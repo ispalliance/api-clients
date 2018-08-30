@@ -3,12 +3,15 @@
 namespace ISPA\ApiClients\Domain;
 
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
+use ISPA\ApiClients\App\Pedef\PedefRootquestor;
 use ISPA\ApiClients\Exception\Logical\InvalidStateException;
 use ISPA\ApiClients\Http\AbstractRootquestor;
 
 /**
  * @property-read LotusRootquestor $lotus
+ * @property-read PedefRootquestor $pedef
  * @method LotusRootquestor getLotus()
+ * @method PedefRootquestor getPedef()
  */
 class ApiManager
 {

@@ -4,6 +4,7 @@ namespace ISPA\ApiClients\DI;
 
 use ISPA\ApiClients\DI\Pass\AbstractPass;
 use ISPA\ApiClients\DI\Pass\AppLotusPass;
+use ISPA\ApiClients\DI\Pass\AppPedefPass;
 use ISPA\ApiClients\DI\Pass\CorePass;
 use Nette\DI\CompilerExtension;
 use Nette\PhpGenerator\ClassType;
@@ -19,6 +20,7 @@ class ApiClientsExtension extends CompilerExtension
 			'lotus' => [],
 			'crm' => [],
 			'nms' => [],
+			'pedef' => [],
 		],
 	];
 
@@ -29,6 +31,7 @@ class ApiClientsExtension extends CompilerExtension
 	{
 		$this->passes[] = new CorePass($this);
 		$this->passes[] = new AppLotusPass($this);
+		$this->passes[] = new AppPedefPass($this);
 	}
 
 	public function loadConfiguration(): void
