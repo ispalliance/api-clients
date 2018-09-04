@@ -7,16 +7,20 @@ use Psr\Http\Message\ResponseInterface;
 class ThumbnailRequestor extends BaseRequestor
 {
 
-	public function generateThumbnail($pdfContents): ResponseInterface
+	public function generateThumbnail(
+		string $contents,
+		string $name = 'PDF file',
+		string $fileName = 'file.pdf'
+	): ResponseInterface
 	{
 		return $this->client->post(
 			'thumbnail',
 			[
 				'multipart' => [
 					[
-						'name' => 'PDF file',
-						'filename' => "file.pdf",
-						'contents' => $pdfContents,
+						'contents' => $contents,
+						'filename' => $fileName,
+						'name' => $name,
 						'headers' => [
 							'Content-Type' => 'application/pdf',
 							'Content-Transfer-Encoding' => "binary",
