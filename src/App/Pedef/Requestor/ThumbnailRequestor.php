@@ -27,6 +27,7 @@ class ThumbnailRequestor extends BaseRequestor
 						],
 					],
 				],
+				'timeout' => 10,
 			]
 		);
 	}
