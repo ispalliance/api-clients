@@ -2,34 +2,28 @@
 
 namespace ISPA\ApiClients\App\Pedef\Requestor;
 
-use Psr\Http\Message\ResponseInterface;
+use ISPA\ApiClients\App\Pedef\Client\ThumbnailClient;
+use ISPA\ApiClients\Domain\AbstractRequestor;
 
-class ThumbnailRequestor extends BaseRequestor
+class ThumbnailRequestor extends AbstractRequestor
 {
 
-	public function generateThumbnail(
-		string $contents,
-		string $name = 'PDF file',
-		string $fileName = 'file.pdf'
-	): ResponseInterface
+	/** @var ThumbnailClient */
+	private $client;
+
+	public function __construct(ThumbnailClient $client)
 	{
-		return $this->client->post(
-			'thumbnail',
-			[
-				'multipart' => [
-					[
-						'contents' => $contents,
-						'filename' => $fileName,
-						'name' => $name,
-						'headers' => [
-							'Content-Type' => 'application/pdf',
-							'Content-Transfer-Encoding' => "binary",
-						],
-					],
-				],
-				'timeout' => 10,
-			]
-		);
+		$this->client = $client;
+	}
+
+	public function generateThumbnail(string $contents, string $name = 'PDF file', string $fileName = 'file.pdf'): string
+	{
+		$response = $this->client->generateThumbnail($contents, $name, $fileName);
+
+		$this->assertResponse($response);
+
+		// todo is
+		return $response->getBody()->getContents();
 	}
 
 }

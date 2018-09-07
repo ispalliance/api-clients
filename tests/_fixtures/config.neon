@@ -1,0 +1,15 @@
+extensions:
+	ispa.api: ISPA\ApiClients\DI\ApiClientsExtension
+
+ispa.api:
+	debug: true
+	app:
+		ares: {}
+
+		lotus:
+			http:
+				baseUri: http://lotus.example.com/api/v1/
+
+		pedef:
+			http:
+				baseUri: http://pedef.example.com/api/v1/

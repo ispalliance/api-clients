@@ -1,0 +1,12 @@
+.DS_Store
+.idea
+.vagrant
+
+/vendor
+/composer.lock
+/phpunit.xml
+/Vagrantfile
+/Vagrantfile.sh
+/Vagrantfile.yaml
+
+!.gitkeep

@@ -2,18 +2,17 @@
 
 namespace ISPA\ApiClients\Domain;
 
+use ISPA\ApiClients\App\Ares\AresRootquestor;
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
 use ISPA\ApiClients\Exception\Logical\InvalidStateException;
-use ISPA\ApiClients\Http\AbstractRootquestor;
 
 /**
+ * @property-read AresRootquestor $ares
  * @property-read LotusRootquestor $lotus
  * @property-read PedefRootquestor $pedef
- * @method LotusRootquestor getLotus()
- * @method PedefRootquestor getPedef()
  */
-class ApiManager
+class ApiProvider
 {
 
 	/** @var AbstractRootquestor[] */
@@ -21,16 +20,20 @@ class ApiManager
 
 	public function add(string $name, AbstractRootquestor $rootquestor): void
 	{
+		if (isset($this->rootquestors[$name])) {
+			throw new InvalidStateException(sprintf('Rootquestor "%s" has been already registered.'));
+		}
+
 		$this->rootquestors[$name] = $rootquestor;
 	}
 
 	public function __get(string $name): AbstractRootquestor
 	{
-		if (!isset($this->rootquestors[$name])) {
-			throw new InvalidStateException(sprintf('Undefined rootquestor "%s"', $name));
+		if (isset($this->rootquestors[$name])) {
+			return $this->rootquestors[$name];
 		}
 
-		return $this->rootquestors[$name];
+		throw new InvalidStateException(sprintf('Undefined rootquestor "%s"', $name));
 	}
 
 }

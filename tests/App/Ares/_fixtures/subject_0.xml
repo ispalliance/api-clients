@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<are:Ares_odpovedi vystup_format="XML" odpoved_typ="es" Id="ares" odpoved_datum_cas="2018-09-21T16:36:12" xsi:schemaLocation="http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_answer_es/v_1.0.0 http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_answer_es/v_1.0.0/ares_answer_es.xsd" xmlns:are="http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_answer_es/v_1.0.0" xmlns:dtt="http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_datatypes/v_1.0.4" xmlns:udt="http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/uvis_datatypes/v_1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<are:Odpoved>
+		<dtt:Help>
+			<dtt:R>Nenalezena obchodní firma, která by odpovídala zadání.</dtt:R>
+			<dtt:R>Při úpravách zadání doporučujeme postupovat podle nápovědy.</dtt:R>
+		</dtt:Help>
+		<dtt:Pocet_zaznamu>0</dtt:Pocet_zaznamu>
+	</are:Odpoved>
+</are:Ares_odpovedi>

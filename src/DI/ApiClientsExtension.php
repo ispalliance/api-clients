@@ -3,6 +3,7 @@
 namespace ISPA\ApiClients\DI;
 
 use ISPA\ApiClients\DI\Pass\AbstractPass;
+use ISPA\ApiClients\DI\Pass\AppAresPass;
 use ISPA\ApiClients\DI\Pass\AppLotusPass;
 use ISPA\ApiClients\DI\Pass\AppPedefPass;
 use ISPA\ApiClients\DI\Pass\CorePass;
@@ -15,12 +16,13 @@ class ApiClientsExtension extends CompilerExtension
 
 	/** @var mixed[] */
 	private $defaults = [
-		'debug' => FALSE,
-		'app' => [
+		'debug' => false,
+		'app'   => [
+			'ares'  => [],
 			'lotus' => [],
-			'crm' => [],
-			'nms' => [],
 			'pedef' => [],
+			//			'crm'   => [],
+			//			'nms'   => [],
 		],
 	];
 
@@ -30,6 +32,7 @@ class ApiClientsExtension extends CompilerExtension
 	public function __construct()
 	{
 		$this->passes[] = new CorePass($this);
+		$this->passes[] = new AppAresPass($this);
 		$this->passes[] = new AppLotusPass($this);
 		$this->passes[] = new AppPedefPass($this);
 	}

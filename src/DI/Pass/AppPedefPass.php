@@ -2,39 +2,47 @@
 
 namespace ISPA\ApiClients\DI\Pass;
 
-use ISPA\ApiClients\App\Pedef\PedefClient;
+use ISPA\ApiClients\App\Pedef\Client\ThumbnailClient;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
 use ISPA\ApiClients\App\Pedef\Requestor\ThumbnailRequestor;
-use Nette\DI\Statement;
+use ISPA\ApiClients\DI\AppBuilder;
 
 class AppPedefPass extends BaseAppPass
 {
 
+	/** @var mixed[] */
+	protected $defaults = [
+		'http' => [
+			'baseUri' => '',
+		],
+	];
+
 	public function loadPassConfiguration(): void
 	{
+		$app = 'pedef';
+
 		// Is this APP enabled? (key in neon)
-		if (!$this->isEnabled('pedef')) return;
+		if (!$this->isEnabled($app)) return;
 
-		$builder = $this->extension->getContainerBuilder();
-		$this->validateConfig('pedef');
+		$this->validateConfig($app);
 
-		// Register api client
+		$config = $this->getConfig($app);
 
-		$builder->addDefinition($this->extension->prefix('app.pedef.client'))
-			->setFactory(PedefClient::class, [
-				new Statement($this->extension->prefix('@guzzle.appFactory::create'), ['pedef']),
-			]);
+		$builder = new AppBuilder($this->extension);
 
-		// Register rootquestor
+		// Http client
+		$httpClient = $builder->addHttpClient($app, [
+			'base_uri' => $config['http']['baseUri'],
+		]);
 
-		$rootquestorDef = $builder->addDefinition($this->extension->prefix('app.pedef.rootquestor'))
-			->setFactory(PedefRootquestor::class);
+		// Clients
+		$thumbnailClient = $builder->addClient($app, 'thumbnail', ThumbnailClient::class, ['@' . $httpClient]);
 
-		// Register single requestor + append it to rootquestor
+		// Rootquestor
+		$builder->addRootquestor($app, PedefRootquestor::class);
 
-		$builder->addDefinition($this->extension->prefix('app.pedef.requestor.thumbnail'))
-			->setFactory(ThumbnailRequestor::class);
-		$rootquestorDef->addSetup('add', ['thumbnail', $this->extension->prefix('@app.pedef.requestor.thumbnail')]);
+		// Requestors
+		$builder->addRequestor($app, 'thumbnail', ThumbnailRequestor::class, ['@' . $thumbnailClient]);
 	}
 
 }

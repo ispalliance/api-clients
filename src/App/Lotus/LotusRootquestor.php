@@ -2,20 +2,13 @@
 
 namespace ISPA\ApiClients\App\Lotus;
 
-use ISPA\ApiClients\App\Lotus\Requestor\BaseRequestor;
 use ISPA\ApiClients\App\Lotus\Requestor\UsersRequestor;
-use ISPA\ApiClients\Http\AbstractRootquestor;
+use ISPA\ApiClients\Domain\AbstractRootquestor;
 
 /**
  * @property-read UsersRequestor $users
- * @method UsersRequestor getUsers()
  */
 class LotusRootquestor extends AbstractRootquestor
 {
-
-	public function add(string $name, BaseRequestor $requestor): void
-	{
-		$this->addRequestor($name, $requestor);
-	}
 
 }

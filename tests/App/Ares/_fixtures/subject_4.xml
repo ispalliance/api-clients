@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<are:Ares_odpovedi vystup_format="XML" odpoved_typ="es" Id="ares" odpoved_datum_cas="2018-09-21T16:36:24" xsi:schemaLocation="http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_answer_es/v_1.0.0 http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_answer_es/v_1.0.0/ares_answer_es.xsd" xmlns:are="http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_answer_es/v_1.0.0" xmlns:dtt="http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_datatypes/v_1.0.4" xmlns:udt="http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/uvis_datatypes/v_1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<are:Odpoved>
+		<dtt:V>
+			<dtt:S>
+				<dtt:ico>27174824</dtt:ico>
+				<dtt:pf>112</dtt:pf>
+				<dtt:ojm>Tlapnet s.r.o.</dtt:ojm>
+				<dtt:jmn>Praha 9, Hrdlořezy, U schodů 122/5</dtt:jmn>
+				<dtt:or>0</dtt:or>
+				<dtt:res>0</dtt:res>
+				<dtt:rzp>0</dtt:rzp>
+				<dtt:dph>0</dtt:dph>
+				<dtt:p_dph>dic=27174824</dtt:p_dph>
+				<dtt:cedr>0</dtt:cedr>
+				<dtt:p_cedr>ico=27174824</dtt:p_cedr>
+				<dtt:ros>0</dtt:ros>
+			</dtt:S>
+			<dtt:S>
+				<dtt:ico>04431413</dtt:ico>
+				<dtt:pf>112</dtt:pf>
+				<dtt:ojm>Tlapnet servis s.r.o.</dtt:ojm>
+				<dtt:jmn>Praha 9, Hrdlořezy, U schodů 122/5</dtt:jmn>
+				<dtt:or>0</dtt:or>
+				<dtt:res>0</dtt:res>
+				<dtt:rzp>0</dtt:rzp>
+				<dtt:ros>0</dtt:ros>
+			</dtt:S>
+			<dtt:S>
+				<dtt:ico>04482182</dtt:ico>
+				<dtt:pf>112</dtt:pf>
+				<dtt:ojm>Tlapnet Internet s.r.o.</dtt:ojm>
+				<dtt:jmn>Praha 9, Hrdlořezy, U schodů 122/5</dtt:jmn>
+				<dtt:or>0</dtt:or>
+				<dtt:res>0</dtt:res>
+				<dtt:rzp>0</dtt:rzp>
+				<dtt:ros>0</dtt:ros>
+			</dtt:S>
+			<dtt:S>
+				<dtt:ico>06563074</dtt:ico>
+				<dtt:pf>706</dtt:pf>
+				<dtt:ojm>Centrum sociální podpory Tlapnet z.s.</dtt:ojm>
+				<dtt:jmn>Čáslav-Nové Město, Jeníkovská 940/14</dtt:jmn>
+				<dtt:or>0</dtt:or>
+				<dtt:res>0</dtt:res>
+				<dtt:ros>0</dtt:ros>
+			</dtt:S>
+		</dtt:V>
+		<dtt:Pocet_zaznamu>4</dtt:Pocet_zaznamu>
+		<dtt:Filtr>1</dtt:Filtr>
+	</are:Odpoved>
+</are:Ares_odpovedi>

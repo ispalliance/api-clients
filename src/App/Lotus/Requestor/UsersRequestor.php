@@ -2,14 +2,38 @@
 
 namespace ISPA\ApiClients\App\Lotus\Requestor;
 
-use Psr\Http\Message\ResponseInterface;
+use ISPA\ApiClients\App\Lotus\Client\UsersClient;
+use ISPA\ApiClients\App\Lotus\Entity\User;
+use ISPA\ApiClients\Domain\AbstractRequestor;
 
-class UsersRequestor extends BaseRequestor
+class UsersRequestor extends AbstractRequestor
 {
 
-	public function getAll(): ResponseInterface
+	/** @var UsersClient */
+	private $client;
+
+	public function __construct(UsersClient $client)
 	{
-		return $this->client->get('users');
+		$this->client = $client;
+	}
+
+	/**
+	 * @return User[]
+	 */
+	public function getAll(): array
+	{
+		$response = $this->client->getAll();
+
+		$this->assertResponse($response);
+
+		$data  = json_decode($response->getBody()->getContents(), true);
+		$users = [];
+
+		foreach ($data as $item) {
+			$users[] = new User($item['id']);
+		}
+
+		return $users;
 	}
 
 }
