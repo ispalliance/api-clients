@@ -9,10 +9,10 @@ At first, register main extension in your NEON.
 
 ```yaml
 extensions:
-	ispa.api: ISPA\ApiClients\DI\ApiClientsExtension
-	
+    ispa.api: ISPA\ApiClients\DI\ApiClientsExtension
+
 ispa.api:
-	debug: %debugMode%
+    debug: %debugMode%
 ```
 
 Secondly, configure single application. We support these applications:
@@ -24,18 +24,20 @@ Secondly, configure single application. We support these applications:
 
 ```yaml
 ispa.api:
-	app:
-		lotus:
-			guzzle:
-				base_uri: http://lotus.example.com/api/v1/
+    app:
+        lotus:
+            guzzle:
+                base_uri: http://lotus.example.com/api/v1/
 
-		crm:
-			guzzle:
-				base_uri: http://adminus.example.com/api/v1/
+        crm:
+            guzzle:
+                base_uri: http://adminus.example.com/api/v1/
+                    defaults:
+                        auth: [username, password]
 
-		nms:
-			guzzle:
-				base_uri: http://nms.example.com/api/v1/
+        nms:
+            guzzle:
+                base_uri: http://nms.example.com/api/v1/
 
         pedef:
             guzzle:
