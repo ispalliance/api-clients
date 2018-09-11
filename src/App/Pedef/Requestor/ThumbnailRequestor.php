@@ -23,7 +23,7 @@ class ThumbnailRequestor extends BaseRequestor
 						'name' => $name,
 						'headers' => [
 							'Content-Type' => 'application/pdf',
-							'Content-Transfer-Encoding' => "binary",
+							'Content-Transfer-Encoding' => 'binary',
 						],
 					],
 				],
