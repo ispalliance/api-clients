@@ -14,7 +14,7 @@ abstract class BaseAppPass extends AbstractPass
 	{
 		$config = $this->extension->getConfig();
 
-		return isset($config['app'][$name]);
+		return isset($config['app'][$name]) && $config['app'][$name] !== FALSE;
 	}
 
 	/**

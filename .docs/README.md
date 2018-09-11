@@ -47,6 +47,13 @@ ispa.api:
 Each application has `guzzle` key for configure their Guzzle client, 
 take a look at [Guzzle doc](https://guzzle.readthedocs.io/en/latest/quickstart.html).
 
+You could also disable client
+
+```yaml
+ispa.api:
+    app:
+        lotus: false
+```
 
 ## Usage
 
