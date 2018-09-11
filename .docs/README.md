@@ -20,6 +20,7 @@ Secondly, configure single application. We support these applications:
 - lotus
 - crm
 - nms
+- pedef
 
 ```yaml
 ispa.api:
@@ -35,6 +36,10 @@ ispa.api:
 		nms:
 			guzzle:
 				base_uri: http://nms.example.com/api/v1/
+
+        pedef:
+            guzzle:
+                base_uri: http://pedef.example.com/api/v1/
 ```
 
 Each application has `guzzle` key for configure their Guzzle client, 
