@@ -20,15 +20,21 @@ class AppLotusPass extends BaseAppPass
 
 		// Register api client
 
-		$builder->addDefinition($this->extension->prefix('app.lotus.client'))
+		$clientDef = $builder->addDefinition($this->extension->prefix('app.lotus.client'))
 			->setFactory(LotusClient::class, [
 				new Statement($this->extension->prefix('@guzzle.appFactory::create'), ['lotus']),
 			]);
+
+		$builder->getDefinition($this->extension->prefix('client.locator'))
+			->addSetup('add', ['lotus', $clientDef]);
 
 		// Register rootquestor
 
 		$rootquestorDef = $builder->addDefinition($this->extension->prefix('app.lotus.rootquestor'))
 			->setFactory(LotusRootquestor::class);
+
+		$builder->getDefinition($this->extension->prefix('manager'))
+			->addSetup('add', ['lotus', $rootquestorDef]);
 
 		// Register single requestor + append it to rootquestor
 

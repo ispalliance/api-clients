@@ -86,7 +86,7 @@ At this time we support these applications:
 
 ### ApiClientLocator
 
-This is middle-level way how to manage our API's.
+This is middle-level way how to manage our APIs.
 
 ```php
 /** @var ApiClientLocator @inject */
@@ -103,7 +103,7 @@ some basic methods on it `get`, `post`, `put`,  `patch`, `head`, `delete`.
 
 ### Guzzle
 
-This is very low-level of managin our API's. It's basically only configured
+This is very low-level of managing our APIs. It's basically only configured
 Guzzle client with credentials to single application.
 
 Official documentation for [Guzzle is here](https://guzzle.readthedocs.io/en/latest/quickstart.html).

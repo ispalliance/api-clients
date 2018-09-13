@@ -7,4 +7,5 @@
 
 # Tests
 /temp
+/tests/tmp
 /coverage.xml

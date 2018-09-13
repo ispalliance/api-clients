@@ -8,7 +8,6 @@ use ISPA\ApiClients\Http\AbstractRootquestor;
 
 /**
  * @property-read UsersRequestor $users
- * @method UsersRequestor getUsers()
  */
 class LotusRootquestor extends AbstractRootquestor
 {

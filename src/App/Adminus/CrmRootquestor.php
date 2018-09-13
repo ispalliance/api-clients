@@ -14,10 +14,6 @@ use ISPA\ApiClients\Http\AbstractRootquestor;
  * @property-read ContractRequestor $contract
  * @property-read CustomerRequestor $customer
  * @property-read UserRequestor $user
- * @method AccountingEntityRequestor getAccountingEntity()
- * @method ContractRequestor getContract()
- * @method CustomerRequestor getCustomer()
- * @method UserRequestor getUser()
  */
 class CrmRootquestor extends AbstractRootquestor
 {

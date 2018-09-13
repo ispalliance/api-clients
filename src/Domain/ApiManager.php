@@ -12,9 +12,6 @@ use ISPA\ApiClients\Http\AbstractRootquestor;
  * @property-read CrmRootquestor $crm
  * @property-read LotusRootquestor $lotus
  * @property-read PedefRootquestor $pedef
- * @method CrmRootquestor getCrm()
- * @method LotusRootquestor getLotus()
- * @method PedefRootquestor getPedef()
  */
 class ApiManager
 {

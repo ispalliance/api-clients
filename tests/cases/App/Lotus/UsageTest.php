@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\ISPA\ApiClients\App\Lotus;
+namespace Tests\Cases\ISPA\ApiClients\App\Lotus;
 
 use GuzzleHttp\Client;
 use ISPA\ApiClients\App\Lotus\LotusClient;

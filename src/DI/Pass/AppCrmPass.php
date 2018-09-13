@@ -23,15 +23,21 @@ class AppCrmPass extends BaseAppPass
 
 		// Register api client
 
-		$builder->addDefinition($this->extension->prefix('app.crm.client'))
+		$clientDef = $builder->addDefinition($this->extension->prefix('app.crm.client'))
 			->setFactory(CrmClient::class, [
 				new Statement($this->extension->prefix('@guzzle.appFactory::create'), ['crm']),
 			]);
+
+		$builder->getDefinition($this->extension->prefix('client.locator'))
+			->addSetup('add', ['crm', $clientDef]);
 
 		// Register rootquestor
 
 		$rootquestorDef = $builder->addDefinition($this->extension->prefix('app.crm.rootquestor'))
 			->setFactory(CrmRootquestor::class);
+
+		$builder->getDefinition($this->extension->prefix('manager'))
+			->addSetup('add', ['crm', $rootquestorDef]);
 
 		// Register requestors + append them to rootquestor
 

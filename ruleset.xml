@@ -11,7 +11,7 @@
         <properties>
             <property name="rootNamespaces" type="array" value="
                 src=>ISPA\ApiClients,
-                tests=>Tests\ISPA\ApiClients
+                tests/cases=>Tests\Cases\ISPA\ApiClients
             "/>
         </properties>
     </rule>

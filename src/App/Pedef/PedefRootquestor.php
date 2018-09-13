@@ -8,7 +8,6 @@ use ISPA\ApiClients\Http\AbstractRootquestor;
 
 /**
  * @property-read ThumbnailRequestor $thumbnail
- * @method ThumbnailRequestor generate()
  */
 class PedefRootquestor extends AbstractRootquestor
 {

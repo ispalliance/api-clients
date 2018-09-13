@@ -20,15 +20,21 @@ class AppPedefPass extends BaseAppPass
 
 		// Register api client
 
-		$builder->addDefinition($this->extension->prefix('app.pedef.client'))
+		$clientDef = $builder->addDefinition($this->extension->prefix('app.pedef.client'))
 			->setFactory(PedefClient::class, [
 				new Statement($this->extension->prefix('@guzzle.appFactory::create'), ['pedef']),
 			]);
+
+		$builder->getDefinition($this->extension->prefix('client.locator'))
+			->addSetup('add', ['pedef', $clientDef]);
 
 		// Register rootquestor
 
 		$rootquestorDef = $builder->addDefinition($this->extension->prefix('app.pedef.rootquestor'))
 			->setFactory(PedefRootquestor::class);
+
+		$builder->getDefinition($this->extension->prefix('manager'))
+			->addSetup('add', ['pedef', $rootquestorDef]);
 
 		// Register single requestor + append it to rootquestor
 
