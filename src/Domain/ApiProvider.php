@@ -6,6 +6,7 @@ use ISPA\ApiClients\App\Adminus\CrmRootquestor;
 use ISPA\ApiClients\App\Ares\AresRootquestor;
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
+use ISPA\ApiClients\App\Ruian\RuianRootquestor;
 use ISPA\ApiClients\Exception\Logical\InvalidStateException;
 
 /**
@@ -13,6 +14,7 @@ use ISPA\ApiClients\Exception\Logical\InvalidStateException;
  * @property-read CrmRootquestor $crm
  * @property-read LotusRootquestor $lotus
  * @property-read PedefRootquestor $pedef
+ * @property-read RuianRootquestor $ruian
  */
 class ApiProvider
 {

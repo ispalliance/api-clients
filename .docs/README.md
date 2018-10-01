@@ -15,7 +15,7 @@ ispa.api:
     debug: %debugMode%
 ```
 
-Secondly, configure single application. We support these applications **adminus**, **ares**, **lotus** and **pedef**.
+Secondly, configure single application. We support these applications **adminus**, **ares**, **lotus**, **pedef** and **ruian**.
 
 ```yaml
 ispa.api:
@@ -112,7 +112,7 @@ ispa.api:
                 base_uri: http://adminus.example.com/api/
 ```
 
-### Endpoins
+### Endpoints
 
 @todo
 
@@ -189,7 +189,7 @@ ispa.api:
                 base_uri: http://adminus.example.com/api/
 ```
 
-### Endpoins
+### Endpoints
 
 @todo
 
@@ -206,6 +206,22 @@ ispa.api:
                 base_uri: http://adminus.example.com/api/
 ```
 
-### Endpoins
+### Endpoints
+
+@todo
+
+### Ruian
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        pedef:
+            http:
+                base_uri: http://ruian.example.com/api/
+```
+
+### Endpoints
 
 @todo
