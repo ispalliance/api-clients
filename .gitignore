@@ -1,12 +1,17 @@
-.DS_Store
-.idea
-.vagrant
+# IDE
+/.idea
 
+# Composer
 /vendor
 /composer.lock
-/phpunit.xml
+
+# Tests
+/temp
+/tests/tmp
+/coverage.xml
+
+# Vagrant
+.vagrant
 /Vagrantfile
 /Vagrantfile.sh
 /Vagrantfile.yaml
-
-!.gitkeep

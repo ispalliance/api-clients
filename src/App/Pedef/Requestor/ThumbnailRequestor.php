@@ -22,7 +22,6 @@ class ThumbnailRequestor extends AbstractRequestor
 
 		$this->assertResponse($response);
 
-		// todo is
 		return $response->getBody()->getContents();
 	}
 

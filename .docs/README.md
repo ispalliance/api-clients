@@ -9,10 +9,10 @@ At first, register main extension in your NEON.
 
 ```yaml
 extensions:
-	ispa.api: ISPA\ApiClients\DI\ApiClientsExtension
-	
+    ispa.api: ISPA\ApiClients\DI\ApiClientsExtension
+
 ispa.api:
-	debug: %debugMode%
+    debug: %debugMode%
 ```
 
 Secondly, configure single application. We support these applications:
@@ -20,26 +20,40 @@ Secondly, configure single application. We support these applications:
 - lotus
 - crm
 - nms
+- pedef
 
 ```yaml
 ispa.api:
-	app:
-		lotus:
-			guzzle:
-				base_uri: http://lotus.example.com/api/v1/
+    app:
+        lotus:
+            guzzle:
+                base_uri: http://lotus.example.com/api/v1/
 
-		crm:
-			guzzle:
-				base_uri: http://adminus.example.com/api/v1/
+        crm:
+            guzzle:
+                base_uri: http://adminus.example.com/api/v1/
+                    defaults:
+                        auth: [username, password]
 
-		nms:
-			guzzle:
-				base_uri: http://nms.example.com/api/v1/
+        nms:
+            guzzle:
+                base_uri: http://nms.example.com/api/v1/
+
+        pedef:
+            guzzle:
+                base_uri: http://pedef.example.com/api/v1/
 ```
 
 Each application has `guzzle` key for configure their Guzzle client, 
 take a look at [Guzzle doc](https://guzzle.readthedocs.io/en/latest/quickstart.html).
 
+You could also disable client
+
+```yaml
+ispa.api:
+    app:
+        lotus: false
+```
 
 ## Usage
 
@@ -72,7 +86,7 @@ At this time we support these applications:
 
 ### ApiClientLocator
 
-This is middle-level way how to manage our API's.
+This is middle-level way how to manage our APIs.
 
 ```php
 /** @var ApiClientLocator @inject */
@@ -89,7 +103,7 @@ some basic methods on it `get`, `post`, `put`,  `patch`, `head`, `delete`.
 
 ### Guzzle
 
-This is very low-level of managin our API's. It's basically only configured
+This is very low-level of managing our APIs. It's basically only configured
 Guzzle client with credentials to single application.
 
 Official documentation for [Guzzle is here](https://guzzle.readthedocs.io/en/latest/quickstart.html).
