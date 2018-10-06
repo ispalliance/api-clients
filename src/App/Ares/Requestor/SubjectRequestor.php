@@ -67,7 +67,7 @@ class SubjectRequestor extends BaseRequestor
 	private function getSubjects(ResponseInterface $response, string $name): array
 	{
 		$odpovedElm = $this->getResponseElement($response);
-		$ns         = $odpovedElm->getNamespaces(true);
+		$ns         = $odpovedElm->getNamespaces(TRUE);
 
 		if (!isset($ns['dtt'])) {
 			throw new ResponseException($response, 'Missing namespace "dtt" in "are:Ares_odpovedi[0]->are:Odpoved[0]".');
@@ -100,7 +100,7 @@ class SubjectRequestor extends BaseRequestor
 		}
 
 		foreach ($odpovedElms->V->S as $sElm) {
-			$vatIdNumber = null;
+			$vatIdNumber = NULL;
 
 			if (isset($sElm->p_dph) && preg_match('/^dic=(\d+)$/', (string) $sElm->p_dph, $matches)) {
 				$vatIdNumber = $matches[1];

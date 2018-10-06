@@ -15,7 +15,7 @@ class IdNumberUtils
 	public static function validate(string $idNumber): bool
 	{
 		if (!preg_match('/^\d{8}$/', $idNumber)) {
-			return false;
+			return FALSE;
 		}
 
 		$sum = 0;

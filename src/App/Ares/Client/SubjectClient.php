@@ -16,8 +16,8 @@ class SubjectClient extends AbstractClient
 
 	private const URL            = 'https://wwwinfo.mfcr.cz/cgi-bin/ares/ares_es.cgi';
 	private const URL_PARAMETERS = [
-		'obch_jm' => null,
-		'ico'     => null,
+		'obch_jm' => NULL,
+		'ico'     => NULL,
 		'obec'    => '',
 		'k_fu'    => '',
 		'maxpoc'  => 200,

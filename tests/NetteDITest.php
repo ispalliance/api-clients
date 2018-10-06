@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\ISPA\ApiClients\App\Ares;
+namespace Tests\ISPA\ApiClients;
 
 use GuzzleHttp\ClientInterface;
 use ISPA\ApiClients as Api;
@@ -76,9 +76,20 @@ class NetteDITest extends TestCase
 //			],
 		return [
 			[
+				'crm',
+				Api\App\Adminus\CrmRootquestor::class,
+				[
+					'accountingEntity' => [Api\App\Adminus\Client\AccountingEntityClient::class, Api\App\Adminus\Requestor\AccountingEntityRequestor::class],
+					'contract' => [Api\App\Adminus\Client\ContractClient::class, Api\App\Adminus\Requestor\ContractRequestor::class],
+					'customer' => [Api\App\Adminus\Client\CustomerClient::class, Api\App\Adminus\Requestor\CustomerRequestor::class],
+					'user' => [Api\App\Adminus\Client\UserClient::class, Api\App\Adminus\Requestor\UserRequestor::class],
+				],
+			],
+			[
 				'ares',
 				Api\App\Ares\AresRootquestor::class,
 				[
+					'address' => [Api\App\Ares\Client\AddressClient::class, Api\App\Ares\Requestor\AddressRequestor::class],
 					'subject' => [Api\App\Ares\Client\SubjectClient::class, Api\App\Ares\Requestor\SubjectRequestor::class],
 				],
 			],
@@ -101,8 +112,8 @@ class NetteDITest extends TestCase
 
 	private function getContainer(): Container
 	{
-		if ($this->container === null) {
-			$loader          = new ContainerLoader(self::TEMP_DIR, true);
+		if ($this->container === NULL) {
+			$loader          = new ContainerLoader(self::TEMP_DIR, TRUE);
 			$class           = $loader->load(function (Compiler $compiler): void {
 				$compiler->addExtension('extensions', new ExtensionsExtension());
 				$compiler->loadConfig(__DIR__ . '/_fixtures/config.neon');

@@ -3,11 +3,10 @@
 namespace ISPA\ApiClients\App\Adminus;
 
 use ISPA\ApiClients\App\Adminus\Requestor\AccountingEntityRequestor;
-use ISPA\ApiClients\App\Adminus\Requestor\BaseRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\ContractRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\CustomerRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\UserRequestor;
-use ISPA\ApiClients\Http\AbstractRootquestor;
+use ISPA\ApiClients\Domain\AbstractRootquestor;
 
 /**
  * @property-read AccountingEntityRequestor $accountingEntity
@@ -17,10 +16,5 @@ use ISPA\ApiClients\Http\AbstractRootquestor;
  */
 class CrmRootquestor extends AbstractRootquestor
 {
-
-	public function add(string $name, BaseRequestor $requestor): void
-	{
-		$this->addRequestor($name, $requestor);
-	}
 
 }

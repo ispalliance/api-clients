@@ -2,8 +2,8 @@
 
 namespace ISPA\ApiClients\Domain;
 
-use ISPA\ApiClients\App\Ares\AresRootquestor;
 use ISPA\ApiClients\App\Adminus\CrmRootquestor;
+use ISPA\ApiClients\App\Ares\AresRootquestor;
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
 use ISPA\ApiClients\Exception\Logical\InvalidStateException;

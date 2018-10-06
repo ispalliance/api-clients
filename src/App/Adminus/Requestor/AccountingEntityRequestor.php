@@ -2,14 +2,24 @@
 
 namespace ISPA\ApiClients\App\Adminus\Requestor;
 
+use ISPA\ApiClients\App\Adminus\Client\AccountingEntityClient;
+use ISPA\ApiClients\Domain\AbstractRequestor;
 use Psr\Http\Message\ResponseInterface;
 
-class AccountingEntityRequestor extends BaseRequestor
+class AccountingEntityRequestor extends AbstractRequestor
 {
+
+	/** @var AccountingEntityClient */
+	private $client;
+
+	public function __construct(AccountingEntityClient $client)
+	{
+		$this->client = $client;
+	}
 
 	public function getAll(): ResponseInterface
 	{
-		return $this->client->get('accounting-entity');
+		return $this->client->getAll();
 	}
 
 	/**
@@ -17,12 +27,12 @@ class AccountingEntityRequestor extends BaseRequestor
 	 */
 	public function getById($id): ResponseInterface
 	{
-		return $this->client->get(sprintf('accounting-entity/%s', (string) $id));
+		return $this->client->getById($id);
 	}
 
 	public function getAllBanks(): ResponseInterface
 	{
-		return $this->client->get('accounting-entity-bank');
+		return $this->client->getAllBanks();
 	}
 
 	/**
@@ -30,7 +40,7 @@ class AccountingEntityRequestor extends BaseRequestor
 	 */
 	public function getBankById($id): ResponseInterface
 	{
-		return $this->client->get(sprintf('accounting-entity-bank/%s', (string) $id));
+		return $this->client->getBankById($id);
 	}
 
 }

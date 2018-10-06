@@ -2,14 +2,24 @@
 
 namespace ISPA\ApiClients\App\Adminus\Requestor;
 
+use ISPA\ApiClients\App\Adminus\Client\UserClient;
+use ISPA\ApiClients\Domain\AbstractRequestor;
 use Psr\Http\Message\ResponseInterface;
 
-class UserRequestor extends BaseRequestor
+class UserRequestor extends AbstractRequestor
 {
+
+	/** @var UserClient */
+	private $client;
+
+	public function __construct(UserClient $client)
+	{
+		$this->client = $client;
+	}
 
 	public function getAll(): ResponseInterface
 	{
-		return $this->client->get('user');
+		return $this->client->getAll();
 	}
 
 	/**
@@ -17,7 +27,7 @@ class UserRequestor extends BaseRequestor
 	 */
 	public function getById($id): ResponseInterface
 	{
-		return $this->client->get(sprintf('user/%s', (string) $id));
+		return $this->client->getById($id);
 	}
 
 }

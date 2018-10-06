@@ -2,14 +2,24 @@
 
 namespace ISPA\ApiClients\App\Adminus\Requestor;
 
+use ISPA\ApiClients\App\Adminus\Client\CustomerClient;
+use ISPA\ApiClients\Domain\AbstractRequestor;
 use Psr\Http\Message\ResponseInterface;
 
-class CustomerRequestor extends BaseRequestor
+class CustomerRequestor extends AbstractRequestor
 {
+
+	/** @var CustomerClient */
+	private $client;
+
+	public function __construct(CustomerClient $client)
+	{
+		$this->client = $client;
+	}
 
 	public function getAll(): ResponseInterface
 	{
-		return $this->client->get('customer-detail/all');
+		return $this->client->getAll();
 	}
 
 	/**
@@ -17,7 +27,7 @@ class CustomerRequestor extends BaseRequestor
 	 */
 	public function getById($id): ResponseInterface
 	{
-		return $this->client->get(sprintf('customer-detail/by-id/%s', (string) $id));
+		return $this->client->getById($id);
 	}
 
 	/**
@@ -25,12 +35,12 @@ class CustomerRequestor extends BaseRequestor
 	 */
 	public function getByCard($cardNumber): ResponseInterface
 	{
-		return $this->client->get(sprintf('customer-detail/by-card/%s', (string) $cardNumber));
+		return $this->client->getByCard($cardNumber);
 	}
 
 	public function getByFilter(string $query): ResponseInterface
 	{
-		return $this->client->get(sprintf('customer-detail/by-filter/%s', $query));
+		return $this->client->getByFilter($query);
 	}
 
 	/**
@@ -38,7 +48,7 @@ class CustomerRequestor extends BaseRequestor
 	 */
 	public function getByLastChange($interval): ResponseInterface
 	{
-		return $this->client->get(sprintf('customer-detail/by-last-change/%s', (string) $interval));
+		return $this->client->getByLastChange($interval);
 	}
 
 	/**
@@ -46,7 +56,7 @@ class CustomerRequestor extends BaseRequestor
 	 */
 	public function getByLastChangeFrom($from): ResponseInterface
 	{
-		return $this->client->get(sprintf('customer-detail/by-last-change-from/%s', (string) $from));
+		return $this->client->getByLastChangeFrom($from);
 	}
 
 	/**
@@ -55,7 +65,7 @@ class CustomerRequestor extends BaseRequestor
 	 */
 	public function getByIdFromTo($from, $to): ResponseInterface
 	{
-		return $this->client->get(sprintf('customer-detail/by-id-from-to/%s/%s', (string) $from, (string) $to));
+		return $this->client->getByIdFromTo($from, $to);
 	}
 
 }

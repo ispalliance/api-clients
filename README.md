@@ -19,6 +19,28 @@ composer require ispa/api-clients
 
 ## API
 
+### Configuration
+
+```yaml
+ispa.api:
+	debug: true
+	app:
+		ares: {}
+
+		crm:
+			http:
+				baseUri: http://crm.example.com/api/v1/
+
+		lotus:
+			http:
+				baseUri: http://lotus.example.com/api/v1/
+
+		pedef:
+			http:
+				baseUri: http://pedef.example.com/api/v1/
+```
+
+
 ### ARES
 
 #### Get subject

@@ -16,7 +16,7 @@ abstract class AbstractRequestor
 	 */
 	protected function assertResponse(ResponseInterface $response, array $allowedStatusCodes = [200]): void
 	{
-		if (!in_array($response->getStatusCode(), $allowedStatusCodes, true)) {
+		if (!in_array($response->getStatusCode(), $allowedStatusCodes, TRUE)) {
 			throw new ResponseException($response);
 		}
 	}

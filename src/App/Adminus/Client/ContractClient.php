@@ -1,28 +1,19 @@
 <?php declare(strict_types = 1);
 
-namespace ISPA\ApiClients\App\Adminus\Requestor;
+namespace ISPA\ApiClients\App\Adminus\Client;
 
-use ISPA\ApiClients\App\Adminus\Client\ContractClient;
-use ISPA\ApiClients\Domain\AbstractRequestor;
+use ISPA\ApiClients\Domain\AbstractClient;
 use Psr\Http\Message\ResponseInterface;
 
-class ContractRequestor extends AbstractRequestor
+class ContractClient extends AbstractClient
 {
-
-	/** @var ContractClient */
-	private $client;
-
-	public function __construct(ContractClient $client)
-	{
-		$this->client = $client;
-	}
 
 	/**
 	 * @param string|int $id
 	 */
 	public function getById($id): ResponseInterface
 	{
-		return $this->client->getById($id);
+		return $this->client->request('GET', sprintf('contract-detail/by-id/%s', (string) $id));
 	}
 
 	/**
@@ -30,7 +21,7 @@ class ContractRequestor extends AbstractRequestor
 	 */
 	public function getByContractNumber($contractNumber): ResponseInterface
 	{
-		return $this->client->getByContractNumber($contractNumber);
+		return $this->client->request('GET', sprintf('contract-detail/by-contract-number/%s', (string) $contractNumber));
 	}
 
 	/**
@@ -38,7 +29,7 @@ class ContractRequestor extends AbstractRequestor
 	 */
 	public function getByCustomer($customerId): ResponseInterface
 	{
-		return $this->client->getByCustomer($customerId);
+		return $this->client->request('GET', sprintf('contract-detail/by-customer/%s', (string) $customerId));
 	}
 
 	/**
@@ -46,7 +37,7 @@ class ContractRequestor extends AbstractRequestor
 	 */
 	public function getByCustomerCard($cardNumber): ResponseInterface
 	{
-		return $this->client->getByCustomerCard($cardNumber);
+		return $this->client->request('GET', sprintf('contract-detail/by-customer-card/%s', (string) $cardNumber));
 	}
 
 	/**
@@ -54,12 +45,12 @@ class ContractRequestor extends AbstractRequestor
 	 */
 	public function getByAttributeSetId($attributeSetId): ResponseInterface
 	{
-		return $this->client->getByAttributeSetId($attributeSetId);
+		return $this->client->request('GET', sprintf('contract-detail/by-attribute-set-id/%s', (string) $attributeSetId));
 	}
 
 	public function getOnlyActive(): ResponseInterface
 	{
-		return $this->client->getOnlyActive();
+		return $this->client->request('GET', 'contract-detail/only-active');
 	}
 
 	/**
@@ -68,7 +59,7 @@ class ContractRequestor extends AbstractRequestor
 	 */
 	public function setStateById($contractId, $stateId): ResponseInterface
 	{
-		return $this->client->setStateById($contractId, $stateId);
+		return $this->client->request('PUT', sprintf('contract-detail/set-state/%s/%s', (string) $contractId, (string) $stateId));
 	}
 
 	/**
@@ -77,12 +68,12 @@ class ContractRequestor extends AbstractRequestor
 	 */
 	public function setStateByContractNumber($contractNumber, $stateId): ResponseInterface
 	{
-		return $this->client->setStateByContractNumber($contractNumber, $stateId);
+		return $this->client->request('PUT', sprintf('contract-detail/set-state-by-contract-number/%s/%s', (string) $contractNumber, (string) $stateId));
 	}
 
 	public function getAllContractTypeStates(): ResponseInterface
 	{
-		return $this->client->getAllContractTypeStates();
+		return $this->client->request('GET', 'contract-type-state');
 	}
 
 	/**
@@ -90,7 +81,7 @@ class ContractRequestor extends AbstractRequestor
 	 */
 	public function getContractTypeStateById($id): ResponseInterface
 	{
-		return $this->client->getContractTypeStateById($id);
+		return $this->client->request('GET', sprintf('contract-type-state/%s', $id));
 	}
 
 }

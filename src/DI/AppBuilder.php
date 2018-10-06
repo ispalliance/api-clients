@@ -75,7 +75,7 @@ class AppBuilder
 	 */
 	public function addRequestor(string $app, string $name, string $class, array $args = []): void
 	{
-		if ($this->rootquestorDef === null) {
+		if ($this->rootquestorDef === NULL) {
 			throw new InvalidStateException(
 				sprintf('Rootquestor for app "%s" is not registered. Register rootquestor first by calling method $this->>registerRootquestor($app).', $app)
 			);

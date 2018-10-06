@@ -8,7 +8,7 @@ use Throwable;
 class SubjectNotFoundException extends RuntimeException
 {
 
-	public static function create(string $idNumber, ?Throwable $previous = null): self
+	public static function create(string $idNumber, ?Throwable $previous = NULL): self
 	{
 		return new self(sprintf('Subject for identification number "%s" not found.', $idNumber), 0, $previous);
 	}

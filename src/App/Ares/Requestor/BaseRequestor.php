@@ -16,7 +16,7 @@ class BaseRequestor extends AbstractRequestor
 
 		$data = $response->getBody()->getContents();
 		$elm  = new SimpleXMLElement($data);
-		$ns   = $elm->getNamespaces(true);
+		$ns   = $elm->getNamespaces(TRUE);
 
 		if (!isset($ns['are'])) {
 			throw new ResponseException($response, 'Missing namespace "are".');

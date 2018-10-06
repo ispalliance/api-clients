@@ -11,9 +11,9 @@ class ResponseException extends RuntimeException
 	/** @var ResponseInterface */
 	private $response;
 
-	public function __construct(ResponseInterface $response, ?string $message = null)
+	public function __construct(ResponseInterface $response, ?string $message = NULL)
 	{
-		if ($message === null) {
+		if ($message === NULL) {
 			$message = sprintf('Unexpected status code "%d".', $response->getStatusCode());
 		}
 

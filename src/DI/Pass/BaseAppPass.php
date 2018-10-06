@@ -12,7 +12,7 @@ abstract class BaseAppPass extends AbstractPass
 	{
 		$config = $this->extension->getConfig();
 
-		return isset($config['app'][$app]);
+		return isset($config['app'][$app]) && $config['app'][$app] !== FALSE;
 	}
 
 	protected function validateConfig(string $app): void

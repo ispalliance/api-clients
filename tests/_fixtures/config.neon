@@ -6,6 +6,10 @@ ispa.api:
 	app:
 		ares: {}
 
+		crm:
+			http:
+				baseUri: http://crm.example.com/api/v1/
+
 		lotus:
 			http:
 				baseUri: http://lotus.example.com/api/v1/

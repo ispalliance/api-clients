@@ -34,11 +34,11 @@ class AddressRequestor extends BaseRequestor
 			throw SubjectNotFoundException::create($idNumber);
 		}
 
-		$adresaElms = null;
+		$adresaElms = NULL;
 
 		if (isset($odpovedElm->Zaznam[0]->Identifikace[0]->Adresa_ARES[0])) {
 			$adresaElm = $odpovedElm->Zaznam[0]->Identifikace[0]->Adresa_ARES[0];
-			$ns        = $adresaElm->getNamespaces(true);
+			$ns        = $adresaElm->getNamespaces(TRUE);
 
 			if (isset($ns['dtt'])) {
 				$adresaElms = $adresaElm->children($ns['dtt']);
@@ -69,7 +69,7 @@ class AddressRequestor extends BaseRequestor
 
 	private function processError(SimpleXMLElement $errorElm, ResponseInterface $response): void
 	{
-		$ns = $errorElm->getNamespaces(true);
+		$ns = $errorElm->getNamespaces(TRUE);
 
 		if (!isset($ns)) {
 			throw new ResponseException($response, 'Missing namespace "dtt" in "are:Ares_odpovedi[0]->are:Odpoved[0]->are:Error[0]".');

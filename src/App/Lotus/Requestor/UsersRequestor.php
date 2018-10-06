@@ -26,7 +26,7 @@ class UsersRequestor extends AbstractRequestor
 
 		$this->assertResponse($response);
 
-		$data  = json_decode($response->getBody()->getContents(), true);
+		$data  = json_decode($response->getBody()->getContents(), TRUE);
 		$users = [];
 
 		foreach ($data as $item) {
