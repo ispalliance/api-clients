@@ -10,7 +10,7 @@ class UsersClient extends AbstractClient
 
 	public function getAll(): ResponseInterface
 	{
-		return $this->client->request('GET', 'users');
+		return $this->httpClient->request('GET', 'users');
 	}
 
 }

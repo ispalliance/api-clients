@@ -10,7 +10,7 @@ class UserClient extends AbstractClient
 
 	public function getAll(): ResponseInterface
 	{
-		return $this->client->request('GET', 'user');
+		return $this->httpClient->request('GET', 'user');
 	}
 
 	/**
@@ -18,7 +18,7 @@ class UserClient extends AbstractClient
 	 */
 	public function getById($id): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('user/%s', (string) $id));
+		return $this->httpClient->request('GET', sprintf('user/%s', (string) $id));
 	}
 
 }

@@ -28,11 +28,11 @@ class AddressClient extends AbstractClient
 
 		$params = [
 			'typ_vyhledani' => 'ico',
-			'ico'           => $idNumber,
+			'ico' => $idNumber,
 		];
-		$url    = self::URL . '?' . http_build_query($params);
+		$url = self::URL . '?' . http_build_query($params);
 
-		return $this->client->request('GET', $url);
+		return $this->httpClient->request('GET', $url);
 	}
 
 }

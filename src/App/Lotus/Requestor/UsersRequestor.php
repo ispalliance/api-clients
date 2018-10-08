@@ -5,6 +5,7 @@ namespace ISPA\ApiClients\App\Lotus\Requestor;
 use ISPA\ApiClients\App\Lotus\Client\UsersClient;
 use ISPA\ApiClients\App\Lotus\Entity\User;
 use ISPA\ApiClients\Domain\AbstractRequestor;
+use Nette\Utils\Json;
 
 class UsersRequestor extends AbstractRequestor
 {
@@ -23,10 +24,9 @@ class UsersRequestor extends AbstractRequestor
 	public function getAll(): array
 	{
 		$response = $this->client->getAll();
-
 		$this->assertResponse($response);
 
-		$data  = json_decode($response->getBody()->getContents(), TRUE);
+		$data = Json::decode($response->getBody()->getContents(), Json::FORCE_ARRAY);
 		$users = [];
 
 		foreach ($data as $item) {

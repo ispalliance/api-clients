@@ -10,7 +10,7 @@ class AccountingEntityClient extends AbstractClient
 
 	public function getAll(): ResponseInterface
 	{
-		return $this->client->request('GET', 'accounting-entity');
+		return $this->httpClient->request('GET', 'accounting-entity');
 	}
 
 	/**
@@ -18,12 +18,12 @@ class AccountingEntityClient extends AbstractClient
 	 */
 	public function getById($id): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('accounting-entity/%s', (string) $id));
+		return $this->httpClient->request('GET', sprintf('accounting-entity/%s', (string) $id));
 	}
 
 	public function getAllBanks(): ResponseInterface
 	{
-		return $this->client->request('GET', 'accounting-entity-bank');
+		return $this->httpClient->request('GET', 'accounting-entity-bank');
 	}
 
 	/**
@@ -31,7 +31,7 @@ class AccountingEntityClient extends AbstractClient
 	 */
 	public function getBankById($id): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('accounting-entity-bank/%s', (string) $id));
+		return $this->httpClient->request('GET', sprintf('accounting-entity-bank/%s', (string) $id));
 	}
 
 }

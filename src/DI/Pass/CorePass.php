@@ -11,13 +11,13 @@ class CorePass extends AbstractPass
 	public function loadPassConfiguration(): void
 	{
 		$builder = $this->extension->getContainerBuilder();
-		$config  = $this->extension->getConfig();
+		$config = $this->extension->getConfig();
 
 		$builder->addDefinition($this->extension->prefix('provider'))
 			->setFactory(ApiProvider::class);
 
 		$builder->addDefinition($this->extension->prefix('guzzleFactory'))
-			->setFactory(GuzzleFactory::class, [$config['debug']]);
+			->setFactory(GuzzleFactory::class, [$config]);
 	}
 
 }

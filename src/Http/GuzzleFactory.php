@@ -7,25 +7,30 @@ use GuzzleHttp\Client;
 class GuzzleFactory
 {
 
-	/** @var bool */
-	private $debug;
+	/** @var mixed[] */
+	protected $config = [];
 
-	public function __construct(bool $debug)
-	{
-		$this->debug = $debug;
-	}
+	/** @var mixed[] */
+	protected $defaults = [
+		'http_errors' => FALSE, // Disable throwing exceptions on an HTTP protocol errors (i.e., 4xx and 5xx responses)
+	];
 
 	/**
 	 * @param mixed[] $config
 	 */
-	public function create(array $config = []): Client
+	public function __construct(array $config)
 	{
-		if ($this->debug) {
-			// todo: Tracy middleware
-			'fix empty statement';
-		}
+		$this->config = $config;
+	}
 
-		return new Client($config);
+	public function create(string $app): GuzzleClient
+	{
+		// @todo $this->config['debug'] ==> Tracy panel
+
+		$config = $this->config[$app]['http'] ?? [];
+		$config = array_merge($this->defaults, $config);
+
+		return new GuzzleClient(new Client($config));
 	}
 
 }

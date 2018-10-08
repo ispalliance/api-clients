@@ -5,44 +5,50 @@ namespace ISPA\ApiClients\DI\Pass;
 use ISPA\ApiClients\App\Pedef\Client\ThumbnailClient;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
 use ISPA\ApiClients\App\Pedef\Requestor\ThumbnailRequestor;
-use ISPA\ApiClients\DI\AppBuilder;
+use ISPA\ApiClients\Http\GuzzleClient;
+use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\Statement;
 
 class AppPedefPass extends BaseAppPass
 {
 
-	/** @var mixed[] */
-	protected $defaults = [
-		'http' => [
-			'baseUri' => '',
-		],
-	];
+	private const APP_NAME = 'pedef';
 
 	public function loadPassConfiguration(): void
 	{
-		$app = 'pedef';
-
 		// Is this APP enabled? (key in neon)
-		if (!$this->isEnabled($app)) return;
+		if (!$this->isEnabled(self::APP_NAME)) return;
 
-		$this->validateConfig($app);
+		$builder = $this->extension->getContainerBuilder();
+		$this->validateConfig(self::APP_NAME);
 
-		$config = $this->getConfig($app);
+		// #1 HTTP client
+		$builder->addDefinition($this->extension->prefix('app.pedef.http.client'))
+			->setFactory(GuzzleClient::class, [
+				new Statement($this->extension->prefix('@guzzleFactory:create'), [self::APP_NAME]),
+			])
+			->setType(HttpClient::class)
+			->setAutowired(FALSE);
 
-		$builder = new AppBuilder($this->extension);
+		// #2 Clients
+		$builder->addDefinition($this->extension->prefix('app.pedef.client.thumbnail'))
+			->setFactory(ThumbnailClient::class, [$this->extension->prefix('@app.pedef.http.client')]);
 
-		// Http client
-		$httpClient = $builder->addHttpClient($app, [
-			'base_uri' => $config['http']['baseUri'],
-		]);
+		// #3 Requestors
+		$builder->addDefinition($this->extension->prefix('app.pedef.requestor.thumbnail'))
+			->setFactory(ThumbnailRequestor::class, [$this->extension->prefix('@app.pedef.client.thumbnail')]);
 
-		// Clients
-		$thumbnailClient = $builder->addClient($app, 'thumbnail', ThumbnailClient::class, ['@' . $httpClient]);
+		// #4 Rootquestor
+		$builder->addDefinition($this->extension->prefix('app.pedef.rootquestor'))
+			->setFactory(PedefRootquestor::class);
 
-		// Rootquestor
-		$builder->addRootquestor($app, PedefRootquestor::class);
+		// #4 -> #3 connect rootquestor to requestors
+		$builder->getDefinition($this->extension->prefix('app.pedef.rootquestor'))
+			->addSetup('add', ['thumbnail', $this->extension->prefix('@app.pedef.requestor.thumbnail')]);
 
-		// Requestors
-		$builder->addRequestor($app, 'thumbnail', ThumbnailRequestor::class, ['@' . $thumbnailClient]);
+		// ApiProvider -> #4 connect provider to rootquestor
+		$builder->getDefinition($this->extension->prefix('provider'))
+			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.pedef.rootquestor')]);
 	}
 
 }

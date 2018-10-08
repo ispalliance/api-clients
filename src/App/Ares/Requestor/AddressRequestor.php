@@ -27,7 +27,7 @@ class AddressRequestor extends BaseRequestor
 	 */
 	public function get(string $idNumber): Address
 	{
-		$response   = $this->client->get($idNumber);
+		$response = $this->client->get($idNumber);
 		$odpovedElm = $this->getResponseElement($response);
 
 		if ((int) $odpovedElm->Pocet_zaznamu === 0) {
@@ -38,7 +38,7 @@ class AddressRequestor extends BaseRequestor
 
 		if (isset($odpovedElm->Zaznam[0]->Identifikace[0]->Adresa_ARES[0])) {
 			$adresaElm = $odpovedElm->Zaznam[0]->Identifikace[0]->Adresa_ARES[0];
-			$ns        = $adresaElm->getNamespaces(TRUE);
+			$ns = $adresaElm->getNamespaces(TRUE);
 
 			if (isset($ns['dtt'])) {
 				$adresaElms = $adresaElm->children($ns['dtt']);

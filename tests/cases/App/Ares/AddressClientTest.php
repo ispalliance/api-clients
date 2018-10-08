@@ -13,7 +13,7 @@ class AddressClientTest extends AbstractAppTestCase
 	{
 		$this->expectException(InvalidIdNumberException::class);
 
-		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_error.xml'));
+		$httpClient = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_error.xml'));
 		$addressClient = new AddressClient($httpClient);
 
 		$addressClient->get('invalid_id_number');

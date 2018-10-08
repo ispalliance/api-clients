@@ -15,7 +15,7 @@ class AddressRequestorTest extends AbstractAppTestCase
 
 	public function testSuccess(): void
 	{
-		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_success.xml'));
+		$httpClient = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_success.xml'));
 		$addressClient = new AddressClient($httpClient);
 		$addressRequestor = new AddressRequestor($addressClient);
 
@@ -35,7 +35,7 @@ class AddressRequestorTest extends AbstractAppTestCase
 	{
 		$this->expectException(InvalidIdNumberException::class);
 
-		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_error.xml'));
+		$httpClient = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_error.xml'));
 		$addressClient = new AddressClient($httpClient);
 		$addressRequestor = new AddressRequestor($addressClient);
 
@@ -46,7 +46,7 @@ class AddressRequestorTest extends AbstractAppTestCase
 	{
 		$this->expectException(SubjectNotFoundException::class);
 
-		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_not_found.xml'));
+		$httpClient = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_not_found.xml'));
 		$addressClient = new AddressClient($httpClient);
 		$addressRequestor = new AddressRequestor($addressClient);
 
@@ -59,8 +59,8 @@ class AddressRequestorTest extends AbstractAppTestCase
 		$this->expectException(ResponseException::class);
 		$this->expectExceptionMessage('chyba logických vazeb vstupních dat v dotazu - POZOR! Hrozí zablokování Vaší IP adresy! Prosím čtěte http://wwwinfo.mfcr.cz/ares/ares_xml_standard.html.cz#max');
 
-		$httpClient       = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_error.xml'));
-		$addressClient    = new AddressClient($httpClient);
+		$httpClient = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/address_error.xml'));
+		$addressClient = new AddressClient($httpClient);
 		$addressRequestor = new AddressRequestor($addressClient);
 
 		// We want to check XML response so we must use right Identification Number to skip InvalidIdNumberException

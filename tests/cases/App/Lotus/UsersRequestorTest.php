@@ -12,8 +12,8 @@ class UsersRequestorTest extends AbstractAppTestCase
 
 	public function testUserRequestor(): void
 	{
-		$httpClient     = $this->createTestClient(200, '[{"id": 1},{"id": 2}]');
-		$usersClient    = new UsersClient($httpClient);
+		$httpClient = $this->createTestClient(200, '[{"id": 1},{"id": 2}]');
+		$usersClient = new UsersClient($httpClient);
 		$usersRequestor = new UsersRequestor($usersClient);
 
 		$res = $usersRequestor->getAll();

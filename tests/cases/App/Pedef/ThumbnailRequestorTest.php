@@ -11,8 +11,8 @@ class ThumbnailRequestorTest extends AbstractAppTestCase
 
 	public function testUserRequestor(): void
 	{
-		$httpClient         = $this->createTestClient(200, 'PDF');
-		$thumbnailClient    = new ThumbnailClient($httpClient);
+		$httpClient = $this->createTestClient(200, 'PDF');
+		$thumbnailClient = new ThumbnailClient($httpClient);
 		$thumbnailRequestor = new ThumbnailRequestor($thumbnailClient);
 
 		$res = $thumbnailRequestor->generateThumbnail('Hello');

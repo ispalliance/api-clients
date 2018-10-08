@@ -7,37 +7,55 @@ use ISPA\ApiClients\App\Ares\Client\AddressClient;
 use ISPA\ApiClients\App\Ares\Client\SubjectClient;
 use ISPA\ApiClients\App\Ares\Requestor\AddressRequestor;
 use ISPA\ApiClients\App\Ares\Requestor\SubjectRequestor;
-use ISPA\ApiClients\DI\AppBuilder;
+use ISPA\ApiClients\Http\GuzzleClient;
+use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\Statement;
 
 class AppAresPass extends BaseAppPass
 {
 
+	private const APP_NAME = 'ares';
+
 	public function loadPassConfiguration(): void
 	{
-		$app = 'ares';
-
 		// Is this APP enabled? (key in neon)
-		if (!$this->isEnabled($app)) return;
+		if (!$this->isEnabled(self::APP_NAME)) return;
 
-		$this->validateConfig($app);
+		$builder = $this->extension->getContainerBuilder();
+		$this->validateConfig(self::APP_NAME);
 
-		$config = $this->getConfig($app);
+		// #1 HTTP client
+		$builder->addDefinition($this->extension->prefix('app.ares.http.client'))
+			->setFactory(GuzzleClient::class, [
+				new Statement($this->extension->prefix('@guzzleFactory:create'), [self::APP_NAME]),
+			])
+			->setType(HttpClient::class)
+			->setAutowired(FALSE);
 
-		$builder = new AppBuilder($this->extension);
+		// #2 Clients
+		$builder->addDefinition($this->extension->prefix('app.ares.client.address'))
+			->setFactory(AddressClient::class, [$this->extension->prefix('@app.ares.http.client')]);
+		$builder->addDefinition($this->extension->prefix('app.ares.client.subject'))
+			->setFactory(SubjectClient::class, [$this->extension->prefix('@app.ares.http.client')]);
 
-		// Http client
-		$httpClient = $builder->addHttpClient($app);
+		// #3 Requestors
+		$builder->addDefinition($this->extension->prefix('app.ares.requestor.address'))
+			->setFactory(AddressRequestor::class, [$this->extension->prefix('@app.ares.client.address')]);
+		$builder->addDefinition($this->extension->prefix('app.ares.requestor.contract'))
+			->setFactory(SubjectRequestor::class, [$this->extension->prefix('@app.ares.client.subject')]);
 
-		// Clients
-		$addressClient = $builder->addClient($app, 'address', AddressClient::class, ['@' . $httpClient]);
-		$subjectClient = $builder->addClient($app, 'subject', SubjectClient::class, ['@' . $httpClient]);
+		// #4 Rootquestor
+		$builder->addDefinition($this->extension->prefix('app.ares.rootquestor'))
+			->setFactory(AresRootquestor::class);
 
-		// Rootquestor
-		$builder->addRootquestor($app, AresRootquestor::class);
+		// #4 -> #3 connect rootquestor to requestors
+		$builder->getDefinition($this->extension->prefix('app.ares.rootquestor'))
+			->addSetup('add', ['address', $this->extension->prefix('@app.ares.requestor.address')])
+			->addSetup('add', ['subject', $this->extension->prefix('@app.ares.requestor.subject')]);
 
-		// Requestors
-		$builder->addRequestor($app, 'address', AddressRequestor::class, ['@' . $addressClient]);
-		$builder->addRequestor($app, 'subject', SubjectRequestor::class, ['@' . $subjectClient]);
+		// ApiProvider -> #4 connect provider to rootquestor
+		$builder->getDefinition($this->extension->prefix('provider'))
+			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.ares.rootquestor')]);
 	}
 
 }

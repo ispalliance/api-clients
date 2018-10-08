@@ -6,62 +6,49 @@ use ISPA\ApiClients\App\Lotus\Client\UsersClient;
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
 use ISPA\ApiClients\App\Lotus\Requestor\UsersRequestor;
 use ISPA\ApiClients\Http\GuzzleClient;
+use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\Statement;
 
 class AppLotusPass extends BaseAppPass
 {
 
-	/** @var mixed[] */
-	protected $defaults = [
-		'http' => [
-			'baseUri' => '',
-		],
-	];
+	private const APP_NAME = 'lotus';
 
 	public function loadPassConfiguration(): void
 	{
 		// Is this APP enabled? (key in neon)
-		if (!$this->isEnabled('lotus')) return;
+		if (!$this->isEnabled(self::APP_NAME)) return;
 
-		$this->validateConfig('lotus');
+		$builder = $this->extension->getContainerBuilder();
+		$this->validateConfig(self::APP_NAME);
 
-		$config = $this->getConfig('lotus');
+		// #1 HTTP client
+		$builder->addDefinition($this->extension->prefix('app.lotus.http.client'))
+			->setFactory(GuzzleClient::class, [
+				new Statement($this->extension->prefix('@guzzleFactory:create'), [self::APP_NAME]),
+			])
+			->setType(HttpClient::class)
+			->setAutowired(FALSE);
 
-		// Guzzle
-		$guzzleConfig = [
-			'base_uri' => $config['http']['baseUri'],
-		];
+		// #2 Clients
+		$builder->addDefinition($this->extension->prefix('app.lotus.client.users'))
+			->setFactory(UsersClient::class, [$this->extension->prefix('@app.lotus.http.client')]);
 
-		$this->extension->getContainerBuilder()
-			->addDefinition($this->extension->prefix('app.lotus.guzzle.client'))
-			->setFactory($this->extension->prefix('@guzzleFactory::create'), [$guzzleConfig]);
+		// #3 Requestors
+		$builder->addDefinition($this->extension->prefix('app.lotus.requestor.users'))
+			->setFactory(UsersRequestor::class, [$this->extension->prefix('@app.lotus.client.users')]);
 
-		// Http client
-		$this->extension->getContainerBuilder()
-			->addDefinition($this->extension->prefix('app.lotus.http.client'))
-			->setClass(GuzzleClient::class, [$this->extension->prefix('@app.lotus.guzzle.client')]);
+		// #4 Rootquestor
+		$builder->addDefinition($this->extension->prefix('app.lotus.rootquestor'))
+			->setFactory(LotusRootquestor::class);
 
-		// Clients
-		$this->extension->getContainerBuilder()
-			->addDefinition($this->extension->prefix('app.lotus.client.users'))
-			->setClass(UsersClient::class, [$this->extension->prefix('@app.lotus.http.client')]);
-
-		// Rootquestor
-		$this->extension->getContainerBuilder()
-			->addDefinition($this->extension->prefix('app.lotus.rootquestor'))
-			->setClass(LotusRootquestor::class);
-
-		$this->extension->getContainerBuilder()
-			->getDefinition($this->extension->prefix('provider'))
-			->addSetup('add', ['lotus', $this->extension->prefix('@app.lotus.rootquestor')]);
-
-		// Requestors
-		$this->extension->getContainerBuilder()
-			->addDefinition($this->extension->prefix('app.lotus.requestor.users'))
-			->setClass(UsersRequestor::class, [$this->extension->prefix('@app.lotus.client.users')]);
-
-		$this->extension->getContainerBuilder()
-			->getDefinition($this->extension->prefix('app.lotus.rootquestor'))
+		// #4 -> #3 connect rootquestor to requestors
+		$builder->getDefinition($this->extension->prefix('app.lotus.rootquestor'))
 			->addSetup('add', ['users', $this->extension->prefix('@app.lotus.requestor.users')]);
+
+		// ApiProvider -> #4 connect provider to rootquestor
+		$builder->getDefinition($this->extension->prefix('provider'))
+			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.lotus.rootquestor')]);
 	}
 
 }

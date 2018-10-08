@@ -10,7 +10,7 @@ class CustomerClient extends AbstractClient
 
 	public function getAll(): ResponseInterface
 	{
-		return $this->client->request('GET', 'customer-detail/all');
+		return $this->httpClient->request('GET', 'customer-detail/all');
 	}
 
 	/**
@@ -18,7 +18,7 @@ class CustomerClient extends AbstractClient
 	 */
 	public function getById($id): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('customer-detail/by-id/%s', (string) $id));
+		return $this->httpClient->request('GET', sprintf('customer-detail/by-id/%s', (string) $id));
 	}
 
 	/**
@@ -26,12 +26,12 @@ class CustomerClient extends AbstractClient
 	 */
 	public function getByCard($cardNumber): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('customer-detail/by-card/%s', (string) $cardNumber));
+		return $this->httpClient->request('GET', sprintf('customer-detail/by-card/%s', (string) $cardNumber));
 	}
 
 	public function getByFilter(string $query): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('customer-detail/by-filter/%s', $query));
+		return $this->httpClient->request('GET', sprintf('customer-detail/by-filter/%s', $query));
 	}
 
 	/**
@@ -39,7 +39,7 @@ class CustomerClient extends AbstractClient
 	 */
 	public function getByLastChange($interval): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('customer-detail/by-last-change/%s', (string) $interval));
+		return $this->httpClient->request('GET', sprintf('customer-detail/by-last-change/%s', (string) $interval));
 	}
 
 	/**
@@ -47,7 +47,7 @@ class CustomerClient extends AbstractClient
 	 */
 	public function getByLastChangeFrom($from): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('customer-detail/by-last-change-from/%s', (string) $from));
+		return $this->httpClient->request('GET', sprintf('customer-detail/by-last-change-from/%s', (string) $from));
 	}
 
 	/**
@@ -56,7 +56,7 @@ class CustomerClient extends AbstractClient
 	 */
 	public function getByIdFromTo($from, $to): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('customer-detail/by-id-from-to/%s/%s', (string) $from, (string) $to));
+		return $this->httpClient->request('GET', sprintf('customer-detail/by-id-from-to/%s/%s', (string) $from, (string) $to));
 	}
 
 }

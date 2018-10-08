@@ -13,7 +13,7 @@ class ContractClient extends AbstractClient
 	 */
 	public function getById($id): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('contract-detail/by-id/%s', (string) $id));
+		return $this->httpClient->request('GET', sprintf('contract-detail/by-id/%s', (string) $id));
 	}
 
 	/**
@@ -21,7 +21,7 @@ class ContractClient extends AbstractClient
 	 */
 	public function getByContractNumber($contractNumber): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('contract-detail/by-contract-number/%s', (string) $contractNumber));
+		return $this->httpClient->request('GET', sprintf('contract-detail/by-contract-number/%s', (string) $contractNumber));
 	}
 
 	/**
@@ -29,7 +29,7 @@ class ContractClient extends AbstractClient
 	 */
 	public function getByCustomer($customerId): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('contract-detail/by-customer/%s', (string) $customerId));
+		return $this->httpClient->request('GET', sprintf('contract-detail/by-customer/%s', (string) $customerId));
 	}
 
 	/**
@@ -37,7 +37,7 @@ class ContractClient extends AbstractClient
 	 */
 	public function getByCustomerCard($cardNumber): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('contract-detail/by-customer-card/%s', (string) $cardNumber));
+		return $this->httpClient->request('GET', sprintf('contract-detail/by-customer-card/%s', (string) $cardNumber));
 	}
 
 	/**
@@ -45,12 +45,12 @@ class ContractClient extends AbstractClient
 	 */
 	public function getByAttributeSetId($attributeSetId): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('contract-detail/by-attribute-set-id/%s', (string) $attributeSetId));
+		return $this->httpClient->request('GET', sprintf('contract-detail/by-attribute-set-id/%s', (string) $attributeSetId));
 	}
 
 	public function getOnlyActive(): ResponseInterface
 	{
-		return $this->client->request('GET', 'contract-detail/only-active');
+		return $this->httpClient->request('GET', 'contract-detail/only-active');
 	}
 
 	/**
@@ -59,7 +59,7 @@ class ContractClient extends AbstractClient
 	 */
 	public function setStateById($contractId, $stateId): ResponseInterface
 	{
-		return $this->client->request('PUT', sprintf('contract-detail/set-state/%s/%s', (string) $contractId, (string) $stateId));
+		return $this->httpClient->request('PUT', sprintf('contract-detail/set-state/%s/%s', (string) $contractId, (string) $stateId));
 	}
 
 	/**
@@ -68,12 +68,12 @@ class ContractClient extends AbstractClient
 	 */
 	public function setStateByContractNumber($contractNumber, $stateId): ResponseInterface
 	{
-		return $this->client->request('PUT', sprintf('contract-detail/set-state-by-contract-number/%s/%s', (string) $contractNumber, (string) $stateId));
+		return $this->httpClient->request('PUT', sprintf('contract-detail/set-state-by-contract-number/%s/%s', (string) $contractNumber, (string) $stateId));
 	}
 
 	public function getAllContractTypeStates(): ResponseInterface
 	{
-		return $this->client->request('GET', 'contract-type-state');
+		return $this->httpClient->request('GET', 'contract-type-state');
 	}
 
 	/**
@@ -81,7 +81,7 @@ class ContractClient extends AbstractClient
 	 */
 	public function getContractTypeStateById($id): ResponseInterface
 	{
-		return $this->client->request('GET', sprintf('contract-type-state/%s', $id));
+		return $this->httpClient->request('GET', sprintf('contract-type-state/%s', $id));
 	}
 
 }

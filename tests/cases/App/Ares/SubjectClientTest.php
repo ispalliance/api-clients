@@ -13,7 +13,7 @@ class SubjectClientTest extends AbstractAppTestCase
 	{
 		$this->expectException(InvalidIdNumberException::class);
 
-		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/subject_0.xml'));
+		$httpClient = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/subject_0.xml'));
 		$subjectClient = new SubjectClient($httpClient);
 
 		$subjectClient->get('invalid_id_number');

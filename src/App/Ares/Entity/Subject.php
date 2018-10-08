@@ -19,8 +19,8 @@ class Subject
 
 	public function __construct(string $name, string $idNumber, ?string $vatIdNumber, string $textAddress)
 	{
-		$this->name        = $name;
-		$this->idNumber    = $idNumber;
+		$this->name = $name;
+		$this->idNumber = $idNumber;
 		$this->vatIdNumber = $vatIdNumber;
 		$this->textAddress = $textAddress;
 	}

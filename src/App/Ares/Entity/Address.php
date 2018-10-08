@@ -28,13 +28,13 @@ class Address
 
 	public function __construct(string $name, string $street, string $houseNumber, string $orientationNumber, string $city, string $cityPart, string $postcode)
 	{
-		$this->name              = $name;
-		$this->street            = $street;
-		$this->houseNumber       = $houseNumber;
+		$this->name = $name;
+		$this->street = $street;
+		$this->houseNumber = $houseNumber;
 		$this->orientationNumber = $orientationNumber;
-		$this->city              = $city;
-		$this->cityPart          = $cityPart;
-		$this->postcode          = $postcode;
+		$this->city = $city;
+		$this->cityPart = $cityPart;
+		$this->postcode = $postcode;
 	}
 
 	public function getName(): string

@@ -2,7 +2,7 @@
 
 namespace ISPA\ApiClients\Domain;
 
-use ISPA\ApiClients\Http\Client;
+use ISPA\ApiClients\Http\HttpClient;
 
 /**
  * All public methods must return ResponseInterface
@@ -10,12 +10,12 @@ use ISPA\ApiClients\Http\Client;
 abstract class AbstractClient
 {
 
-	/** @var Client */
-	protected $client;
+	/** @var HttpClient */
+	protected $httpClient;
 
-	public function __construct(Client $client)
+	public function __construct(HttpClient $httpClient)
 	{
-		$this->client = $client;
+		$this->httpClient = $httpClient;
 	}
 
 }

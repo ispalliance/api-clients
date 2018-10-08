@@ -14,22 +14,22 @@ use Psr\Http\Message\ResponseInterface;
 class SubjectClient extends AbstractClient
 {
 
-	private const URL            = 'https://wwwinfo.mfcr.cz/cgi-bin/ares/ares_es.cgi';
+	private const URL = 'https://wwwinfo.mfcr.cz/cgi-bin/ares/ares_es.cgi';
 	private const URL_PARAMETERS = [
 		'obch_jm' => NULL,
-		'ico'     => NULL,
-		'obec'    => '',
-		'k_fu'    => '',
-		'maxpoc'  => 200,
-		'ulice'   => '',
-		'cis_or'  => '',
-		'cis_po'  => '',
-		'setrid'  => 'ZADNE',
-		'pr_for'  => '',
-		'nace'    => '',
-		'xml'     => 0,
-		'filtr'   => 0, // 0 => All, 1 => Only active, 2 => Only inactive
-		'jazyk'   => 'cz',
+		'ico' => NULL,
+		'obec' => '',
+		'k_fu' => '',
+		'maxpoc' => 200,
+		'ulice' => '',
+		'cis_or' => '',
+		'cis_po' => '',
+		'setrid' => 'ZADNE',
+		'pr_for' => '',
+		'nace' => '',
+		'xml' => 0,
+		'filtr' => 0, // 0 => All, 1 => Only active, 2 => Only inactive
+		'jazyk' => 'cz',
 		'cestina' => '',
 	];
 
@@ -44,20 +44,20 @@ class SubjectClient extends AbstractClient
 			throw InvalidIdNumberException::create($idNumber);
 		}
 
-		$params        = self::URL_PARAMETERS;
+		$params = self::URL_PARAMETERS;
 		$params['ico'] = $idNumber;
-		$url           = self::URL . '?' . http_build_query($params);
+		$url = self::URL . '?' . http_build_query($params);
 
-		return $this->client->request('GET', $url);
+		return $this->httpClient->request('GET', $url);
 	}
 
 	public function getAll(string $name): ResponseInterface
 	{
-		$params            = self::URL_PARAMETERS;
+		$params = self::URL_PARAMETERS;
 		$params['obch_jm'] = $this->normalizeName($name);
-		$url               = self::URL . '?' . http_build_query($params);
+		$url = self::URL . '?' . http_build_query($params);
 
-		return $this->client->request('GET', $url);
+		return $this->httpClient->request('GET', $url);
 	}
 
 	private function normalizeName(string $name): string

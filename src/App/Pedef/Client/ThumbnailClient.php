@@ -10,19 +10,19 @@ class ThumbnailClient extends AbstractClient
 
 	public function generateThumbnail(string $contents, string $name = 'PDF file', string $fileName = 'file.pdf'): ResponseInterface
 	{
-		return $this->client->request('POST', 'thumbnail', [
+		return $this->httpClient->request('POST', 'thumbnail', [
 			'multipart' => [
 				[
 					'contents' => $contents,
 					'filename' => $fileName,
-					'name'     => $name,
-					'headers'  => [
-						'Content-Type'              => 'application/pdf',
+					'name' => $name,
+					'headers' => [
+						'Content-Type' => 'application/pdf',
 						'Content-Transfer-Encoding' => 'binary',
 					],
 				],
 			],
-			'timeout'   => 10,
+			'timeout' => 10,
 		]);
 	}
 

@@ -18,11 +18,11 @@ class ApiClientsExtension extends CompilerExtension
 	/** @var mixed[] */
 	private $defaults = [
 		'debug' => FALSE,
-		'app'   => [
-			'ares'  => [],
+		'app' => [
+			'ares' => [],
 			'lotus' => [],
-			'crm'   => [],
-			'nms'   => [],
+			'crm' => [],
+			'nms' => [],
 			'pedef' => [],
 		],
 	];

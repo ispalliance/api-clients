@@ -3,7 +3,7 @@
 namespace Tests\Cases\App;
 
 use GuzzleHttp\Psr7\Response;
-use ISPA\ApiClients\Http\Client;
+use ISPA\ApiClients\Http\HttpClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
@@ -13,9 +13,9 @@ abstract class AbstractAppTestCase extends TestCase
 	/**
 	 * @param mixed[] $headers
 	 */
-	protected function createTestClient(int $status, string $body, array $headers = []): Client
+	protected function createTestClient(int $status, string $body, array $headers = []): HttpClient
 	{
-		return new class($status, $body, $headers) implements Client
+		return new class($status, $body, $headers) implements HttpClient
 		{
 
 			/** @var int */
@@ -32,8 +32,8 @@ abstract class AbstractAppTestCase extends TestCase
 			 */
 			public function __construct(int $status, string $body, array $headers)
 			{
-				$this->status  = $status;
-				$this->body    = $body;
+				$this->status = $status;
+				$this->body = $body;
 				$this->headers = $headers;
 			}
 

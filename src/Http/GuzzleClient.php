@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use ISPA\ApiClients\Exception\Runtime\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
-class GuzzleClient implements Client
+class GuzzleClient implements HttpClient
 {
 
 	/** @var GuzzleClientInterface */
@@ -23,8 +23,6 @@ class GuzzleClient implements Client
 	 */
 	public function request(string $method, string $uri, array $options = []): ResponseInterface
 	{
-		$options['http_errors'] = FALSE; // Disable throwing exceptions on an HTTP protocol errors (i.e., 4xx and 5xx responses)
-
 		try {
 			return $this->guzzle->request($method, $uri, $options);
 		} catch (GuzzleException $e) {

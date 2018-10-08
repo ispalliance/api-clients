@@ -11,50 +11,65 @@ use ISPA\ApiClients\App\Adminus\Requestor\AccountingEntityRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\ContractRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\CustomerRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\UserRequestor;
-use ISPA\ApiClients\DI\AppBuilder;
+use ISPA\ApiClients\Http\GuzzleClient;
+use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\Statement;
 
 class AppCrmPass extends BaseAppPass
 {
 
-	/** @var mixed[] */
-	protected $defaults = [
-		'http' => [
-			'baseUri' => '',
-		],
-	];
+	private const APP_NAME = 'crm';
 
 	public function loadPassConfiguration(): void
 	{
-		$app = 'crm';
-
 		// Is this APP enabled? (key in neon)
-		if (!$this->isEnabled($app)) return;
+		if (!$this->isEnabled(self::APP_NAME)) return;
 
-		$this->validateConfig($app);
+		$builder = $this->extension->getContainerBuilder();
+		$this->validateConfig(self::APP_NAME);
 
-		$config = $this->getConfig($app);
+		// #1 HTTP client
+		$builder->addDefinition($this->extension->prefix('app.adminus.http.client'))
+			->setFactory(GuzzleClient::class, [
+				new Statement($this->extension->prefix('@guzzleFactory:create'), [self::APP_NAME]),
+			])
+			->setType(HttpClient::class)
+			->setAutowired(FALSE);
 
-		$builder = new AppBuilder($this->extension);
+		// #2 Clients
+		$builder->addDefinition($this->extension->prefix('app.adminus.client.accountingEntity'))
+			->setFactory(AccountingEntityClient::class, [$this->extension->prefix('@app.adminus.http.client')]);
+		$builder->addDefinition($this->extension->prefix('app.adminus.client.contract'))
+			->setFactory(ContractClient::class, [$this->extension->prefix('@app.adminus.http.client')]);
+		$builder->addDefinition($this->extension->prefix('app.adminus.client.customer'))
+			->setFactory(CustomerClient::class, [$this->extension->prefix('@app.adminus.http.client')]);
+		$builder->addDefinition($this->extension->prefix('app.adminus.client.user'))
+			->setFactory(UserClient::class, [$this->extension->prefix('@app.adminus.http.client')]);
 
-		// Http client
-		$httpClient = $builder->addHttpClient($app, [
-			'base_uri' => $config['http']['baseUri'],
-		]);
+		// #3 Requestors
+		$builder->addDefinition($this->extension->prefix('app.adminus.requestor.accountingEntity'))
+			->setFactory(AccountingEntityRequestor::class, [$this->extension->prefix('@app.adminus.client.accountingEntity')]);
+		$builder->addDefinition($this->extension->prefix('app.adminus.requestor.contract'))
+			->setFactory(ContractRequestor::class, [$this->extension->prefix('@app.adminus.client.contract')]);
+		$builder->addDefinition($this->extension->prefix('app.adminus.requestor.customer'))
+			->setFactory(CustomerRequestor::class, [$this->extension->prefix('@app.adminus.client.customer')]);
+		$builder->addDefinition($this->extension->prefix('app.adminus.requestor.user'))
+			->setFactory(UserRequestor::class, [$this->extension->prefix('@app.adminus.client.user')]);
 
-		// Clients
-		$accountingEntityClient = $builder->addClient($app, 'accountingEntity', AccountingEntityClient::class, ['@' . $httpClient]);
-		$contractClient         = $builder->addClient($app, 'contract', ContractClient::class, ['@' . $httpClient]);
-		$customerClient         = $builder->addClient($app, 'customer', CustomerClient::class, ['@' . $httpClient]);
-		$userClient             = $builder->addClient($app, 'user', UserClient::class, ['@' . $httpClient]);
+		// #4 Rootquestor
+		$builder->addDefinition($this->extension->prefix('app.adminus.rootquestor'))
+			->setFactory(CrmRootquestor::class);
 
-		// Rootquestor
-		$builder->addRootquestor($app, CrmRootquestor::class);
+		// #4 -> #3 connect rootquestor to requestors
+		$builder->getDefinition($this->extension->prefix('app.adminus.rootquestor'))
+			->addSetup('add', ['accountingEntity', $this->extension->prefix('@app.adminus.requestor.accountingEntity')])
+			->addSetup('add', ['contract', $this->extension->prefix('@app.adminus.requestor.contract')])
+			->addSetup('add', ['customer', $this->extension->prefix('@app.adminus.requestor.customer')])
+			->addSetup('add', ['user', $this->extension->prefix('@app.adminus.requestor.user')]);
 
-		// Requestors
-		$builder->addRequestor($app, 'accountingEntity', AccountingEntityRequestor::class, ['@' . $accountingEntityClient]);
-		$builder->addRequestor($app, 'contract', ContractRequestor::class, ['@' . $contractClient]);
-		$builder->addRequestor($app, 'customer', CustomerRequestor::class, ['@' . $customerClient]);
-		$builder->addRequestor($app, 'user', UserRequestor::class, ['@' . $userClient]);
+		// ApiProvider -> #4 connect provider to rootquestor
+		$builder->getDefinition($this->extension->prefix('provider'))
+			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.adminus.rootquestor')]);
 	}
 
 }
