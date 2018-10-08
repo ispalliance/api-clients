@@ -11,6 +11,10 @@ indent_style = tab
 indent_size = tab
 tab_width = 4
 
-[{*.json,*.yml,*.md}]
+[*.md]
 indent_style = space
 indent_size = 4
+
+[{composer.json,package.json,.travis.yml}]
+indent_style = space
+indent_size = 2
