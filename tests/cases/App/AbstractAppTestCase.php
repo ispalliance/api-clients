@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\ISPA\ApiClients\App;
+namespace Tests\Cases\App;
 
 use GuzzleHttp\Psr7\Response;
 use ISPA\ApiClients\Http\Client;

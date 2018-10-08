@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\ISPA\ApiClients\App\Pedef;
+namespace Tests\Cases\App\Pedef;
 
 use ISPA\ApiClients\App\Pedef\Client\ThumbnailClient;
 use ISPA\ApiClients\App\Pedef\Requestor\ThumbnailRequestor;
-use Tests\ISPA\ApiClients\App\AbstractAppTestCase;
+use Tests\Cases\App\AbstractAppTestCase;
 
 class ThumbnailRequestorTest extends AbstractAppTestCase
 {

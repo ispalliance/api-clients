@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\ISPA\ApiClients\App\Lotus;
+namespace Tests\Cases\App\Lotus;
 
 use ISPA\ApiClients\App\Lotus\Client\UsersClient;
 use ISPA\ApiClients\App\Lotus\Entity\User;
 use ISPA\ApiClients\App\Lotus\Requestor\UsersRequestor;
-use Tests\ISPA\ApiClients\App\AbstractAppTestCase;
+use Tests\Cases\App\AbstractAppTestCase;
 
 class UsersRequestorTest extends AbstractAppTestCase
 {

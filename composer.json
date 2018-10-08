@@ -17,19 +17,20 @@
 	],
 	"require": {
 		"guzzlehttp/guzzle": "^6.3.3",
-		"nette/utils": "^2.4.3"
+		"contributte/utils": "^0.3.1"
 	},
 	"require-dev": {
 		"ninjify/qa": "^0.8.0",
-		"phpunit/phpunit": "^7.2.6",
-		"nette/di": "~2.4.13"
+		"phpunit/phpunit": "^7.4.0",
+		"nette/di": "~2.4.14"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
 			"ISPA\\ApiClients\\": "src",
-			"Tests\\ISPA\\ApiClients\\": "tests"
+			"Tests\\Cases\\": "tests/cases",
+			"Tests\\Toolkit\\": "tests/toolkit"
 		}
 	},
 	"scripts": {

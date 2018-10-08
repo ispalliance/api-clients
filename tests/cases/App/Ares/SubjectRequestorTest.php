@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\ISPA\ApiClients\App\Ares;
+namespace Tests\Cases\App\Ares;
 
 use ISPA\ApiClients\App\Ares\Client\SubjectClient;
 use ISPA\ApiClients\App\Ares\Entity\Subject;
@@ -8,14 +8,14 @@ use ISPA\ApiClients\App\Ares\Exception\Runtime\InvalidIdNumberException;
 use ISPA\ApiClients\App\Ares\Exception\Runtime\SubjectNotFoundException;
 use ISPA\ApiClients\App\Ares\Exception\Runtime\TooManySubjectsException;
 use ISPA\ApiClients\App\Ares\Requestor\SubjectRequestor;
-use Tests\ISPA\ApiClients\App\AbstractAppTestCase;
+use Tests\Cases\App\AbstractAppTestCase;
 
 class SubjectRequestorTest extends AbstractAppTestCase
 {
 
 	public function testGetSuccess(): void
 	{
-		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/_fixtures/subject_1.xml'));
+		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/subject_1.xml'));
 		$subjectClient = new SubjectClient($httpClient);
 		$subjectRequestor = new SubjectRequestor($subjectClient);
 
@@ -32,7 +32,7 @@ class SubjectRequestorTest extends AbstractAppTestCase
 	{
 		$this->expectException(InvalidIdNumberException::class);
 
-		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/_fixtures/subject_0.xml'));
+		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/subject_0.xml'));
 		$subjectClient = new SubjectClient($httpClient);
 		$subjectRequestor = new SubjectRequestor($subjectClient);
 
@@ -43,7 +43,7 @@ class SubjectRequestorTest extends AbstractAppTestCase
 	{
 		$this->expectException(SubjectNotFoundException::class);
 
-		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/_fixtures/subject_0.xml'));
+		$httpClient    = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/subject_0.xml'));
 		$subjectClient = new SubjectClient($httpClient);
 		$subjectRequestor = new SubjectRequestor($subjectClient);
 
@@ -53,7 +53,7 @@ class SubjectRequestorTest extends AbstractAppTestCase
 
 	public function testGetAll0(): void
 	{
-		$httpClient       = $this->createTestClient(200, file_get_contents(__DIR__ . '/_fixtures/subject_0.xml'));
+		$httpClient       = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/subject_0.xml'));
 		$subjectClient = new SubjectClient($httpClient);
 		$subjectRequestor = new SubjectRequestor($subjectClient);
 
@@ -62,7 +62,7 @@ class SubjectRequestorTest extends AbstractAppTestCase
 
 	public function testGetAll4(): void
 	{
-		$httpClient       = $this->createTestClient(200, file_get_contents(__DIR__ . '/_fixtures/subject_4.xml'));
+		$httpClient       = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/subject_4.xml'));
 		$subjectClient = new SubjectClient($httpClient);
 		$subjectRequestor = new SubjectRequestor($subjectClient);
 
@@ -80,7 +80,7 @@ class SubjectRequestorTest extends AbstractAppTestCase
 	{
 		$this->expectException(TooManySubjectsException::class);
 
-		$httpClient       = $this->createTestClient(200, file_get_contents(__DIR__ . '/_fixtures/subject_too_many.xml'));
+		$httpClient       = $this->createTestClient(200, file_get_contents(__DIR__ . '/files/subject_too_many.xml'));
 		$subjectClient = new SubjectClient($httpClient);
 		$subjectRequestor = new SubjectRequestor($subjectClient);
 
