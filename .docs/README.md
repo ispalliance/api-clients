@@ -15,56 +15,41 @@ ispa.api:
     debug: %debugMode%
 ```
 
-Secondly, configure single application. We support these applications:
-
-- lotus
-- crm
-- nms
-- pedef
+Secondly, configure single application. We support these applications **adminus**, **ares**, **lotus** and **pedef**.
 
 ```yaml
 ispa.api:
     app:
-        lotus:
-            guzzle:
-                base_uri: http://lotus.example.com/api/v1/
-
-        crm:
-            guzzle:
-                base_uri: http://adminus.example.com/api/v1/
-                    defaults:
-                        auth: [username, password]
-
-        nms:
-            guzzle:
-                base_uri: http://nms.example.com/api/v1/
-
-        pedef:
-            guzzle:
-                base_uri: http://pedef.example.com/api/v1/
+        <name>:
+            http:
+                base_uri: http://example.com/api/v1/
 ```
 
-Each application has `guzzle` key for configure their Guzzle client, 
+Each application has `http` key for configure its http client. By default there is Guzzle client,
 take a look at [Guzzle doc](https://guzzle.readthedocs.io/en/latest/quickstart.html).
 
-You could also disable client
+You could also disable client entirely.
 
 ```yaml
 ispa.api:
     app:
-        lotus: false
+        <name>: false
 ```
 
-## Usage
+## Architecture
+
+```
+ApiProvider -> *Rootquestor(s) -> *Requestor(s) -> endpoint method 
+```
 
 There are many ways how to use this aggregated API clients.
 
-### ApiManager
+### ApiProvider
 
 This is high-level managed API layer.
 
 ```php
-/** @var ApiManager @inject */
+/** @var ApiProvider @inject */
 public $api;
 
 public function magic(): void
@@ -79,27 +64,21 @@ You can access all defined application's API services and then their requestors.
 $this->api->{app}->{requestor}->{method}
 ```
 
-
-At this time we support these applications:
-
-- lotus
-
-### ApiClientLocator
+### Rootquestor
 
 This is middle-level way how to manage our APIs.
 
 ```php
-/** @var ApiClientLocator @inject */
+/** @var LotusRootquestor @inject */
 public $api;
 
 public function magic(): void
 {
-    $users = $this->api->lotus->get("users");
+    $users = $this->api->users->getAll();
 }
 ```
 
-It's collection of API clients with preconfigured Guzzle clients inside. There are
-some basic methods on it `get`, `post`, `put`,  `patch`, `head`, `delete`.
+You can directly pick one of the **rootquestor** and access his **requestors**. This limit by single API.
 
 ### Guzzle
 
@@ -118,3 +97,115 @@ public function magic(): void
     $users = $client->get("users");
 }
 ```
+
+# 3rd
+
+## Adminus
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        adminus:
+            http:
+                base_uri: http://adminus.example.com/api/
+```
+
+### Endpoins
+
+@todo
+
+
+## ARES
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        ares:
+            http:
+                base_uri: http://example.com/api/
+```
+
+### Endpoints 
+
+#### Get subject
+
+```php
+use ISPA\ApiClients\App\Ares\Exception\Runtime\InvalidIdNumberException;
+use ISPA\ApiClients\App\Ares\Exception\Runtime\SubjectNotFoundException;
+
+try {
+    $subject = $api->ares->subject->get('IDENTIFICATION_NUMBER');
+} catch (InvalidIdNumberException $e) {
+    // Do something
+} catch (SubjectNotFoundException $e) {
+    // Do something
+}
+```
+
+
+#### Get subjects
+
+```php
+use ISPA\ApiClients\App\Ares\Exception\Runtime\TooManySubjectsException;
+
+try {
+    $subjects = $api->ares->subject->getAll('NAME');
+} catch (TooManySubjectsException $e) {
+    // Do something
+}
+```
+
+
+#### Get address
+
+
+```php
+use ISPA\ApiClients\App\Ares\Exception\Runtime\InvalidIdNumberException;
+use ISPA\ApiClients\App\Ares\Exception\Runtime\SubjectNotFoundException;
+
+try {
+    $subject = $api->ares->address->get('IDENTIFICATION_NUMBER');
+} catch (InvalidIdNumberException $e) {
+    // Do something
+} catch (SubjectNotFoundException $e) {
+    // Do something
+}
+```
+
+
+### Lotus
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        lotus:
+            http:
+                base_uri: http://adminus.example.com/api/
+```
+
+### Endpoins
+
+@todo
+
+
+### Pedef
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        pedef:
+            http:
+                base_uri: http://adminus.example.com/api/
+```
+
+### Endpoins
+
+@todo
