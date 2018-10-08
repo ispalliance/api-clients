@@ -1,62 +1,66 @@
 {
-	"name": "ispa/api-clients",
-	"description": "API clients for all ISPA applications",
-	"keywords": [
-		"ispa",
-		"php",
-		"api"
-	],
-	"type": "library",
-	"license": ["MIT"],
-	"homepage": "https://github.com/ispalliance/api-clients",
-	"authors": [
-		{
-			"name": "Milan Felix Šulc",
-			"homepage": "https://f3l1x.io"
-		}
-	],
-	"require": {
-		"guzzlehttp/guzzle": "^6.3.3",
-		"contributte/utils": "^0.3.1"
-	},
-	"require-dev": {
-		"ninjify/qa": "^0.8.0",
-		"phpunit/phpunit": "^7.4.0",
-		"nette/di": "~2.4.14"
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"autoload": {
-		"psr-4": {
-			"ISPA\\ApiClients\\": "src",
-			"Tests\\Cases\\": "tests/cases",
-			"Tests\\Toolkit\\": "tests/toolkit"
-		}
-	},
-	"scripts": {
-		"qa": [
-			"linter src tests",
-			"codesniffer src tests"
-		],
-		"tester": [
-			"phpunit tests --colors=always"
-		],
-		"coverage": [
-			"phpunit tests --colors=always -c tests/coverage.xml"
-		],
-		"phpstan-install": [
-			"mkdir -p temp/phpstan",
-			"composer require -d temp/phpstan phpstan/phpstan:0.10.1",
-			"composer require -d temp/phpstan phpstan/phpstan-nette:0.10.0",
-			"composer require -d temp/phpstan phpstan/phpstan-strict-rules:0.10.0"
-		],
-		"phpstan": [
-			"temp/phpstan/vendor/bin/phpstan analyse -l max -c phpstan.neon src"
-		]
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "0.1.x-dev"
-		}
-	}
+  "name": "ispa/api-clients",
+  "description": "API clients for all ISPA applications",
+  "keywords": [
+    "ispa",
+    "php",
+    "api"
+  ],
+  "type": "library",
+  "license": [
+    "MIT"
+  ],
+  "homepage": "https://github.com/ispalliance/api-clients",
+  "authors": [
+    {
+      "name": "Milan Felix Šulc",
+      "homepage": "https://f3l1x.io"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^6.3.3",
+    "contributte/utils": "^0.3.1"
+  },
+  "require-dev": {
+    "ext-simplexml": "*",
+    "ext-json": "*",
+    "ninjify/qa": "^0.8.0",
+    "phpunit/phpunit": "^7.4.0",
+    "nette/di": "~2.4.14"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "ISPA\\ApiClients\\": "src",
+      "Tests\\Cases\\": "tests/cases",
+      "Tests\\Toolkit\\": "tests/toolkit"
+    }
+  },
+  "scripts": {
+    "qa": [
+      "linter src tests",
+      "codesniffer src tests"
+    ],
+    "tester": [
+      "phpunit tests --colors=always"
+    ],
+    "coverage": [
+      "phpunit tests --colors=always -c tests/coverage.xml"
+    ],
+    "phpstan-install": [
+      "mkdir -p temp/phpstan",
+      "composer require -d temp/phpstan phpstan/phpstan:0.10.1",
+      "composer require -d temp/phpstan phpstan/phpstan-nette:0.10.0",
+      "composer require -d temp/phpstan phpstan/phpstan-strict-rules:0.10.0"
+    ],
+    "phpstan": [
+      "temp/phpstan/vendor/bin/phpstan analyse -l max -c phpstan.neon src"
+    ]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
+    }
+  }
 }
