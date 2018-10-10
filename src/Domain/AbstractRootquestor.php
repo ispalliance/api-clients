@@ -13,7 +13,7 @@ abstract class AbstractRootquestor
 	public function add(string $name, AbstractRequestor $requestor): void
 	{
 		if (isset($this->requestors[$name])) {
-			throw new InvalidStateException(sprintf('Requestor "%s" has been already registered.'));
+			throw new InvalidStateException(sprintf('Requestor "%s" has been already registered.', $name));
 		}
 
 		$this->requestors[$name] = $requestor;

@@ -102,7 +102,7 @@ class SubjectRequestor extends BaseRequestor
 		foreach ($odpovedElms->V->S as $sElm) {
 			$vatIdNumber = NULL;
 
-			if (isset($sElm->p_dph) && preg_match('/^dic=(\d+)$/', (string) $sElm->p_dph, $matches)) {
+			if (isset($sElm->p_dph) && (bool) preg_match('/^dic=(\d+)$/', (string) $sElm->p_dph, $matches)) {
 				$vatIdNumber = $matches[1];
 			}
 

@@ -23,7 +23,7 @@ class ApiProvider
 	public function add(string $name, AbstractRootquestor $rootquestor): void
 	{
 		if (isset($this->rootquestors[$name])) {
-			throw new InvalidStateException(sprintf('Rootquestor "%s" has been already registered.'));
+			throw new InvalidStateException(sprintf('Rootquestor "%s" has been already registered.', $name));
 		}
 
 		$this->rootquestors[$name] = $rootquestor;

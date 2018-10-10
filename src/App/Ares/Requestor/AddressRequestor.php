@@ -71,7 +71,7 @@ class AddressRequestor extends BaseRequestor
 	{
 		$ns = $errorElm->getNamespaces(TRUE);
 
-		if (!isset($ns)) {
+		if ($ns === []) {
 			throw new ResponseException($response, 'Missing namespace "dtt" in "are:Ares_odpovedi[0]->are:Odpoved[0]->are:Error[0]".');
 		}
 

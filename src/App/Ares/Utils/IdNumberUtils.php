@@ -14,14 +14,14 @@ class IdNumberUtils
 
 	public static function validate(string $idNumber): bool
 	{
-		if (!preg_match('/^\d{8}$/', $idNumber)) {
+		if (!(bool) preg_match('/^\d{8}$/', $idNumber)) {
 			return FALSE;
 		}
 
 		$sum = 0;
 
 		for ($i = 0; $i < 7; $i++) {
-			$sum += $idNumber[$i] * (8 - $i);
+			$sum += (int) $idNumber[$i] * (8 - $i);
 		}
 
 		$num = (11 - ($sum % 11)) % 10;
