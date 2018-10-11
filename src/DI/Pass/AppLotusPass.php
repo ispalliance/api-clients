@@ -5,9 +5,7 @@ namespace ISPA\ApiClients\DI\Pass;
 use ISPA\ApiClients\App\Lotus\Client\UsersClient;
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
 use ISPA\ApiClients\App\Lotus\Requestor\UsersRequestor;
-use ISPA\ApiClients\Http\GuzzleClient;
 use ISPA\ApiClients\Http\HttpClient;
-use Nette\DI\Statement;
 
 class AppLotusPass extends BaseAppPass
 {
@@ -24,9 +22,7 @@ class AppLotusPass extends BaseAppPass
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.lotus.http.client'))
-			->setFactory(GuzzleClient::class, [
-				new Statement($this->extension->prefix('@guzzleFactory:create'), [self::APP_NAME]),
-			])
+			->setFactory($this->extension->prefix('@guzzleFactory::create'), [self::APP_NAME])
 			->setType(HttpClient::class)
 			->setAutowired(FALSE);
 

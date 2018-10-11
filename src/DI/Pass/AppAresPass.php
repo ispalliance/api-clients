@@ -7,9 +7,7 @@ use ISPA\ApiClients\App\Ares\Client\AddressClient;
 use ISPA\ApiClients\App\Ares\Client\SubjectClient;
 use ISPA\ApiClients\App\Ares\Requestor\AddressRequestor;
 use ISPA\ApiClients\App\Ares\Requestor\SubjectRequestor;
-use ISPA\ApiClients\Http\GuzzleClient;
 use ISPA\ApiClients\Http\HttpClient;
-use Nette\DI\Statement;
 
 class AppAresPass extends BaseAppPass
 {
@@ -26,9 +24,7 @@ class AppAresPass extends BaseAppPass
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.ares.http.client'))
-			->setFactory(GuzzleClient::class, [
-				new Statement($this->extension->prefix('@guzzleFactory:create'), [self::APP_NAME]),
-			])
+			->setFactory($this->extension->prefix('@guzzleFactory::create'), [self::APP_NAME])
 			->setType(HttpClient::class)
 			->setAutowired(FALSE);
 
@@ -41,7 +37,7 @@ class AppAresPass extends BaseAppPass
 		// #3 Requestors
 		$builder->addDefinition($this->extension->prefix('app.ares.requestor.address'))
 			->setFactory(AddressRequestor::class, [$this->extension->prefix('@app.ares.client.address')]);
-		$builder->addDefinition($this->extension->prefix('app.ares.requestor.contract'))
+		$builder->addDefinition($this->extension->prefix('app.ares.requestor.subject'))
 			->setFactory(SubjectRequestor::class, [$this->extension->prefix('@app.ares.client.subject')]);
 
 		// #4 Rootquestor

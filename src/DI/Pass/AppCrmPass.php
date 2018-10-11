@@ -11,9 +11,7 @@ use ISPA\ApiClients\App\Adminus\Requestor\AccountingEntityRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\ContractRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\CustomerRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\UserRequestor;
-use ISPA\ApiClients\Http\GuzzleClient;
 use ISPA\ApiClients\Http\HttpClient;
-use Nette\DI\Statement;
 
 class AppCrmPass extends BaseAppPass
 {
@@ -30,9 +28,7 @@ class AppCrmPass extends BaseAppPass
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.adminus.http.client'))
-			->setFactory(GuzzleClient::class, [
-				new Statement($this->extension->prefix('@guzzleFactory:create'), [self::APP_NAME]),
-			])
+			->setFactory($this->extension->prefix('@guzzleFactory::create'), [self::APP_NAME])
 			->setType(HttpClient::class)
 			->setAutowired(FALSE);
 
