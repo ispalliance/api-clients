@@ -28,7 +28,7 @@ class GuzzleFactory
 		// @todo $this->config['debug'] ==> Tracy panel
 		// panel pro tracy máme v contributte/guzzlette - bylo by fajn nevynalézat znovu kolo. @mabar
 
-		$config = $this->config[$app]['http'] ?? [];
+		$config = $this->config['app'][$app]['http'] ?? [];
 		$config = array_merge($this->defaults, $config);
 
 		return new GuzzleClient(new Client($config));
