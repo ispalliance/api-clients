@@ -45,4 +45,17 @@ class Subject
 		return $this->textAddress;
 	}
 
+	/**
+	 * @return mixed[]
+	 */
+	public function toArray(): array
+	{
+		return [
+			'id' => $this->getIdNumber(),
+			'name' => $this->getName(),
+			'address' => $this->getTextAddress(),
+			'vat_id' => $this->getVatIdNumber(),
+		];
+	}
+
 }
