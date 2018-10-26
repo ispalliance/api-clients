@@ -19,7 +19,11 @@ class CustomerRequestor extends AbstractRequestor
 
 	public function getAll(): ResponseInterface
 	{
-		return $this->client->getAll();
+		$resp = $this->client->getAll();
+
+		$this->assertResponse($resp);
+
+		return $resp;
 	}
 
 	/**
@@ -27,7 +31,11 @@ class CustomerRequestor extends AbstractRequestor
 	 */
 	public function getById($id): ResponseInterface
 	{
-		return $this->client->getById($id);
+		$resp = $this->client->getById($id);
+
+		$this->assertResponse($resp);
+
+		return $resp;
 	}
 
 	/**
@@ -40,7 +48,12 @@ class CustomerRequestor extends AbstractRequestor
 
 	public function getByFilter(string $query): ResponseInterface
 	{
-		return $this->client->getByFilter($query);
+
+		$resp = $this->client->getByFilter($query);
+
+		$this->assertResponse($resp, [200, 404]);
+
+		return $resp;
 	}
 
 	/**
@@ -48,7 +61,11 @@ class CustomerRequestor extends AbstractRequestor
 	 */
 	public function getByLastChange($interval): ResponseInterface
 	{
-		return $this->client->getByLastChange($interval);
+		$resp = $this->client->getByLastChange($interval);
+
+		$this->assertResponse($resp);
+
+		return $resp;
 	}
 
 	/**
@@ -56,7 +73,11 @@ class CustomerRequestor extends AbstractRequestor
 	 */
 	public function getByLastChangeFrom($from): ResponseInterface
 	{
-		return $this->client->getByLastChangeFrom($from);
+		$resp = $this->client->getByLastChangeFrom($from);
+
+		$this->assertResponse($resp);
+
+		return $resp;
 	}
 
 	/**
@@ -65,7 +86,11 @@ class CustomerRequestor extends AbstractRequestor
 	 */
 	public function getByIdFromTo($from, $to): ResponseInterface
 	{
-		return $this->client->getByIdFromTo($from, $to);
+		$resp = $this->client->getByIdFromTo($from, $to);
+
+		$this->assertResponse($resp);
+
+		return $resp;
 	}
 
 	/**
