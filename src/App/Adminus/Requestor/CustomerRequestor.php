@@ -3,8 +3,8 @@
 namespace ISPA\ApiClients\App\Adminus\Requestor;
 
 use ISPA\ApiClients\App\Adminus\Client\CustomerClient;
+use ISPA\ApiClients\App\Ispa\ResponseDataExtractor;
 use ISPA\ApiClients\Domain\AbstractRequestor;
-use Psr\Http\Message\ResponseInterface;
 
 class CustomerRequestor extends AbstractRequestor
 {
@@ -17,80 +17,94 @@ class CustomerRequestor extends AbstractRequestor
 		$this->client = $client;
 	}
 
-	public function getAll(): ResponseInterface
+	/**
+	 * @return mixed[]
+	 */
+	public function getAll(): array
 	{
 		$resp = $this->client->getAll();
 
-		$this->assertResponse($resp);
+		$this->assertResponse($resp, [200, 404]);
 
-		return $resp;
+		return ResponseDataExtractor::extractData($resp);
 	}
 
 	/**
 	 * @param string|int $id
+	 * @return mixed[]
 	 */
-	public function getById($id): ResponseInterface
+	public function getById($id): array
 	{
 		$resp = $this->client->getById($id);
 
-		$this->assertResponse($resp);
+		$this->assertResponse($resp, [200, 404]);
 
-		return $resp;
+		return ResponseDataExtractor::extractData($resp);
 	}
 
 	/**
 	 * @param string|int $cardNumber
+	 * @return mixed[]
 	 */
-	public function getByCard($cardNumber): ResponseInterface
+	public function getByCard($cardNumber): array
 	{
-		return $this->client->getByCard($cardNumber);
+		$resp = $this->client->getByCard($cardNumber);
+
+		$this->assertResponse($resp, [200, 404]);
+
+		return ResponseDataExtractor::extractData($resp);
 	}
 
-	public function getByFilter(string $query): ResponseInterface
+	/**
+	 * @return mixed[]
+	 */
+	public function getByFilter(string $query): array
 	{
-
 		$resp = $this->client->getByFilter($query);
 
 		$this->assertResponse($resp, [200, 404]);
 
-		return $resp;
+		return ResponseDataExtractor::extractData($resp);
 	}
 
 	/**
 	 * @param string|int $interval Seconds count
+	 * @return mixed[]
 	 */
-	public function getByLastChange($interval): ResponseInterface
+	public function getByLastChange($interval): array
 	{
 		$resp = $this->client->getByLastChange($interval);
 
-		$this->assertResponse($resp);
+		$this->assertResponse($resp, [200, 404]);
 
-		return $resp;
+		return ResponseDataExtractor::extractData($resp);
 	}
 
 	/**
 	 * @param string|int $from Unix timestamp
+	 * @return mixed[]
 	 */
-	public function getByLastChangeFrom($from): ResponseInterface
+	public function getByLastChangeFrom($from): array
 	{
 		$resp = $this->client->getByLastChangeFrom($from);
 
-		$this->assertResponse($resp);
+		$this->assertResponse($resp, [200, 404]);
 
-		return $resp;
+		return ResponseDataExtractor::extractData($resp);
 	}
 
 	/**
 	 * @param string|int $from
 	 * @param string|int $to
+	 * @return mixed[]
 	 */
-	public function getByIdFromTo($from, $to): ResponseInterface
+	public function getByIdFromTo($from, $to): array
 	{
 		$resp = $this->client->getByIdFromTo($from, $to);
 
-		$this->assertResponse($resp);
+		$this->assertResponse($resp, [200, 404]);
 
-		return $resp;
+		return ResponseDataExtractor::extractData($resp);
 	}
 
 	/**

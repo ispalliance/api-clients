@@ -3,8 +3,8 @@
 namespace ISPA\ApiClients\App\Adminus\Requestor;
 
 use ISPA\ApiClients\App\Adminus\Client\UserClient;
+use ISPA\ApiClients\App\Ispa\ResponseDataExtractor;
 use ISPA\ApiClients\Domain\AbstractRequestor;
-use Psr\Http\Message\ResponseInterface;
 
 class UserRequestor extends AbstractRequestor
 {
@@ -17,17 +17,29 @@ class UserRequestor extends AbstractRequestor
 		$this->client = $client;
 	}
 
-	public function getAll(): ResponseInterface
+	/**
+	 * @return mixed[]
+	 */
+	public function getAll(): array
 	{
-		return $this->client->getAll();
+		$resp = $this->client->getAll();
+
+		$this->assertResponse($resp, [200, 404]);
+
+		return ResponseDataExtractor::extractData($resp);
 	}
 
 	/**
 	 * @param string|int $id
+	 * @return mixed[]
 	 */
-	public function getById($id): ResponseInterface
+	public function getById($id): array
 	{
-		return $this->client->getById($id);
+		$resp = $this->client->getById($id);
+
+		$this->assertResponse($resp, [200, 404]);
+
+		return ResponseDataExtractor::extractData($resp);
 	}
 
 }

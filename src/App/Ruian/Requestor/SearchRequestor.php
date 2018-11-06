@@ -2,7 +2,9 @@
 
 namespace ISPA\ApiClients\App\Ruian\Requestor;
 
+use ISPA\ApiClients\App\Ispa\ResponseDataExtractor;
 use ISPA\ApiClients\App\Ruian\Client\SearchClient;
+use ISPA\ApiClients\App\Ruian\Entity\Address;
 use ISPA\ApiClients\Domain\AbstractRequestor;
 use Psr\Http\Message\ResponseInterface;
 
@@ -48,38 +50,77 @@ class SearchRequestor extends AbstractRequestor
 	 *                         'district' => 'Teplice'
 	 *                         ]
 	 *                         ]
+	 * @return Address[]
 	 */
-	public function getMultipleByFilter(array $filters, bool $expanded = FALSE): ResponseInterface
+	public function getMultipleByFilter(array $filters, bool $expanded = FALSE): array
 	{
-		return $this->client->getMultipleByFilter($filters, $expanded);
+		$response = $this->client->getMultipleByFilter($filters, $expanded);
+		$this->assertResponse($response);
+
+		return $this->toAddresses(ResponseDataExtractor::extractData($response));
 	}
 
 	/**
 	 * @param string|int|null $limit
+	 * @return Address[]
 	 */
-	public function getByFulltext(string $filter, $limit = NULL): ResponseInterface
+	public function getByFulltext(string $filter, $limit = NULL): array
 	{
-		return $this->client->getByFulltext($filter, $limit);
+		$response = $this->client->getByFulltext($filter, $limit);
+		$this->assertResponse($response);
+
+		return $this->toAddresses(ResponseDataExtractor::extractData($response));
 	}
 
-	public function getMultipleByFulltext(): ResponseInterface
+	/**
+	 * @return Address[]
+	 */
+	public function getMultipleByFulltext(): array
 	{
-		return $this->client->getMultipleByFulltext();
+		$response = $this->client->getMultipleByFulltext();
+		$this->assertResponse($response);
+
+		return $this->toAddresses(ResponseDataExtractor::extractData($response));
 	}
 
-	public function getByPolygon(): ResponseInterface
+	/**
+	 * @return Address[]
+	 */
+	public function getByPolygon(): array
 	{
-		return $this->client->getByPolygon();
+		$response = $this->client->getByPolygon();
+		$this->assertResponse($response);
+
+		return $this->toAddresses(ResponseDataExtractor::extractData($response));
 	}
 
 	/**
 	 * @param string|int $latitude
 	 * @param string|int $longtitude
 	 * @param string|int $radius
+	 * @return Address[]
 	 */
-	public function getByCircle($latitude, $longtitude, $radius): ResponseInterface
+	public function getByCircle($latitude, $longtitude, $radius): array
 	{
-		return $this->client->getByCircle($latitude, $longtitude, $radius);
+		$response = $this->client->getByCircle($latitude, $longtitude, $radius);
+		$this->assertResponse($response);
+
+		return $this->toAddresses(ResponseDataExtractor::extractData($response));
+	}
+
+	/**
+	 * @param mixed[] $items
+	 * @return Address[]
+	 */
+	private function toAddresses(array $items): array
+	{
+		$addresses = [];
+		foreach ($items as $item) {
+			$item['country'] = 'CZ';
+			$addresses[] = Address::fromArray($item);
+		}
+
+		return $addresses;
 	}
 
 }

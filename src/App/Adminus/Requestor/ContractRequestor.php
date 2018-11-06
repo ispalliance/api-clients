@@ -3,8 +3,8 @@
 namespace ISPA\ApiClients\App\Adminus\Requestor;
 
 use ISPA\ApiClients\App\Adminus\Client\ContractClient;
+use ISPA\ApiClients\App\Ispa\ResponseDataExtractor;
 use ISPA\ApiClients\Domain\AbstractRequestor;
-use Psr\Http\Message\ResponseInterface;
 
 class ContractRequestor extends AbstractRequestor
 {
@@ -19,78 +19,122 @@ class ContractRequestor extends AbstractRequestor
 
 	/**
 	 * @param string|int $id
+	 * @return mixed[]
 	 */
-	public function getById($id): ResponseInterface
+	public function getById($id): array
 	{
-		return $this->client->getById($id);
+		$response = $this->client->getById($id);
+		$this->assertResponse($response, [200, 404]);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
 	/**
 	 * @param string|int $contractNumber
+	 * @return mixed[]
 	 */
-	public function getByContractNumber($contractNumber): ResponseInterface
+	public function getByContractNumber($contractNumber): array
 	{
-		return $this->client->getByContractNumber($contractNumber);
+		$response = $this->client->getByContractNumber($contractNumber);
+		$this->assertResponse($response, [200, 404]);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
 	/**
 	 * @param string|int $customerId
+	 * @return mixed[]
 	 */
-	public function getByCustomer($customerId): ResponseInterface
+	public function getByCustomer($customerId): array
 	{
-		return $this->client->getByCustomer($customerId);
+		$response = $this->client->getByCustomer($customerId);
+		$this->assertResponse($response, [200, 404]);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
 	/**
 	 * @param string|int $cardNumber
+	 * @return mixed[]
 	 */
-	public function getByCustomerCard($cardNumber): ResponseInterface
+	public function getByCustomerCard($cardNumber): array
 	{
-		return $this->client->getByCustomerCard($cardNumber);
+		$response = $this->client->getByCustomerCard($cardNumber);
+		$this->assertResponse($response, [200, 404]);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
 	/**
 	 * @param string|int $attributeSetId
+	 * @return mixed[]
 	 */
-	public function getByAttributeSetId($attributeSetId): ResponseInterface
+	public function getByAttributeSetId($attributeSetId): array
 	{
-		return $this->client->getByAttributeSetId($attributeSetId);
+		$response = $this->client->getByAttributeSetId($attributeSetId);
+		$this->assertResponse($response, [200, 404]);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
-	public function getOnlyActive(): ResponseInterface
+	/**
+	 * @return mixed[]
+	 */
+	public function getOnlyActive(): array
 	{
-		return $this->client->getOnlyActive();
+		$response = $this->client->getOnlyActive();
+		$this->assertResponse($response, [200, 404]);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
 	/**
 	 * @param string|int $contractId
 	 * @param string|int $stateId
+	 * @return mixed[]
 	 */
-	public function setStateById($contractId, $stateId): ResponseInterface
+	public function setStateById($contractId, $stateId): array
 	{
-		return $this->client->setStateById($contractId, $stateId);
+		$response = $this->client->setStateById($contractId, $stateId);
+		$this->assertResponse($response);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
 	/**
 	 * @param string|int $contractNumber
 	 * @param string|int $stateId
+	 * @return mixed[]
 	 */
-	public function setStateByContractNumber($contractNumber, $stateId): ResponseInterface
+	public function setStateByContractNumber($contractNumber, $stateId): array
 	{
-		return $this->client->setStateByContractNumber($contractNumber, $stateId);
+		$response = $this->client->setStateByContractNumber($contractNumber, $stateId);
+		$this->assertResponse($response);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
-	public function getAllContractTypeStates(): ResponseInterface
+	/**
+	 * @return mixed[]
+	 */
+	public function getAllContractTypeStates(): array
 	{
-		return $this->client->getAllContractTypeStates();
+		$response = $this->client->getAllContractTypeStates();
+		$this->assertResponse($response, [200, 404]);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
 	/**
 	 * @param string|int $id
+	 * @return mixed[]
 	 */
-	public function getContractTypeStateById($id): ResponseInterface
+	public function getContractTypeStateById($id): array
 	{
-		return $this->client->getContractTypeStateById($id);
+		$response = $this->client->getContractTypeStateById($id);
+		$this->assertResponse($response, [200, 404]);
+
+		return ResponseDataExtractor::extractData($response);
 	}
 
 }

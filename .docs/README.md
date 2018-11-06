@@ -217,7 +217,7 @@ ispa.api:
 ```yaml
 ispa.api:
     app:
-        pedef:
+        ruian:
             http:
                 base_uri: http://ruian.example.com/api/
 ```
