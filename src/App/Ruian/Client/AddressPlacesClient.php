@@ -16,7 +16,7 @@ class AddressPlacesClient extends AbstractClient
 	 */
 	public function getByCode($code, bool $expanded = FALSE): ResponseInterface
 	{
-		$query = $expanded ? Helpers::buildQuery(['expanded' => 'true']) : '';
+		$query = $expanded ? '?' . Helpers::buildQuery(['expanded' => 'true']) : '';
 
 		return $this->httpClient->request('GET', sprintf('%s/by-code/%s%s', static::BASE_URL, (string) $code, $query));
 	}
@@ -26,10 +26,10 @@ class AddressPlacesClient extends AbstractClient
 	 */
 	public function getByCodes(array $codes, bool $expanded = FALSE): ResponseInterface
 	{
-		$query = $expanded ? Helpers::buildQuery(['expanded' => 'true']) : '';
+		$query = $expanded ? '?' . Helpers::buildQuery(['expanded' => 'true']) : '';
 
 		return $this->httpClient->request(
-            'POST',
+			'POST',
 			sprintf('%s/by-codes%s', static::BASE_URL, $query),
 			[
 				'body' => json_encode($codes),
@@ -39,35 +39,35 @@ class AddressPlacesClient extends AbstractClient
 
 	public function getByMunicipality(string $municipality, bool $expanded = FALSE): ResponseInterface
 	{
-		$query = $expanded ? Helpers::buildQuery(['expanded' => 'true']) : '';
+		$query = $expanded ? '?' . Helpers::buildQuery(['expanded' => 'true']) : '';
 
 		return $this->httpClient->request('GET', sprintf('%s/by-municipality/%s%s', static::BASE_URL, $municipality, $query));
 	}
 
 	public function getByMunicipalityPart(string $partOfMunicipality, bool $expanded = FALSE): ResponseInterface
 	{
-		$query = $expanded ? Helpers::buildQuery(['expanded' => 'true']) : '';
+		$query = $expanded ? '?' . Helpers::buildQuery(['expanded' => 'true']) : '';
 
 		return $this->httpClient->request('GET', sprintf('%s/by-part-of-municipality/%s%s', static::BASE_URL, $partOfMunicipality, $query));
 	}
 
 	public function getByStreet(string $street, bool $expanded = FALSE): ResponseInterface
 	{
-		$query = $expanded ? Helpers::buildQuery(['expanded' => 'true']) : '';
+		$query = $expanded ? '?' . Helpers::buildQuery(['expanded' => 'true']) : '';
 
 		return $this->httpClient->request('GET', sprintf('%s/by-street/%s%s', static::BASE_URL, $street, $query));
 	}
 
 	public function getByRegion(string $region, bool $expanded = FALSE): ResponseInterface
 	{
-		$query = $expanded ? Helpers::buildQuery(['expanded' => 'true']) : '';
+		$query = $expanded ? '?' . Helpers::buildQuery(['expanded' => 'true']) : '';
 
 		return $this->httpClient->request('GET', sprintf('%s/by-region/%s%s', static::BASE_URL, $region, $query));
 	}
 
 	public function getByDistrict(string $district, bool $expanded = FALSE): ResponseInterface
 	{
-		$query = $expanded ? Helpers::buildQuery(['expanded' => 'true']) : '';
+		$query = $expanded ? '?' . Helpers::buildQuery(['expanded' => 'true']) : '';
 
 		return $this->httpClient->request('GET', sprintf('%s/by-district/%s%s', static::BASE_URL, $district, $query));
 	}

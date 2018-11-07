@@ -2,11 +2,12 @@
 
 namespace ISPA\ApiClients\App\Ruian\Requestor;
 
+use ISPA\ApiClients\App\Ispa\AddressCreator;
 use ISPA\ApiClients\App\Ispa\ResponseDataExtractor;
 use ISPA\ApiClients\App\Ruian\Client\SearchClient;
 use ISPA\ApiClients\App\Ruian\Entity\Address;
+use ISPA\ApiClients\App\Ruian\Entity\ExpandedAddress;
 use ISPA\ApiClients\Domain\AbstractRequestor;
-use Psr\Http\Message\ResponseInterface;
 
 class SearchRequestor extends AbstractRequestor
 {
@@ -30,10 +31,14 @@ class SearchRequestor extends AbstractRequestor
 	 *                         'region_code' => 60,
 	 *                         'street' => 'Na%'
 	 *                         ]
+	 * @return Address[]|ExpandedAddress[]
 	 */
-	public function getByFilter(array $filters, bool $expanded = FALSE): ResponseInterface
+	public function getByFilter(array $filters, bool $expanded = FALSE): array
 	{
-		return $this->client->getByFilter($filters, $expanded);
+		$response = $this->client->getByFilter($filters, $expanded);
+		$this->assertResponse($response);
+
+		return AddressCreator::toProperAddresses((ResponseDataExtractor::extractData($response)), $expanded);
 	}
 
 	/**
@@ -50,14 +55,14 @@ class SearchRequestor extends AbstractRequestor
 	 *                         'district' => 'Teplice'
 	 *                         ]
 	 *                         ]
-	 * @return Address[]
+	 * @return Address[]|ExpandedAddress[]
 	 */
 	public function getMultipleByFilter(array $filters, bool $expanded = FALSE): array
 	{
 		$response = $this->client->getMultipleByFilter($filters, $expanded);
 		$this->assertResponse($response);
 
-		return $this->toAddresses(ResponseDataExtractor::extractData($response));
+		return AddressCreator::toProperAddresses((ResponseDataExtractor::extractData($response)), $expanded);
 	}
 
 	/**
@@ -69,7 +74,7 @@ class SearchRequestor extends AbstractRequestor
 		$response = $this->client->getByFulltext($filter, $limit);
 		$this->assertResponse($response);
 
-		return $this->toAddresses(ResponseDataExtractor::extractData($response));
+		return AddressCreator::toAddresses((ResponseDataExtractor::extractData($response)));
 	}
 
 	/**
@@ -80,7 +85,7 @@ class SearchRequestor extends AbstractRequestor
 		$response = $this->client->getMultipleByFulltext();
 		$this->assertResponse($response);
 
-		return $this->toAddresses(ResponseDataExtractor::extractData($response));
+		return AddressCreator::toAddresses((ResponseDataExtractor::extractData($response)));
 	}
 
 	/**
@@ -91,7 +96,7 @@ class SearchRequestor extends AbstractRequestor
 		$response = $this->client->getByPolygon();
 		$this->assertResponse($response);
 
-		return $this->toAddresses(ResponseDataExtractor::extractData($response));
+		return AddressCreator::toAddresses((ResponseDataExtractor::extractData($response)));
 	}
 
 	/**
@@ -105,22 +110,7 @@ class SearchRequestor extends AbstractRequestor
 		$response = $this->client->getByCircle($latitude, $longtitude, $radius);
 		$this->assertResponse($response);
 
-		return $this->toAddresses(ResponseDataExtractor::extractData($response));
-	}
-
-	/**
-	 * @param mixed[] $items
-	 * @return Address[]
-	 */
-	private function toAddresses(array $items): array
-	{
-		$addresses = [];
-		foreach ($items as $item) {
-			$item['country'] = 'CZ';
-			$addresses[] = Address::fromArray($item);
-		}
-
-		return $addresses;
+		return AddressCreator::toAddresses((ResponseDataExtractor::extractData($response)));
 	}
 
 }

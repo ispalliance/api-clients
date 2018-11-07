@@ -4,7 +4,7 @@ namespace ISPA\ApiClients\App\Ruian\Entity;
 
 use stdClass;
 
-final class Address extends stdClass
+class Address extends stdClass
 {
 
 	/** @var ?string */
@@ -45,8 +45,9 @@ final class Address extends stdClass
 
 	/**
 	 * @param mixed[] $data
+	 * @return Address
 	 */
-	public static function fromArray(array $data): self
+	public static function fromArray(array $data): object
 	{
 		$self = new self();
 
@@ -68,14 +69,13 @@ final class Address extends stdClass
 	public function toString(): string
 	{
 		$out = '';
-
-		$out .= $this->street ?? '';
-		$out .= $this->houseNumber ? ' ' . $this->houseNumber : '';
-		$out .= $this->orientationNumber ? '/' . $this->orientationNumber : '';
-		$out .= $this->zipCode ? ', ' . $this->zipCode : '';
-		$out .= $this->municipality ? ', ' . $this->municipality : '';
-		$out .= $this->partOfMunicipality ? ' - ' . $this->partOfMunicipality : '';
-		$out .= $this->district ? ' (' . $this->district . ')' : '';
+		$out .= $this->street !== NULL ? $this->street : '';
+		$out .= $this->houseNumber !== NULL ? ' ' .$this->houseNumber : '';
+		$out .= $this->orientationNumber !== NULL ? '/' . $this->orientationNumber : '';
+		$out .= $this->zipCode !== NULL ? ', ' . $this->zipCode : '';
+		$out .= $this->municipality !== NULL ? ', ' . $this->municipality : '';
+		$out .= $this->partOfMunicipality !== NULL ? ' - ' . $this->partOfMunicipality : '';
+		$out .= $this->district !== NULL? ' (' . $this->district . ')' : '';
 
 		return $out;
 	}

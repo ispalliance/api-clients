@@ -2,9 +2,12 @@
 
 namespace ISPA\ApiClients\App\Ruian\Requestor;
 
+use ISPA\ApiClients\App\Ispa\AddressCreator;
+use ISPA\ApiClients\App\Ispa\ResponseDataExtractor;
 use ISPA\ApiClients\App\Ruian\Client\AddressPlacesClient;
+use ISPA\ApiClients\App\Ruian\Entity\Address;
+use ISPA\ApiClients\App\Ruian\Entity\ExpandedAddress;
 use ISPA\ApiClients\Domain\AbstractRequestor;
-use Psr\Http\Message\ResponseInterface;
 
 class AddressPlacesRequestor extends AbstractRequestor
 {
@@ -19,43 +22,81 @@ class AddressPlacesRequestor extends AbstractRequestor
 
 	/**
 	 * @param string|int $code
+	 * @return Address|ExpandedAddress|null
 	 */
-	public function getByCode($code, bool $expanded = FALSE): ResponseInterface
+	public function getByCode($code, bool $expanded = FALSE): ?object
 	{
-		return $this->client->getByCode($code, $expanded);
+		$response = $this->client->getByCode($code, $expanded);
+		$this->assertResponse($response, [200, 404]);
+
+		return AddressCreator::toProperAddress(ResponseDataExtractor::extractData($response), $expanded);
 	}
 
 	/**
 	 * @param string[]|int[] $codes [1,2,3,4,5]
+	 * @return Address[]|ExpandedAddress[]
 	 */
-	public function getByCodes(array $codes, bool $expanded = FALSE): ResponseInterface
+	public function getByCodes(array $codes, bool $expanded = FALSE): array
 	{
-		return $this->client->getByCodes($codes, $expanded);
+		$response = $this->client->getByCodes($codes, $expanded);
+		$this->assertResponse($response, [200, 404]);
+
+		return AddressCreator::toProperAddresses(ResponseDataExtractor::extractData($response), $expanded);
 	}
 
-	public function getByMunicipality(string $municipality, bool $expanded = FALSE): ResponseInterface
+	/**
+	 * @return Address[]|ExpandedAddress[]
+	 */
+	public function getByMunicipality(string $municipality, bool $expanded = FALSE): array
 	{
-		return $this->client->getByMunicipality($municipality, $expanded);
+		$response = $this->client->getByMunicipality($municipality, $expanded);
+		$this->assertResponse($response, [200, 404]);
+
+		return AddressCreator::toProperAddresses(ResponseDataExtractor::extractData($response), $expanded);
 	}
 
-	public function getByMunicipalityPart(string $partOfMunicipality, bool $expanded = FALSE): ResponseInterface
+	/**
+	 * @return Address[]|ExpandedAddress[]
+	 */
+	public function getByMunicipalityPart(string $partOfMunicipality, bool $expanded = FALSE): array
 	{
-		return $this->client->getByMunicipalityPart($partOfMunicipality, $expanded);
+		$response = $this->client->getByMunicipalityPart($partOfMunicipality, $expanded);
+		$this->assertResponse($response, [200, 404]);
+
+		return AddressCreator::toProperAddresses(ResponseDataExtractor::extractData($response), $expanded);
 	}
 
-	public function getByStreet(string $street, bool $expanded = FALSE): ResponseInterface
+	/**
+	 * @return Address[]|ExpandedAddress[]
+	 */
+	public function getByStreet(string $street, bool $expanded = FALSE): array
 	{
-		return $this->client->getByStreet($street, $expanded);
+		$response = $this->client->getByStreet($street, $expanded);
+		$this->assertResponse($response, [200, 404]);
+
+		return AddressCreator::toProperAddresses(ResponseDataExtractor::extractData($response), $expanded);
 	}
 
-	public function getByRegion(string $region, bool $expanded = FALSE): ResponseInterface
+	/**
+	 * @return Address[]|ExpandedAddress[]
+	 */
+	public function getByRegion(string $region, bool $expanded = FALSE): array
 	{
-		return $this->client->getByRegion($region, $expanded);
+		$response = $this->client->getByRegion($region, $expanded);
+		$this->assertResponse($response, [200, 404]);
+
+		return AddressCreator::toProperAddresses(ResponseDataExtractor::extractData($response), $expanded);
 	}
 
-	public function getByDistrict(string $district, bool $expanded = FALSE): ResponseInterface
+	/**
+	 * @return Address[]|ExpandedAddress[]
+	 */
+	public function getByDistrict(string $district, bool $expanded = FALSE): array
 	{
-		return $this->client->getByDistrict($district, $expanded);
+		$response = $this->client->getByDistrict($district, $expanded);
+		$this->assertResponse($response, [200, 404]);
+
+		return AddressCreator::toProperAddresses(ResponseDataExtractor::extractData($response), $expanded);
 	}
 
 }
