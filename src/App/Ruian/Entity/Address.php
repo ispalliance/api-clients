@@ -69,13 +69,13 @@ class Address extends stdClass
 	public function toString(): string
 	{
 		$out = '';
-		$out .= $this->street !== NULL ? $this->street : '';
-		$out .= $this->houseNumber !== NULL ? ' ' .$this->houseNumber : '';
+		$out .= $this->street ?? '';
+		$out .= $this->houseNumber !== NULL ? ' ' . $this->houseNumber : '';
 		$out .= $this->orientationNumber !== NULL ? '/' . $this->orientationNumber : '';
 		$out .= $this->zipCode !== NULL ? ', ' . $this->zipCode : '';
 		$out .= $this->municipality !== NULL ? ', ' . $this->municipality : '';
 		$out .= $this->partOfMunicipality !== NULL ? ' - ' . $this->partOfMunicipality : '';
-		$out .= $this->district !== NULL? ' (' . $this->district . ')' : '';
+		$out .= $this->district !== NULL ? ' (' . $this->district . ')' : '';
 
 		return $out;
 	}

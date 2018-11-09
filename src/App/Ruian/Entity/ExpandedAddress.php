@@ -140,4 +140,15 @@ final class ExpandedAddress extends Address
 		return $this->parcelNumber;
 	}
 
+	public function getCoordinates(): ?Coordinates
+	{
+		if ($this->getGpsPoint() === NULL) return NULL;
+
+		// remove first and last char from gpsPoint eg.: "(50.438972607384,15.35105983584)"
+		$base = substr(substr($this->getGpsPoint(), 0, -1), 1);
+		$coords = explode(',', $base, 2);
+
+		return Coordinates::fromArray($coords);
+	}
+
 }
