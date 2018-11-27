@@ -2,6 +2,7 @@
 
 namespace ISPA\ApiClients\Utils\Xml;
 
+use ISPA\ApiClients\Exception\Logical\XmlException;
 use ISPA\ApiClients\Exception\RuntimeException;
 use LibXMLError;
 use SimpleXMLElement;
@@ -23,6 +24,30 @@ final class Helpers
 		}
 
 		return $xml;
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public static function xmlToArray(string $xml): array
+	{
+		libxml_use_internal_errors(TRUE);
+		$parsed = simplexml_load_string($xml);
+
+		if ($parsed === FALSE) {
+			/** @var LibXMLError $error */
+			foreach (libxml_get_errors() as $error) {
+				throw new XmlException(sprintf('Could not parse xml string. Error: %s', $error->message));
+			}
+			libxml_clear_errors();
+		}
+
+		$encoded = json_encode($parsed);
+		if ($encoded === FALSE) {
+			throw new XmlException('Could not encode to json.');
+		}
+
+		return json_decode($encoded, TRUE);
 	}
 
 }

@@ -4,6 +4,7 @@ namespace ISPA\ApiClients\DI;
 
 use ISPA\ApiClients\DI\Pass\AbstractPass;
 use ISPA\ApiClients\DI\Pass\AppAresPass;
+use ISPA\ApiClients\DI\Pass\AppCPostPass;
 use ISPA\ApiClients\DI\Pass\AppCrmPass;
 use ISPA\ApiClients\DI\Pass\AppDbdPass;
 use ISPA\ApiClients\DI\Pass\AppLotusPass;
@@ -22,6 +23,7 @@ class ApiClientsExtension extends CompilerExtension
 		'debug' => FALSE,
 		'app' => [
 			'ares' => [],
+			'cpost' => [],
 			'crm' => [],
 			'dbd' => [],
 			'lotus' => [],
@@ -37,7 +39,9 @@ class ApiClientsExtension extends CompilerExtension
 	public function __construct()
 	{
 		$this->passes[] = new CorePass($this);
+
 		$this->passes[] = new AppAresPass($this);
+		$this->passes[] = new AppCPostPass($this);
 		$this->passes[] = new AppCrmPass($this);
 		$this->passes[] = new AppDbdPass($this);
 		$this->passes[] = new AppLotusPass($this);

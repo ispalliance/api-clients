@@ -1,6 +1,9 @@
 # IDE
 /.idea
 
+# Temp files
+/temp
+
 # Composer
 /vendor
 /composer.lock

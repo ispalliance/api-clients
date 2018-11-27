@@ -226,6 +226,25 @@ ispa.api:
 
 @todo
 
+### Cpost
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        cpost:
+            http:
+                base_uri: http://adminus.example.com/api/
+                auth: [dreplech, dreplech]
+            tmp_dir: '../../some/tmp/dir/path/'
+```
+
+### Endpoins
+
+@todo
+
+
 ### DBD
 
 Please note that DBD client communicates using SOAP, thus configuration key 'soap' is used. 
