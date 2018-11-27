@@ -1,10 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace ISPA\ApiClients\Http;
+namespace ISPA\ApiClients\Http\Guzzle;
 
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use ISPA\ApiClients\Exception\Runtime\RequestException;
+use ISPA\ApiClients\Http\HttpClient;
 use Psr\Http\Message\ResponseInterface;
 
 class GuzzleClient implements HttpClient

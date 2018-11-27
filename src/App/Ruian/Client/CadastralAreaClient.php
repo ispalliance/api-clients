@@ -2,11 +2,11 @@
 
 namespace ISPA\ApiClients\App\Ruian\Client;
 
-use ISPA\ApiClients\Domain\AbstractClient;
-use ISPA\ApiClients\Http\Helpers;
+use ISPA\ApiClients\Domain\AbstractHttpClient;
+use ISPA\ApiClients\Http\Utils\Helpers;
 use Psr\Http\Message\ResponseInterface;
 
-class CadastralAreaClient extends AbstractClient
+class CadastralAreaClient extends AbstractHttpClient
 {
 
 	private const BASE_URL = 'address-register-cadastral-area';

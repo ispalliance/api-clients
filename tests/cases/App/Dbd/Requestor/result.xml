@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<response>
+  <rodne_cislo/>
+  <datum_narozeni>1981-04-14</datum_narozeni>
+  <jmeno>Martin Šárfy</jmeno>
+  <exekuce pritomny="1">
+    <zaznam spisovaZnacka="094EX07393/09" exekutor="Tunkl, Plzeň-město" datumZapisu="2013-02-28" udalost="" poznamka="" adresa="HavanskÃ¡ Äp.2823 / Äo.2, TÃ¡bor, 39005"/>
+    <zaznam spisovaZnacka="132EX12259/09" exekutor="Fendrych, Praha 2" datumZapisu="2013-03-09" udalost="" poznamka="" adresa="HavanskÃ¡ 2823/2, TÃ¡bor, 390 05"/>
+    <zaznam spisovaZnacka="008EX826/02" exekutor="Bronec, České Budějovice" datumZapisu="2013-03-19" udalost="" poznamka="" adresa="Horky 174, TÃ¡bor, 390 01"/>
+    <zaznam spisovaZnacka="031EX47/05" exekutor="Chaloupka, Mělník" datumZapisu="2013-05-14" udalost="" poznamka="" adresa="Horky 174, 39001 TÃ¡bor"/>
+    <zaznam spisovaZnacka="105EX730/13" exekutor="" datumZapisu="2013-11-04" udalost="" poznamka="" adresa="HavanskÃ¡ 2823/2, 390 05, mÃ­st. podnik. V ZahradÃ¡ch 174, TÃ¡bor, 390 01"/>
+    <zaznam spisovaZnacka="096EX72/08" exekutor="" datumZapisu="2014-02-14" udalost="" poznamka="" adresa="trvale, HavanskÃ¡ 2823/2, 39005 TÃ¡bor"/>
+    <zaznam spisovaZnacka="085EX15712/12" exekutor="Suchánek, Praha 9" datumZapisu="2014-05-16" udalost="" poznamka="" adresa="HavanskÃ¡ 2823/2, TÃ¡bor, 39005"/>
+    <zaznam spisovaZnacka="085EX594/14" exekutor="Suchánek, Praha 9" datumZapisu="2015-04-24" udalost="" poznamka="" adresa="HavanskÃ¡ 2823/2, TÃ¡bor, 39005"/>
+  </exekuce>
+  <insolvence pritomny="1">
+    <zaznam jmeno="Martin Šárfy" spisovaZnacka="test/001/2017"/>
+  </insolvence>
+</response>

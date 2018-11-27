@@ -225,3 +225,29 @@ ispa.api:
 ### Endpoints
 
 @todo
+
+### DBD
+
+Please note that DBD client communicates using SOAP, thus configuration key 'soap' is used. 
+`wsdl`, `user` and `pass` subkeys are requried.
+
+All requests to remote API are being charged, so it is recommended to have `test` option enabled during testing and debugging.
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        dbd:
+            http:
+                wsdl: 'http://ws.dcgroup.cz/index.php?WSDL'
+                auth: 
+                    user: foo
+                    pass: bar
+            config: 
+                test: TRUE
+```
+
+### Endpoints
+
+@todo

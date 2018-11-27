@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace ISPA\ApiClients\Http;
+namespace ISPA\ApiClients\Http\Guzzle;
 
 use GuzzleHttp\Client;
 

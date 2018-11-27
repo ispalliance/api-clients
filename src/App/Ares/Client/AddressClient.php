@@ -4,13 +4,13 @@ namespace ISPA\ApiClients\App\Ares\Client;
 
 use ISPA\ApiClients\App\Ares\Exception\Runtime\InvalidIdNumberException;
 use ISPA\ApiClients\App\Ares\Utils\IdNumberUtils;
-use ISPA\ApiClients\Domain\AbstractClient;
+use ISPA\ApiClients\Domain\AbstractHttpClient;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * @see https://wwwinfo.mfcr.cz/ares/ares_xml_standard.html.cz
  */
-class AddressClient extends AbstractClient
+class AddressClient extends AbstractHttpClient
 {
 
 	private const URL = 'https://wwwinfo.mfcr.cz/cgi-bin/ares/darv_std.cgi';

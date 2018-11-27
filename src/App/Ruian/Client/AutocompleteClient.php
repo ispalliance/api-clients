@@ -2,10 +2,10 @@
 
 namespace ISPA\ApiClients\App\Ruian\Client;
 
-use ISPA\ApiClients\Domain\AbstractClient;
+use ISPA\ApiClients\Domain\AbstractHttpClient;
 use Psr\Http\Message\ResponseInterface;
 
-class AutocompleteClient extends AbstractClient
+class AutocompleteClient extends AbstractHttpClient
 {
 
 	private const BASE_URL = 'address-register-autocomplete';

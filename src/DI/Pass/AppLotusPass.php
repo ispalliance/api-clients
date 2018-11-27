@@ -10,7 +10,7 @@ use ISPA\ApiClients\Http\HttpClient;
 class AppLotusPass extends BaseAppPass
 {
 
-	private const APP_NAME = 'lotus';
+	public const APP_NAME = 'lotus';
 
 	public function loadPassConfiguration(): void
 	{

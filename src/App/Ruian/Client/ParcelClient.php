@@ -2,10 +2,10 @@
 
 namespace ISPA\ApiClients\App\Ruian\Client;
 
-use ISPA\ApiClients\Domain\AbstractClient;
+use ISPA\ApiClients\Domain\AbstractHttpClient;
 use Psr\Http\Message\ResponseInterface;
 
-class ParcelClient extends AbstractClient
+class ParcelClient extends AbstractHttpClient
 {
 
 	private const BASE_URL = 'address-register-parcel';

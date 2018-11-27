@@ -8,6 +8,7 @@ abstract class BaseAppPass extends AbstractPass
 	/** @var mixed[] */
 	protected $defaults = [
 		'http' => [],
+		'config' => [],
 	];
 
 	protected function isEnabled(string $app): bool

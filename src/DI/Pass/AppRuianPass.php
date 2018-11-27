@@ -34,7 +34,7 @@ use ISPA\ApiClients\Http\HttpClient;
 class AppRuianPass extends BaseAppPass
 {
 
-	private const APP_NAME = 'ruian';
+	public const APP_NAME = 'ruian';
 
 	public function loadPassConfiguration(): void
 	{

@@ -16,7 +16,7 @@ use ISPA\ApiClients\Http\HttpClient;
 class AppCrmPass extends BaseAppPass
 {
 
-	private const APP_NAME = 'crm';
+	public const APP_NAME = 'crm';
 
 	public function loadPassConfiguration(): void
 	{

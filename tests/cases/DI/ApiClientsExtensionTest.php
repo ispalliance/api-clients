@@ -51,7 +51,7 @@ use ISPA\ApiClients\App\Ruian\Requestor\ZsjRequestor;
 use ISPA\ApiClients\App\Ruian\RuianRootquestor;
 use ISPA\ApiClients\DI\ApiClientsExtension;
 use ISPA\ApiClients\Domain\ApiProvider;
-use ISPA\ApiClients\Http\GuzzleFactory;
+use ISPA\ApiClients\Http\Guzzle\GuzzleFactory;
 use ISPA\ApiClients\Http\HttpClient;
 use Nette\DI\Compiler;
 use Tests\Toolkit\ContainerTestCase;

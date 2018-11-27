@@ -5,9 +5,6 @@ namespace ISPA\ApiClients\Domain;
 use ISPA\ApiClients\Exception\Runtime\ResponseException;
 use Psr\Http\Message\ResponseInterface;
 
-/**
- * All public methods may throw ResponseException.
- */
 abstract class AbstractRequestor
 {
 

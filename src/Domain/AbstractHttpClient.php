@@ -4,10 +4,7 @@ namespace ISPA\ApiClients\Domain;
 
 use ISPA\ApiClients\Http\HttpClient;
 
-/**
- * All public methods must return ResponseInterface
- */
-abstract class AbstractClient
+abstract class AbstractHttpClient
 {
 
 	/** @var HttpClient */

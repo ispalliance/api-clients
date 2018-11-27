@@ -2,10 +2,10 @@
 
 namespace ISPA\ApiClients\App\Lotus\Client;
 
-use ISPA\ApiClients\Domain\AbstractClient;
+use ISPA\ApiClients\Domain\AbstractHttpClient;
 use Psr\Http\Message\ResponseInterface;
 
-class UsersClient extends AbstractClient
+class UsersClient extends AbstractHttpClient
 {
 
 	public function getAll(): ResponseInterface

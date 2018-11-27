@@ -10,7 +10,7 @@ use ISPA\ApiClients\Http\HttpClient;
 class AppPedefPass extends BaseAppPass
 {
 
-	private const APP_NAME = 'pedef';
+	public const APP_NAME = 'pedef';
 
 	public function loadPassConfiguration(): void
 	{

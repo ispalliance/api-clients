@@ -12,7 +12,7 @@ use ISPA\ApiClients\Http\HttpClient;
 class AppAresPass extends BaseAppPass
 {
 
-	private const APP_NAME = 'ares';
+	public const APP_NAME = 'ares';
 
 	public function loadPassConfiguration(): void
 	{

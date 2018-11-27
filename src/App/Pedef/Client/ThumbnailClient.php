@@ -2,10 +2,10 @@
 
 namespace ISPA\ApiClients\App\Pedef\Client;
 
-use ISPA\ApiClients\Domain\AbstractClient;
+use ISPA\ApiClients\Domain\AbstractHttpClient;
 use Psr\Http\Message\ResponseInterface;
 
-class ThumbnailClient extends AbstractClient
+class ThumbnailClient extends AbstractHttpClient
 {
 
 	public function generateThumbnail(string $contents, string $name = 'PDF file', string $fileName = 'file.pdf'): ResponseInterface

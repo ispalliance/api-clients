@@ -2,11 +2,11 @@
 
 namespace ISPA\ApiClients\App\Ruian\Client;
 
-use ISPA\ApiClients\Domain\AbstractClient;
-use ISPA\ApiClients\Http\Helpers;
+use ISPA\ApiClients\Domain\AbstractHttpClient;
+use ISPA\ApiClients\Http\Utils\Helpers;
 use Psr\Http\Message\ResponseInterface;
 
-class ZsjClient extends AbstractClient
+class ZsjClient extends AbstractHttpClient
 {
 
 	private const BASE_URL = 'address-register-zsj';

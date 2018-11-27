@@ -2,10 +2,10 @@
 
 namespace ISPA\ApiClients\App\Adminus\Client;
 
-use ISPA\ApiClients\Domain\AbstractClient;
+use ISPA\ApiClients\Domain\AbstractHttpClient;
 use Psr\Http\Message\ResponseInterface;
 
-class AccountingEntityClient extends AbstractClient
+class AccountingEntityClient extends AbstractHttpClient
 {
 
 	public function getAll(): ResponseInterface
