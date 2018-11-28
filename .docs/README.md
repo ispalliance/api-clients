@@ -237,7 +237,8 @@ ispa.api:
             http:
                 base_uri: http://adminus.example.com/api/
                 auth: [dreplech, dreplech]
-            tmp_dir: '../../some/tmp/dir/path/'
+            config:
+              tmp_dir: '../../some/tmp/dir/path/'
 ```
 
 ### Endpoins

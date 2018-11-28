@@ -18,7 +18,7 @@ final class UsageTest extends TestCase
 
 	protected function setUp(): void
 	{
-//		$this->markTestSkipped('This is manual test');
+		$this->markTestSkipped('This is manual test');
 
 		$config = [
 			'app' => [
@@ -27,7 +27,9 @@ final class UsageTest extends TestCase
 						'base_uri' => 'https://online3.postservis.cz/dopisonline/',
 						'auth' => ['dreplech', 'dreplech'],
 					],
-					'tmp_dir' => __DIR__ . '/../../../tmp/',
+					'config' => [
+						'tmp_dir' => __DIR__ . '/../../../tmp/',
+					],
 				],
 			],
 		];

@@ -39,11 +39,11 @@ abstract class AbstractCpostHttpClient extends AbstractHttpClient
 
 	protected function getTmpDir(): string
 	{
-		if (!isset($this->config['tmp_dir'])) {
-			throw new InvalidArgumentException('Mandatory CPost "tmp_dir" configuration option missing');
+		if (!array_key_exists('config', $this->config) || !isset($this->config['config']['tmp_dir'])) {
+			throw new InvalidArgumentException('Mandatory CPost "tmp_dir" config missing');
 		}
 
-		return $this->config['tmp_dir'];
+		return $this->config['config']['tmp_dir'];
 	}
 
 	protected function assertUsernamePassword(): void
