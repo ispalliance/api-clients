@@ -16,9 +16,9 @@ use ISPA\ApiClients\App\Ares\Client\AddressClient;
 use ISPA\ApiClients\App\Ares\Client\SubjectClient;
 use ISPA\ApiClients\App\Ares\Requestor\AddressRequestor;
 use ISPA\ApiClients\App\Ares\Requestor\SubjectRequestor;
-use ISPA\ApiClients\App\Lotus\Client\UsersClient;
+use ISPA\ApiClients\App\Lotus\Client\UserClient as LotusUserClient;
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
-use ISPA\ApiClients\App\Lotus\Requestor\UsersRequestor;
+use ISPA\ApiClients\App\Lotus\Requestor\UserRequestor as LotusUserRequestor;
 use ISPA\ApiClients\App\Pedef\Client\ThumbnailClient;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
 use ISPA\ApiClients\App\Pedef\Requestor\ThumbnailRequestor;
@@ -110,13 +110,13 @@ class ApiClientsExtensionTest extends ContainerTestCase
 		// AppLotusPass
 		static::assertInstanceOf(HttpClient::class, $this->container->getService('ispa.apis.app.lotus.http.client'));
 
-		static::assertInstanceOf(UsersClient::class, $this->container->getService('ispa.apis.app.lotus.client.users'));
+		static::assertInstanceOf(LotusUserClient::class, $this->container->getService('ispa.apis.app.lotus.client.users'));
 
-		static::assertInstanceOf(UsersRequestor::class, $this->container->getService('ispa.apis.app.lotus.requestor.users'));
+		static::assertInstanceOf(LotusUserRequestor::class, $this->container->getService('ispa.apis.app.lotus.requestor.users'));
 
 		static::assertInstanceOf(LotusRootquestor::class, $this->container->getService('ispa.apis.app.lotus.rootquestor'));
 
-		static::assertInstanceOf(UsersRequestor::class, $this->container->getService('ispa.apis.app.lotus.rootquestor')->users);
+		static::assertInstanceOf(UserRequestor::class, $this->container->getService('ispa.apis.app.lotus.rootquestor')->user);
 
 		static::assertInstanceOf(LotusRootquestor::class, $this->container->getService('ispa.apis.provider')->lotus);
 

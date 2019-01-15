@@ -271,3 +271,21 @@ ispa.api:
 ### Endpoints
 
 @todo
+
+### Lotus
+
+### Configuration
+
+```yaml
+lotus.api:
+    app:
+        lotus:
+            http:
+                base_uri: http://lotus.ispa.cz/api/v1/
+                headers: ["X-Api-Token" => "validGeneratedAppToken"]
+```
+
+### Endpoints
+
+@todo
+
