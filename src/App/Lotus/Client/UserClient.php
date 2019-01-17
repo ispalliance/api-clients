@@ -14,8 +14,8 @@ class UserClient extends AbstractHttpClient
 	public function list(int $limit = 10, int $offset = 0): ResponseInterface
 	{
 		$query = Helpers::buildQuery([
-			'limit' => $limit,
-			'offset' => $offset,
+			'limit' => $limit > 0 ? $limit : 10,
+			'offset' => $offset >= 0 ? $offset : 0,
 		]);
 		return $this->httpClient->request('GET', sprintf('%s?%s', self::PATH, $query));
 	}

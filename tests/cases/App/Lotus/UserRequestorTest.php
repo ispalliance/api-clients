@@ -45,7 +45,7 @@ class UserRequestorTest extends AbstractAppTestCase
 	public function testError(): void
 	{
 		$this->expectException(ResponseException::class);
-		$this->expectExceptionMessage('API error: Client authentication failed');
+		$this->expectExceptionMessage('API error. Status: error, Message: Client authentication failed');
 		$usersRequestor = $this->createRequestor('error.json');
 		$usersRequestor->getByEmail('user@ispalliance.cz');
 	}

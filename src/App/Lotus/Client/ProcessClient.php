@@ -12,12 +12,13 @@ class ProcessClient extends AbstractHttpClient
 	private const PATH_PROCESS = 'processes';
 	private const PATH_TEMPLATE = 'template-processes';
 	private const PATH_START = 'start-process';
+	private const PATH_UPLOAD = 'process/%s/upload?variable=%s';
 
 	public function listProcesses(int $limit = 10, int $offset = 0): ResponseInterface
 	{
 		$query = Helpers::buildQuery([
-			'limit' => $limit,
-			'offset' => $offset,
+			'limit' => $limit > 0 ? $limit : 10,
+			'offset' => $offset >= 0 ? $offset : 0,
 		]);
 		return $this->httpClient->request('GET', sprintf('%s?%s', self::PATH_PROCESS, $query));
 	}
@@ -30,8 +31,8 @@ class ProcessClient extends AbstractHttpClient
 	public function listTemplates(int $limit = 10, int $offset = 0): ResponseInterface
 	{
 		$query = Helpers::buildQuery([
-			'limit' => $limit,
-			'offset' => $offset,
+			'limit' => $limit > 0 ? $limit : 10,
+			'offset' => $offset >= 0 ? $offset : 0,
 		]);
 		return $this->httpClient->request('GET', sprintf('%s?%s', self::PATH_TEMPLATE, $query));
 	}
@@ -47,6 +48,27 @@ class ProcessClient extends AbstractHttpClient
 	public function startProcess(int $id, array $data): ResponseInterface
 	{
 		return $this->httpClient->request('POST', sprintf('%s/%d', self::PATH_START, $id), ['form_params' => $data]);
+	}
+
+	public function uploadFile(
+		int $processId,
+		string $variable,
+		string $fileName,
+		string $contents
+	): ResponseInterface
+	{
+		return $this->httpClient->request(
+			'POST',
+			sprintf(self::PATH_UPLOAD, $processId, $variable),
+			[
+				'multipart' => [
+					[
+						'name'     => $fileName,
+						'contents' => $contents,
+					],
+				],
+			]
+		);
 	}
 
 }

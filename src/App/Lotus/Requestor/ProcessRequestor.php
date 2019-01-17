@@ -22,7 +22,7 @@ final class ProcessRequestor extends BaseRequestor
 	{
 		$response = $this->client->listProcesses($limit, $offset);
 
-		return $this->getData($response);
+		return $this->processResponse($response)->getData();
 	}
 
 	/**
@@ -32,7 +32,7 @@ final class ProcessRequestor extends BaseRequestor
 	{
 		$response = $this->client->getProcess($id);
 
-		return $this->getData($response);
+		return $this->processResponse($response)->getData();
 	}
 
 	/**
@@ -42,7 +42,7 @@ final class ProcessRequestor extends BaseRequestor
 	{
 		$response = $this->client->listTemplates($limit, $offset);
 
-		return $this->getData($response);
+		return $this->processResponse($response)->getData();
 	}
 
 	/**
@@ -52,7 +52,7 @@ final class ProcessRequestor extends BaseRequestor
 	{
 		$response = $this->client->getTemplate($id);
 
-		return $this->getData($response);
+		return $this->processResponse($response)->getData();
 	}
 
 	/**
@@ -63,7 +63,22 @@ final class ProcessRequestor extends BaseRequestor
 	{
 		$response = $this->client->startProcess($id, $data);
 
-		return $this->getData($response);
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function uploadFile(
+		int $processId,
+		string $variable,
+		string $fileName,
+		string $contents
+	): array
+	{
+		$response = $this->client->uploadFile($processId, $variable, $fileName, $contents);
+
+		return $this->processResponse($response)->getData();
 	}
 
 }

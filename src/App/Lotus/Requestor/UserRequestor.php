@@ -22,7 +22,7 @@ final class UserRequestor extends BaseRequestor
 	{
 		$response = $this->client->list($limit, $offset);
 
-		return $this->getData($response);
+		return $this->processResponse($response)->getData();
 	}
 
 	/**
@@ -32,7 +32,7 @@ final class UserRequestor extends BaseRequestor
 	{
 		$response = $this->client->getById($id);
 
-		return $this->getData($response);
+		return $this->processResponse($response)->getData();
 	}
 
 	/**
@@ -42,7 +42,7 @@ final class UserRequestor extends BaseRequestor
 	{
 		$response = $this->client->getByEmail($email);
 
-		return $this->getData($response);
+		return $this->processResponse($response)->getData();
 	}
 
 }
