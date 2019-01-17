@@ -6,15 +6,19 @@ use ISPA\ApiClients\App\Lotus\Client\ProcessClient;
 use ISPA\ApiClients\App\Lotus\Client\UserClient;
 use ISPA\ApiClients\App\Lotus\Requestor\ProcessRequestor;
 use ISPA\ApiClients\App\Lotus\Requestor\UserRequestor;
+use ISPA\ApiClients\Http\Guzzle\GuzzleClient;
 use ISPA\ApiClients\Http\Guzzle\GuzzleFactory;
 use PHPUnit\Framework\TestCase;
 
 final class UsageTest extends TestCase
 {
 
-	public function testCall(): void
+	/** @var GuzzleClient */
+	private $guzzle;
+
+	public function setUp(): void
 	{
-//		$this->markTestSkipped('Manual testing only');
+		$this->markTestSkipped('Manual testing only');
 
 		// Change base_uri and X-Api-Token values
 		$config = [
@@ -29,16 +33,26 @@ final class UsageTest extends TestCase
 				],
 			],
 		];
-		$guzzle = (new GuzzleFactory($config))->create('lotus');
-		$usrClient = new UserClient($guzzle);
+
+		$this->guzzle = (new GuzzleFactory($config))->create('lotus');
+	}
+
+	public function testListUsers(): void
+	{
+		$usrClient = new UserClient($this->guzzle);
 		$usrRequestor = new UserRequestor($usrClient);
 
 		$res = $usrRequestor->list();
 		$this->assertGreaterThan(0, count($res));
+	}
 
-		$procClient = new ProcessClient($guzzle);
+	public function testUploadFile(): void
+	{
+		$procClient = new ProcessClient($this->guzzle);
 		$procRequestor = new ProcessRequestor($procClient);
-		$procRequestor->uploadFile(12, 'task', 'filename', 'contents');
+
+		$upl = $procRequestor->uploadFile(12, 'task', 'filename', 'contents');
+		$this->assertEquals([], $upl);
 	}
 
 }

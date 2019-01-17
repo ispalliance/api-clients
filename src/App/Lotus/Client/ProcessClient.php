@@ -63,7 +63,8 @@ class ProcessClient extends AbstractHttpClient
 			[
 				'multipart' => [
 					[
-						'name'     => $fileName,
+						'name'     => 'File',
+						'filename' => $fileName,
 						'contents' => $contents,
 					],
 				],
