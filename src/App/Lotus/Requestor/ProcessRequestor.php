@@ -48,6 +48,16 @@ final class ProcessRequestor extends BaseRequestor
 	/**
 	 * @return mixed[]
 	 */
+	public function listStartableTemplates(): array
+	{
+		$response = $this->client->listStartableTemplates();
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
 	public function getTemplate(int $id): array
 	{
 		$response = $this->client->getTemplate($id);

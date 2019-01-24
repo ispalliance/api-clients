@@ -22,13 +22,13 @@ class UserClient extends AbstractHttpClient
 
 	public function getById(int $id): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/%d', self::PATH, $id));
+		return $this->httpClient->request('GET', sprintf('%s/detail/%d', self::PATH, $id));
 	}
 
 	public function getByEmail(string $email): ResponseInterface
 	{
 		$query = Helpers::buildQuery(['email' => $email]);
-		return $this->httpClient->request('GET', sprintf('%s/email?%s', self::PATH, $query));
+		return $this->httpClient->request('GET', sprintf('%s/detail/email?%s', self::PATH, $query));
 	}
 
 }

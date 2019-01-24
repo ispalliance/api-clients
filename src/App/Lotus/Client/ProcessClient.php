@@ -25,7 +25,7 @@ class ProcessClient extends AbstractHttpClient
 
 	public function getProcess(int $id): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/%d', self::PATH_PROCESS, $id));
+		return $this->httpClient->request('GET', sprintf('%s/detail/%d', self::PATH_PROCESS, $id));
 	}
 
 	public function listTemplates(int $limit = 10, int $offset = 0): ResponseInterface
@@ -37,9 +37,14 @@ class ProcessClient extends AbstractHttpClient
 		return $this->httpClient->request('GET', sprintf('%s?%s', self::PATH_TEMPLATE, $query));
 	}
 
+	public function listStartableTemplates(): ResponseInterface
+	{
+		return $this->httpClient->request('GET', sprintf('%s/startable', self::PATH_TEMPLATE));
+	}
+
 	public function getTemplate(int $id): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/%d', self::PATH_TEMPLATE, $id));
+		return $this->httpClient->request('GET', sprintf('%s/detail/%d', self::PATH_TEMPLATE, $id));
 	}
 
 	/**
