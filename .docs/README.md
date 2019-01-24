@@ -15,7 +15,14 @@ ispa.api:
     debug: %debugMode%
 ```
 
-Secondly, configure single application. We support these applications **adminus**, **ares**, **lotus**, **pedef** and **ruian**.
+Secondly, configure single application. We support these applications:
+ - **adminus**
+ - **ares**
+ - **cpost**
+ - **dbd**
+ - **lotus**
+ - **pedef**
+ - **ruian**
 
 ```yaml
 ispa.api:
@@ -25,7 +32,7 @@ ispa.api:
                 base_uri: http://example.com/api/v1/
 ```
 
-Each application has `http` key for configure its http client. By default there is Guzzle client,
+Each application has `http` key for configuring its HTTP client. By default this is the Guzzle client, 
 take a look at [Guzzle doc](https://guzzle.readthedocs.io/en/latest/quickstart.html).
 
 You could also disable client entirely.
@@ -78,12 +85,12 @@ public function magic(): void
 }
 ```
 
-You can directly pick one of the **rootquestor** and access his **requestors**. This limit by single API.
+You can directly pick one of the **rootquestor** and access his **requestors**. This is limited by single API.
 
 ### Guzzle
 
 This is very low-level of managing our APIs. It's basically only configured
-Guzzle client with credentials to single application.
+Guzzle client with credentials, timeout settings etc for particular application.
 
 Official documentation for [Guzzle is here](https://guzzle.readthedocs.io/en/latest/quickstart.html).
 
@@ -112,9 +119,51 @@ ispa.api:
                 base_uri: http://adminus.example.com/api/
 ```
 
-### Endpoints
+### Available requestor's methods
 
-@todo
+**AccountingEntityRequestor**
+
+| Method           | API path                         | Type |
+| ---------------- | -------------------------------- |----- |
+| getAll()         | .../accounting-entity/{$id}      | GET  |
+| getById($id)     | .../accounting-entity/{$id}      | GET  |
+| getAllBanks()    | .../accounting-entity-blank      | GET  |
+| getBankById($id) | .../accounting-entity-blank/{$id}| GET  |
+
+
+**ContractRequestor**
+
+| Method                                              | API path                                                                      | Type |
+| --------------------------------------------------- | ----------------------------------------------------------------------------- | ---- |
+| getById($id)                                        | .../contract-detail/by-id/{$id}                                               | GET  |
+| getByContractNumber($contractNumber)                | .../contract-detail/by-contract-number/{$contractNumber}                      | GET  |
+| getByCustomer($customerId)                          | .../contract-detail/by-customer/{$customerId}                                 | GET  |
+| getByCustomerCard($cardNumber)                      | .../contract-detail/by-customer-card/{$cardNumber}                            | GET  |
+| getByAttributeSetId($attributeSetId)                | .../contract-detail/by-attribute-set-id/{$attributeSetId}                     | GET  |
+| getOnlyActive()                                     | .../contract-detail/only-active                                               | GET  |
+| setStateById($contractId, $stateId)                 | .../contract-detail/set-state/{$contractId}/{$stateId}                        | PUT  |
+| setStateByContractNumber($contractNumber, $stateId) | .../contract-detail/set-state-by-contract-number/{$contractNumber}/{$stateId} | PUT  |
+| getAllContractTypeStates()                          | .../contract-type-state                                                       | GET  |
+| getContractTypeStateById($id)                       | .../contract-type-state/{$id}                                                 | GET  |
+
+**CustomerRequestor**
+
+| Method                     | API path                                        | Type |
+| -------------------------- | ----------------------------------------------- | ---- |
+| getAll()                   | .../customer-detail/all                         | GET  |
+| getById($id)               | .../customer-detail/by-id/{$id}                 | GET  |
+| getByCard($cardNumber)     | .../customer-detail/by-card/{$cardNumber}       | GET  |
+| getByFilter(string $query) | .../customer-detail/by-filter/{$query}          | GET  |
+| getByLastChange($interval) | .../customer-detail/by-last-change/{$interval}  | GET  |
+| getByLastChangeFrom($from) | .../customer-detail/by-last-change-from/{$from} | GET  |
+| getByIdFromTo($from, $to)  | .../customer-detail/by-id-from-to/{$from}/{$to} | GET  |
+
+**UserRequestor**
+
+| Method        | API path       | Type |
+| ------------- | -------------- | ---- |
+| getAll()      | .../user       | GET  |
+| getById($id)  | .../user/{$id} | GET  |
 
 
 ## ARES
@@ -129,7 +178,22 @@ ispa.api:
                 base_uri: http://example.com/api/
 ```
 
-### Endpoints 
+### Available requestor's methods
+
+**AddressRequestor**
+
+| Method                         | API path                                          | Type |
+| -------------------------------| ------------------------------------------------- |----- |
+| get(string $idNumber): Address | https://wwwinfo.mfcr.cz/cgi-bin/ares/darv_std.cgi | GET  |
+
+**SubjectRequestor**
+
+| Method                         | API path                                         | Type |
+| -------------------------------| ------------------------------------------------ |----- |
+| get(string $idNumber): Subject | https://wwwinfo.mfcr.cz/cgi-bin/ares/ares_es.cgi | GET  |
+| getAll(string $name): array    | https://wwwinfo.mfcr.cz/cgi-bin/ares/ares_es.cgi | GET  |
+
+### Examples 
 
 #### Get subject
 
@@ -176,57 +240,7 @@ try {
 }
 ```
 
-
-### Lotus
-
-### Configuration
-
-```yaml
-ispa.api:
-    app:
-        lotus:
-            http:
-                base_uri: http://adminus.example.com/api/
-```
-
-### Endpoints
-
-@todo
-
-
-### Pedef
-
-### Configuration
-
-```yaml
-ispa.api:
-    app:
-        pedef:
-            http:
-                base_uri: http://adminus.example.com/api/
-```
-
-### Endpoints
-
-@todo
-
-### Ruian
-
-### Configuration
-
-```yaml
-ispa.api:
-    app:
-        ruian:
-            http:
-                base_uri: http://ruian.example.com/api/
-```
-
-### Endpoints
-
-@todo
-
-### Cpost
+## CPost
 
 ### Configuration
 
@@ -235,18 +249,23 @@ ispa.api:
     app:
         cpost:
             http:
-                base_uri: http://adminus.example.com/api/
+                base_uri: http://cpost.api/
                 auth: [dreplech, dreplech]
             config:
               tmp_dir: '../../some/tmp/dir/path/'
 ```
 
-### Endpoins
+### Available requestor's methods
 
-@todo
+**ConsignmentRequestor**
 
+| Method                                                            | API path              | Type |
+| ------------------------------------------------------------------| ----------------------|----- |
+| sendConsignment(Consignment $consignment): ResponseInterface      | .../donApi.php        | GET  |
+| getConsignmentsOverview(string $consignmentId): ResponseInterface | .../donPrehledZak.php | GET  |
+| getConsignmentsByDate(DateTime $date): ResponseInterface          | .../donPrehledZak.php | GET  |
 
-### DBD
+## DBD
 
 Please note that DBD client communicates using SOAP, thus configuration key 'soap' is used. 
 `wsdl`, `user` and `pass` subkeys are requried.
@@ -268,11 +287,17 @@ ispa.api:
                 test: TRUE
 ```
 
-### Endpoints
+### Available requestor's methods
 
-@todo
+**DebtorRequestor**
 
-### Lotus
+| Method                                 | SOAP method    | Type  |
+| -------------------------------------- | ---------------|------ |
+| checkPerson(Person $person): Result    | Minister_Check | SOAP  |
+| checkCompany(Company $company): Result | Minister_Check | SOAP  |
+
+
+## Lotus
 
 ### Configuration
 
@@ -285,7 +310,163 @@ lotus.api:
                 headers: ["X-Api-Token" => "validGeneratedAppToken"]
 ```
 
-### Endpoints
+### Available requestor's methods
 
-@todo
+**UserRequestor**
 
+| Method                    | API path                    | Type |
+| --------------------------| --------------------------- |----- |
+| list($limit, $offset)     | .../users                   | GET  |
+| getById(int $id)          | .../users/detail/{$id}      | GET  |
+| getByEmail(string $email) | .../users/detail/email{$id} | GET  |
+
+**ProcessRequestor**
+
+| Method                                                                           | API path                                              | Type |
+| ---------------------------------------------------------------------------------| ----------------------------------------------------- |----- |
+| listProcesses($limit, $offset)                                                   | .../processes                                         | GET  |
+| getProcess(int $id)                                                              | .../processes/detail/{$id}                            | GET  |
+| listTemplates($limit, $offset)                                                   | .../template-processes                                | GET  |
+| listStartableTemplates()                                                         | .../template-processes/startable                      | GET  |
+| getTemplate(int $id)                                                             | .../template-processes/detail/{$id}                   | GET  |
+| startProcess(int $id, array $data)                                               | .../start-process                                     | POST |
+| uploadFile(int $processId, string $variable, string $fileName, string $contents) | .../process/{$processId}/upload?variable=%{$variable} | POST |
+
+## Pedef
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        pedef:
+            http:
+                base_uri: http://pedef.example.com/api/
+```
+### Available requestor's methods
+
+**ThumbnailRequestor**
+
+| Method                                                                      | API path | Type |
+| ----------------------------------------------------------------------------| ---------|----- |
+| generateThumbnail(string $contents, string $name, string $fileName): string | base_uri | POST |
+
+
+## Ruian
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        ruian:
+            http:
+                base_uri: http://ruian.example.com/api/
+```
+
+### Available requestor's methods
+
+**AddressPlacesRequestor**
+
+| Method                | API path                    | Type |
+| ----------------------| ----------------------------|----- |
+| getByCode             | .../by-code                 | GET  |
+| getByCodes            | .../by-codes                | GET  |
+| getByMunicipality     | .../by-municipality         | GET  |
+| getByMunicipalityPart | .../by-part-of-municipality | GET  |
+| getByStreet           | .../by-street               | GET  |
+| getByRegion           | .../by-region               | GET  |
+| getByDistrict         | .../by-district             | GET  |
+
+**AutocompleteRequestor**
+
+| Method                                     | API path                                              | Type |
+| -------------------------------------------| ------------------------------------------------------|----- |
+| getDistrictsByFilter                       | .../districts-by-filter                               | GET  |
+| getMunicipalitiesWithPartsByFilter         | .../municipalities-with-parts-by-filter               | GET  |
+| getStreetsByCityCodeAndFilter              | .../streets-by-filter                                 | GET  |
+| getStreetsByCityPartCodeAndFilter          | .../streets-by-part-of-city-filter                    | GET  |
+| getHouseNumbersByStreetCode                | .../house-numbers-by-street-code                      | GET  |
+| getHouseNumbersWithoutStreetByCityCode     | .../house-numbers-without-street-by-city-code         | GET  |
+| getHouseNumbersWithoutStreetByCityPartCode | .../house-numbers-without-street-by-part-of-city-code | GET  |
+
+**BuildingObjectRequestor**
+
+| Method | API path                             | Type |
+| -------| -------------------------------------|----- |
+| get    | .../address-register-building-object | GET  |
+
+**CadastralAreaRequestor**
+
+| Method             | API path                                | Type |
+| -------------------| ----------------------------------------|----- |
+| get($from, $limit) | .../address-register-cadastral-area     | GET  |
+| getAll             | .../address-register-cadastral-area/all | GET  |
+
+**DistrictRequestor**
+
+| Method             | API path                          | Type |
+| -------------------| ----------------------------------|----- |
+| get($from, $limit) | .../address-register-district     | GET  |
+| getAll             | .../address-register-district/all | GET  |
+
+**MetaRequestor**
+
+| Method                              | API path            | Type |
+| ------------------------------------| --------------------|----- |
+| getMeta                             | .../meta            | GET  |
+| getModelInfo(string $restModelName) | .../meta/model-info | GET  |
+
+**MunicipalityRequestor**
+
+| Method             | API path                              | Type |
+| -------------------| --------------------------------------|----- |
+| get($from, $limit) | .../address-register-municipality     | GET  |
+| getAll()           | .../address-register-municipality/all | GET  |
+
+**MunicipalityPartRequestor**
+
+| Method             | API path                                      | Type |
+| -------------------| ----------------------------------------------|----- |
+| get($from, $limit) | .../address-register-part-of-municipality     | GET  |
+| getAll()           | .../address-register-part-of-municipality/all | GET  |
+
+**ParcelRequestor**
+
+| Method                                                               | API path                                                           | Type |
+| ---------------------------------------------------------------------| -------------------------------------------------------------------|------|
+| getByCode($code)                                                     | .../address-register-parcel/{$code}                                | GET  |
+| getByCadastralArea($cadastralAreaCode)                               | .../address-register-parcel/by-cadastral-area/{$cadastralAreaCode} | GET  |
+| getByCadastralAreaAndParcelNumber($cadastralAreaCode, $parcelNumber) | .../address-register-parcel/by-cadastral-area-and-parcel-number    | GET  |
+| getByPolygon()                                                       | .../???  TODO                                                      | GET  |
+| getByCircle($latitude, $longtitude, $radius)                         | .../???  TODO                                                      | GET  |
+
+**RegionRequestor**
+
+| Method             | API path                        | Type |
+| -------------------| --------------------------------|----- |
+| get($from, $limit) | .../address-register-region     | GET  |
+| getAll()           | .../address-register-region/all | GET  |
+
+**SearchRequestor**
+
+| Method                | API path                                         | Type |
+| ----------------------| -------------------------------------------------|----- |
+| getByFilter           | .../address-register-search/by-filter            | POST |
+| getMultipleByFilter   | .../address-register-search/multiple-by-filter   | POST |
+| getByFulltext         | .../address-register-search/by-fulltext          | GET  |
+| getMultipleByFulltext | .../address-register-search/multiple-by-fulltext | POST |
+| getByPolygon          | .../address-register-search/by-polygon           | POST |
+| getByCircle           | .../address-register-search/???   TODO           | GET  |
+
+**StreetRequestor**
+
+| Method             | API path                    | Type |
+| -------------------| ----------------------------|----- |
+| get($from, $limit) | .../address-register-street | GET  |
+
+**ZsjRequestor**
+
+| Method             | API path                 | Type |
+| -------------------| -------------------------|----- |
+| get($from, $limit) | .../address-register-zsj | GET  |
