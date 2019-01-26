@@ -307,7 +307,8 @@ lotus.api:
         lotus:
             http:
                 base_uri: http://lotus.ispa.cz/api/v1/
-                headers: ["X-Api-Token" => "validGeneratedAppToken"]
+                headers: 
+                    X-Api-Token: validGeneratedAppToken
 ```
 
 ### Available requestor's methods
