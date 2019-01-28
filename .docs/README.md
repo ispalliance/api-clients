@@ -18,7 +18,6 @@ ispa.api:
 Secondly, configure single application. We support these applications:
  - **adminus**
  - **ares**
- - **cpost**
  - **dbd**
  - **lotus**
  - **pedef**
@@ -239,31 +238,6 @@ try {
     // Do something
 }
 ```
-
-## CPost
-
-### Configuration
-
-```yaml
-ispa.api:
-    app:
-        cpost:
-            http:
-                base_uri: http://cpost.api/
-                auth: [dreplech, dreplech]
-            config:
-              tmp_dir: '../../some/tmp/dir/path/'
-```
-
-### Available requestor's methods
-
-**ConsignmentRequestor**
-
-| Method                                                            | API path              | Type |
-| ------------------------------------------------------------------| ----------------------|----- |
-| sendConsignment(Consignment $consignment): ResponseInterface      | .../donApi.php        | GET  |
-| getConsignmentsOverview(string $consignmentId): ResponseInterface | .../donPrehledZak.php | GET  |
-| getConsignmentsByDate(DateTime $date): ResponseInterface          | .../donPrehledZak.php | GET  |
 
 ## DBD
 
