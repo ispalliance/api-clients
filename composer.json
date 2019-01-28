@@ -15,6 +15,13 @@
     {
       "name": "Milan Felix Šulc",
       "homepage": "https://f3l1x.io"
+    },
+    {
+      "name": "Marek Bartoš",
+      "homepage": "https://marek-bartos.cz"
+    },
+    {
+      "name": "Tomáš Sedláček"
     }
   ],
   "require": {
@@ -50,11 +57,11 @@
       "linter src tests",
       "codesniffer src tests"
     ],
-    "tester": [
+    "tests": [
       "phpunit tests --colors=always"
     ],
     "coverage": [
-      "phpunit tests --colors=always -c tests/coverage.xml"
+      "phpdbg -qrr vendor/bin/phpunit tests --colors=always -c tests/coverage.xml"
     ],
     "phpstan": [
       "vendor/bin/phpstan analyse -l max -c phpstan.neon src"
