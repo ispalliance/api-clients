@@ -26,6 +26,17 @@ final class ProcessRequestor extends BaseRequestor
 	}
 
 	/**
+	 * @param mixed[] $variables
+	 * @return mixed[]
+	 */
+	public function listProcessesByVariables(array $variables): array
+	{
+		$response = $this->client->listProcessesByVariables($variables);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
 	 * @return mixed[]
 	 */
 	public function getProcess(int $id): array

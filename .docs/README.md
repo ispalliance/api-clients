@@ -301,12 +301,15 @@ lotus.api:
 | Method                                                                           | API path                                              | Type |
 | ---------------------------------------------------------------------------------| ----------------------------------------------------- |----- |
 | listProcesses($limit, $offset)                                                   | .../processes                                         | GET  |
+| listProcessesByVariables(array $variables)                                       | .../processes/find-by-variables                       | POST |
 | getProcess(int $id)                                                              | .../processes/detail/{$id}                            | GET  |
 | listTemplates($limit, $offset)                                                   | .../template-processes                                | GET  |
 | listStartableTemplates()                                                         | .../template-processes/startable                      | GET  |
 | getTemplate(int $id)                                                             | .../template-processes/detail/{$id}                   | GET  |
 | startProcess(int $id, array $data)                                               | .../start-process                                     | POST |
 | uploadFile(int $processId, string $variable, string $fileName, string $contents) | .../process/{$processId}/upload?variable=%{$variable} | POST |
+
+Note: listProcessesByVariables expects $variables to be array of variables to search for in format ["name" => "value", ...] eg ["user" => "10", "status" => "active"]
 
 ## Nominatim
 

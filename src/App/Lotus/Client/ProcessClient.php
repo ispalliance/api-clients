@@ -23,6 +23,18 @@ class ProcessClient extends AbstractHttpClient
 		return $this->httpClient->request('GET', sprintf('%s?%s', self::PATH_PROCESS, $query));
 	}
 
+	/**
+	 * @param mixed $variables
+	 */
+	public function listProcessesByVariables(array $variables): ResponseInterface
+	{
+		return $this->httpClient->request(
+			'POST',
+			sprintf('%s/find-by-variables', self::PATH_PROCESS),
+			['form_params' => $variables]
+		);
+	}
+
 	public function getProcess(int $id): ResponseInterface
 	{
 		return $this->httpClient->request('GET', sprintf('%s/detail/%d', self::PATH_PROCESS, $id));
