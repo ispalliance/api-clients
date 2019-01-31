@@ -310,8 +310,6 @@ lotus.api:
 
 ## Nominatim
 
-Allows you to get gps coordinates for given address or in reverse get address from given coordinates. 
-
 ### Configuration
 
 ```yaml
@@ -326,9 +324,12 @@ ispa.api:
 
 **AddressRequestor**
 
+Allows you to get gps coordinates for given address or in reverse get address from given coordinates. 
+
 | Method                               | API path                    | Type |
 | -------------------------------------| --------------------------- |----- |
 | findByCoords(float $lat, float $lng) | .../reverse                 | GET  |
+| findByAddress(Address $address)      | .../                        | GET  |
 
 
 ## Pedef

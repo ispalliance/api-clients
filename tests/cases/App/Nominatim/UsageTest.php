@@ -3,17 +3,17 @@
 namespace Tests\Cases\App\Nominatim;
 
 use ISPA\ApiClients\App\Nominatim\Client\AddressClient;
+use ISPA\ApiClients\App\Nominatim\Entity\Address;
 use ISPA\ApiClients\App\Nominatim\Requestor\AddressRequestor;
 use ISPA\ApiClients\DI\Pass\AppNominatimPass;
-use ISPA\ApiClients\Http\Guzzle\GuzzleClient;
 use ISPA\ApiClients\Http\Guzzle\GuzzleFactory;
 use PHPUnit\Framework\TestCase;
 
 final class UsageTest extends TestCase
 {
 
-	/** @var GuzzleClient */
-	private $guzzle;
+	/** @var AddressRequestor */
+	private $requestor;
 
 	public function setUp(): void
 	{
@@ -29,15 +29,14 @@ final class UsageTest extends TestCase
 			],
 		];
 
-		$this->guzzle = (new GuzzleFactory($config))->create(AppNominatimPass::APP_NAME);
+		$guzzle = (new GuzzleFactory($config))->create(AppNominatimPass::APP_NAME);
+		$client = new AddressClient($guzzle);
+		$this->requestor = new AddressRequestor($client);
 	}
 
-	public function testFindPlaceByCoords(): void
+	public function testFindByCoords(): void
 	{
-		$client = new AddressClient($this->guzzle);
-		$requestor = new AddressRequestor($client);
-
-		$place = $requestor->findByCoords(50.4389786, 15.3510543);
+		$place = $this->requestor->findByCoords(50.4389786, 15.3510543);
 
 		$this->assertNotNull($place);
 		$this->assertEquals('20378588', $place->getId());
@@ -53,6 +52,17 @@ final class UsageTest extends TestCase
 		$this->assertEquals('35', $addr->getHouseNumber());
 		$this->assertEquals('Komenského náměstí', $addr->getStreet());
 		$this->assertEquals('Jičín', $addr->getSuburb());
+	}
+
+	public function testFindByAddress(): void
+	{
+		$addr = new Address();
+		$addr->setCountry('česko');
+		$addr->setStreet('Husova');
+		$addr->setTown('Jičín');
+
+		$places = $this->requestor->findByAddress($addr, 2);
+		$this->assertCount(2, $places);
 	}
 
 }

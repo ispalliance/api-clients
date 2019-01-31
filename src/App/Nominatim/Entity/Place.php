@@ -101,6 +101,9 @@ final class Place
 		return $this->address;
 	}
 
+	/**
+	 * @return float[]
+	 */
 	public function getBoundingBox(): array
 	{
 		return $this->boundingBox;

@@ -3,6 +3,7 @@
 namespace ISPA\ApiClients\App\Nominatim\Requestor;
 
 use ISPA\ApiClients\App\Nominatim\Client\AddressClient;
+use ISPA\ApiClients\App\Nominatim\Entity\Address;
 use ISPA\ApiClients\App\Nominatim\Entity\Place;
 use ISPA\ApiClients\Domain\AbstractRequestor;
 use ISPA\ApiClients\Exception\Runtime\ResponseException;
@@ -25,11 +26,34 @@ final class AddressRequestor extends AbstractRequestor
 	{
 		$resp = $this->client->findByCoords($lat, $lng);
 		$this->assertResponse($resp);
+		$data = $this->processResponse($resp);
 
-		return $this->processResponse($resp);
+		return Place::fromArray($data);
 	}
 
-	private function processResponse(ResponseInterface $response): ?Place
+	/**
+	 * @return Place[]
+	 */
+	public function findByAddress(Address $address, int $limit = 10): array
+	{
+		$resp = $this->client->findByAddress($address, $limit);
+		$this->assertResponse($resp);
+		$data = $this->processResponse($resp);
+
+		$places = [];
+		if (!is_array($data)) return $places;
+
+		foreach ($data as $placeData) {
+			$places[] = Place::fromArray($placeData);
+		}
+
+		return $places;
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	private function processResponse(ResponseInterface $response): array
 	{
 		$this->assertResponse($response);
 
@@ -43,7 +67,7 @@ final class AddressRequestor extends AbstractRequestor
 			throw new ResponseException($response, $data['error']['message'] ?? 'Unknown error');
 		}
 
-		return Place::fromArray($data);
+		return $data;
 	}
 
 }

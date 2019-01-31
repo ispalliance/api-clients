@@ -33,7 +33,7 @@ final class Address
 	private $houseNumber = '';
 
 	/**
-	 * @param mixed $data
+	 * @param mixed[] $data
 	 */
 	public static function fromArray(array $data): self
 	{
@@ -48,6 +48,16 @@ final class Address
 		$a->houseNumber = $data['house_number'] ?? '';
 
 		return $a;
+	}
+
+	public function toQuery(): string
+	{
+		$q = $this->houseNumber . ' ' . $this->road;
+		$q .= $this->town !== '' ? ', ' . $this->town : '';
+		$q .= $this->postcode !== '' ? ', ' . $this->postcode : '';
+		$q .= $this->country !== '' ? ', ' . $this->country : '';
+
+		return $q;
 	}
 
 	public function getCountryCode(): string
@@ -133,6 +143,11 @@ final class Address
 	public function setRoad(string $road): void
 	{
 		$this->road = $road;
+	}
+
+	public function setStreet(string $street): void
+	{
+		$this->setRoad($street);
 	}
 
 	public function getHouseNumber(): string

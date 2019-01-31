@@ -2,7 +2,6 @@
 
 namespace ISPA\ApiClients\App\Nominatim;
 
-
 use ISPA\ApiClients\App\Nominatim\Requestor\AddressRequestor;
 use ISPA\ApiClients\Domain\AbstractRootquestor;
 
