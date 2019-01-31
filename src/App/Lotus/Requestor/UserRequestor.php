@@ -12,6 +12,8 @@ final class UserRequestor extends BaseRequestor
 
 	public function __construct(UserClient $client)
 	{
+		parent::__construct($client);
+
 		$this->client = $client;
 	}
 

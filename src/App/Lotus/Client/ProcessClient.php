@@ -2,11 +2,10 @@
 
 namespace ISPA\ApiClients\App\Lotus\Client;
 
-use ISPA\ApiClients\Domain\AbstractHttpClient;
 use ISPA\ApiClients\Http\Utils\Helpers;
 use Psr\Http\Message\ResponseInterface;
 
-class ProcessClient extends AbstractHttpClient
+class ProcessClient extends AbstractLotusClient
 {
 
 	private const PATH_PROCESS = 'processes';
@@ -20,7 +19,7 @@ class ProcessClient extends AbstractHttpClient
 			'limit' => $limit > 0 ? $limit : 10,
 			'offset' => $offset >= 0 ? $offset : 0,
 		]);
-		return $this->httpClient->request('GET', sprintf('%s?%s', self::PATH_PROCESS, $query));
+		return $this->request('GET', sprintf('%s?%s', self::PATH_PROCESS, $query));
 	}
 
 	/**
@@ -37,7 +36,7 @@ class ProcessClient extends AbstractHttpClient
 
 	public function getProcess(int $id): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/detail/%d', self::PATH_PROCESS, $id));
+		return $this->request('GET', sprintf('%s/detail/%d', self::PATH_PROCESS, $id));
 	}
 
 	public function listTemplates(int $limit = 10, int $offset = 0): ResponseInterface
@@ -46,17 +45,17 @@ class ProcessClient extends AbstractHttpClient
 			'limit' => $limit > 0 ? $limit : 10,
 			'offset' => $offset >= 0 ? $offset : 0,
 		]);
-		return $this->httpClient->request('GET', sprintf('%s?%s', self::PATH_TEMPLATE, $query));
+		return $this->request('GET', sprintf('%s?%s', self::PATH_TEMPLATE, $query));
 	}
 
 	public function listStartableTemplates(): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/startable', self::PATH_TEMPLATE));
+		return $this->request('GET', sprintf('%s/startable', self::PATH_TEMPLATE));
 	}
 
 	public function getTemplate(int $id): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/detail/%d', self::PATH_TEMPLATE, $id));
+		return $this->request('GET', sprintf('%s/detail/%d', self::PATH_TEMPLATE, $id));
 	}
 
 	/**
@@ -64,7 +63,11 @@ class ProcessClient extends AbstractHttpClient
 	 */
 	public function startProcess(int $id, ?array $data = []): ResponseInterface
 	{
-		return $this->httpClient->request('POST', sprintf('%s/%d', self::PATH_START, $id), ['form_params' => $data]);
+		return $this->request(
+			'POST',
+			sprintf('%s/%d', self::PATH_START, $id),
+			['form_params' => $data]
+		);
 	}
 
 	public function uploadFile(
@@ -74,7 +77,7 @@ class ProcessClient extends AbstractHttpClient
 		string $contents
 	): ResponseInterface
 	{
-		return $this->httpClient->request(
+		return $this->request(
 			'POST',
 			sprintf(self::PATH_UPLOAD, $processId, $variable),
 			[

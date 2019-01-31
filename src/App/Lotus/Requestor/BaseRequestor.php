@@ -2,6 +2,7 @@
 
 namespace ISPA\ApiClients\App\Lotus\Requestor;
 
+use ISPA\ApiClients\App\Lotus\Client\AbstractLotusClient;
 use ISPA\ApiClients\App\Lotus\Entity\LotusResponse;
 use ISPA\ApiClients\Domain\AbstractRequestor;
 use ISPA\ApiClients\Exception\Runtime\ResponseException;
@@ -11,6 +12,29 @@ use Psr\Http\Message\ResponseInterface;
 
 class BaseRequestor extends AbstractRequestor
 {
+
+	/** @var AbstractLotusClient */
+	private $sudoClient;
+
+	public function __construct(AbstractLotusClient $sudoClient)
+	{
+		$this->sudoClient = $sudoClient;
+	}
+
+	public function enableSudo(string $email): void
+	{
+		$this->sudoClient->enableSudo($email);
+	}
+
+	public function disableSudo(): void
+	{
+		$this->sudoClient->disableSudo();
+	}
+
+	public function isSudo(): bool
+	{
+		return $this->sudoClient->isSudo();
+	}
 
 	protected function processResponse(ResponseInterface $response): LotusResponse
 	{

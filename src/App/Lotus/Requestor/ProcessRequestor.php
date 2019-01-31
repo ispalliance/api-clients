@@ -12,6 +12,8 @@ final class ProcessRequestor extends BaseRequestor
 
 	public function __construct(ProcessClient $client)
 	{
+		parent::__construct($client);
+
 		$this->client = $client;
 	}
 

@@ -2,11 +2,10 @@
 
 namespace ISPA\ApiClients\App\Lotus\Client;
 
-use ISPA\ApiClients\Domain\AbstractHttpClient;
 use ISPA\ApiClients\Http\Utils\Helpers;
 use Psr\Http\Message\ResponseInterface;
 
-class UserClient extends AbstractHttpClient
+class UserClient extends AbstractLotusClient
 {
 
 	private const PATH = 'users';
@@ -17,18 +16,18 @@ class UserClient extends AbstractHttpClient
 			'limit' => $limit > 0 ? $limit : 10,
 			'offset' => $offset >= 0 ? $offset : 0,
 		]);
-		return $this->httpClient->request('GET', sprintf('%s?%s', self::PATH, $query));
+		return $this->request('GET', sprintf('%s?%s', self::PATH, $query));
 	}
 
 	public function getById(int $id): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/detail/%d', self::PATH, $id));
+		return $this->request('GET', sprintf('%s/detail/%d', self::PATH, $id));
 	}
 
 	public function getByEmail(string $email): ResponseInterface
 	{
 		$query = Helpers::buildQuery(['email' => $email]);
-		return $this->httpClient->request('GET', sprintf('%s/detail/email?%s', self::PATH, $query));
+		return $this->request('GET', sprintf('%s/detail/email?%s', self::PATH, $query));
 	}
 
 }

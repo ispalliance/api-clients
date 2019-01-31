@@ -2,9 +2,12 @@
 
 namespace Tests\Cases\App\Lotus;
 
+use GuzzleHttp\Psr7\Response;
 use ISPA\ApiClients\App\Lotus\Client\UserClient;
 use ISPA\ApiClients\App\Lotus\Requestor\UserRequestor;
 use ISPA\ApiClients\Exception\Runtime\ResponseException;
+use ISPA\ApiClients\Http\HttpClient;
+use PHPUnit\Framework\MockObject\MockObject;
 use Tests\Cases\App\AbstractAppTestCase;
 
 class UserRequestorTest extends AbstractAppTestCase
@@ -48,6 +51,45 @@ class UserRequestorTest extends AbstractAppTestCase
 		$this->expectExceptionMessage('API error. Status: error, Message: Client authentication failed');
 		$usersRequestor = $this->createRequestor('error.json');
 		$usersRequestor->getByEmail('user@ispalliance.cz');
+	}
+
+	public function testSudoDisabled(): void
+	{
+		/** @var HttpClient|MockObject $httpClient */
+		$httpClient = $this->createMock(HttpClient::class);
+		$httpClient->method('request')->willReturnCallback(function (string $method, string $url, array $opts) {
+			$this->assertArrayNotHasKey('headers', $opts);
+
+			return new Response(200, [], '{"status": "success"}');
+		});
+
+		$client = new UserClient($httpClient);
+		$requestor = new UserRequestor($client);
+
+		$this->assertFalse($requestor->isSudo());
+		$requestor->getByEmail('user@ispalliance.cz');
+	}
+
+	public function testSudoEnabled(): void
+	{
+		/** @var HttpClient|MockObject $httpClient */
+		$httpClient = $this->createMock(HttpClient::class);
+		$httpClient->method('request')->willReturnCallback(function (string $method, string $url, array $opts) {
+			$this->assertArrayHasKey('headers', $opts);
+			$this->assertArrayHasKey('X-Sudo', $opts['headers']);
+			$this->assertEquals('email@ispa.cz', $opts['headers']['X-Sudo']);
+
+			return new Response(200, [], '{"status": "success"}');
+		});
+
+		$client = new UserClient($httpClient);
+		$requestor = new UserRequestor($client);
+
+		$this->assertFalse($requestor->isSudo());
+		$requestor->enableSudo('email@ispa.cz');
+		$this->assertTrue($requestor->isSudo());
+
+		$requestor->getByEmail('user@ispalliance.cz');
 	}
 
 	private function createRequestor(string $file): UserRequestor
