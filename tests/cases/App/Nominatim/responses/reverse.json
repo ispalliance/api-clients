@@ -1,0 +1,26 @@
+{
+  "place_id": "20378588",
+  "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+  "osm_type": "node",
+  "osm_id": "2020692175",
+  "lat": "50.4389786",
+  "lon": "15.3510543",
+  "display_name": "35, Komenského náměstí, Jičín, okres Jičín, Královéhradecký kraj, Severovýchod, 50601, Česko",
+  "address": {
+    "house_number": "35",
+    "road": "Komenského náměstí",
+    "suburb": "Jičín",
+    "town": "Jičín",
+    "county": "okres Jičín",
+    "state": "Severovýchod",
+    "postcode": "50601",
+    "country": "Česko",
+    "country_code": "cz"
+  },
+  "boundingbox": [
+    "50.4388786",
+    "50.4390786",
+    "15.3509543",
+    "15.3511543"
+  ]
+}

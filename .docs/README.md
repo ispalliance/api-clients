@@ -20,6 +20,7 @@ Secondly, configure single application. We support these applications:
  - **ares**
  - **dbd**
  - **lotus**
+ - **nominatim**
  - **pedef**
  - **ruian**
 
@@ -306,6 +307,29 @@ lotus.api:
 | getTemplate(int $id)                                                             | .../template-processes/detail/{$id}                   | GET  |
 | startProcess(int $id, array $data)                                               | .../start-process                                     | POST |
 | uploadFile(int $processId, string $variable, string $fileName, string $contents) | .../process/{$processId}/upload?variable=%{$variable} | POST |
+
+## Nominatim
+
+Allows you to get gps coordinates for given address or in reverse get address from given coordinates. 
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        nominatim:
+            http:
+                base_uri: https://nominatim.openstreetmap.org
+```
+
+### Available requestor's methods
+
+**AddressRequestor**
+
+| Method                               | API path                    | Type |
+| -------------------------------------| --------------------------- |----- |
+| findByCoords(float $lat, float $lng) | .../reverse                 | GET  |
+
 
 ## Pedef
 

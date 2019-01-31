@@ -7,6 +7,7 @@ use ISPA\ApiClients\DI\Pass\AppAresPass;
 use ISPA\ApiClients\DI\Pass\AppCrmPass;
 use ISPA\ApiClients\DI\Pass\AppDbdPass;
 use ISPA\ApiClients\DI\Pass\AppLotusPass;
+use ISPA\ApiClients\DI\Pass\AppNominatimPass;
 use ISPA\ApiClients\DI\Pass\AppPedefPass;
 use ISPA\ApiClients\DI\Pass\AppRuianPass;
 use ISPA\ApiClients\DI\Pass\CorePass;
@@ -25,6 +26,7 @@ class ApiClientsExtension extends CompilerExtension
 			'crm' => [],
 			'dbd' => [],
 			'lotus' => [],
+			'nominatim' => [],
 			'nms' => [],
 			'pedef' => [],
 			'ruian' => [],
@@ -42,6 +44,7 @@ class ApiClientsExtension extends CompilerExtension
 		$this->passes[] = new AppCrmPass($this);
 		$this->passes[] = new AppDbdPass($this);
 		$this->passes[] = new AppLotusPass($this);
+		$this->passes[] = new AppNominatimPass($this);
 		$this->passes[] = new AppPedefPass($this);
 		$this->passes[] = new AppRuianPass($this);
 	}
