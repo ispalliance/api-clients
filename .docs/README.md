@@ -301,15 +301,37 @@ lotus.api:
 | Method                                                                           | API path                                              | Type |
 | ---------------------------------------------------------------------------------| ----------------------------------------------------- |----- |
 | listProcesses($limit, $offset)                                                   | .../processes                                         | GET  |
-| listProcessesByVariables(array $variables)                                       | .../processes/find-by-variables                       | POST |
+| listProcessesByVariables(array $variables) *1                                    | .../processes/find-by-variables                       | POST |
 | getProcess(int $id)                                                              | .../processes/detail/{$id}                            | GET  |
 | listTemplates($limit, $offset)                                                   | .../template-processes                                | GET  |
 | listStartableTemplates()                                                         | .../template-processes/startable                      | GET  |
 | getTemplate(int $id)                                                             | .../template-processes/detail/{$id}                   | GET  |
-| startProcess(int $id, array $data)                                               | .../start-process                                     | POST |
+| startProcess(int $id, ?array $data = []) *2                                      | .../start-process                                     | POST |
 | uploadFile(int $processId, string $variable, string $fileName, string $contents) | .../process/{$processId}/upload?variable=%{$variable} | POST |
 
-Note: listProcessesByVariables expects $variables to be array of variables to search for in format ["name" => "value", ...] eg ["user" => "10", "status" => "active"]
+*1 Note: listProcessesByVariables expects $variables to be array of variables to search for in format ["name" => "value", ...] eg ["user" => "10", "status" => "active"]
+
+*2 Note: startProcess detailed info:
+
+StartProcess method accepts optional parameter $data with which you can set process default variables, assign users to roles etc.
+Please see example of $data with comments below:
+```php
+$data = [
+    // set values to process variables
+    'variables' => [
+        'foo' => 'bar',
+        'baz' => 'bat',
+    ],
+    // assign users to roles by their user ids and role names
+    'roles' => [
+        'medic' => [152578, 24557],
+        'coroner' => [666]
+    ],
+    // how many times the process should proceed to next step automatically
+    'next' => 2,
+];
+```
+    
 
 ## Nominatim
 

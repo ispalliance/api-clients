@@ -80,7 +80,7 @@ final class ProcessRequestor extends BaseRequestor
 	 * @param mixed[] $data
 	 * @return mixed[]
 	 */
-	public function startProcess(int $id, array $data): array
+	public function startProcess(int $id, ?array $data = []): array
 	{
 		$response = $this->client->startProcess($id, $data);
 

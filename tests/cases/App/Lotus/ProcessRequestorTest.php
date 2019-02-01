@@ -51,7 +51,7 @@ class ProcessRequestorTest extends AbstractAppTestCase
 	public function testStartProcess(): void
 	{
 		$requestor = $this->createRequestor('process.json');
-		$res = $requestor->startProcess(1, []);
+		$res = $requestor->startProcess(1);
 
 		$this->assertEquals('Úkol', $res['name']);
 	}

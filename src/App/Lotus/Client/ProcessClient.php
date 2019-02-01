@@ -24,7 +24,7 @@ class ProcessClient extends AbstractHttpClient
 	}
 
 	/**
-	 * @param mixed $variables
+	 * @param mixed[] $variables
 	 */
 	public function listProcessesByVariables(array $variables): ResponseInterface
 	{
@@ -62,7 +62,7 @@ class ProcessClient extends AbstractHttpClient
 	/**
 	 * @param mixed[] $data
 	 */
-	public function startProcess(int $id, array $data): ResponseInterface
+	public function startProcess(int $id, ?array $data = []): ResponseInterface
 	{
 		return $this->httpClient->request('POST', sprintf('%s/%d', self::PATH_START, $id), ['form_params' => $data]);
 	}
