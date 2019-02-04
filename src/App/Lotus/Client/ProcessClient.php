@@ -3,6 +3,7 @@
 namespace ISPA\ApiClients\App\Lotus\Client;
 
 use ISPA\ApiClients\Http\Utils\Helpers;
+use Nette\Utils\Json;
 use Psr\Http\Message\ResponseInterface;
 
 class ProcessClient extends AbstractLotusClient
@@ -30,7 +31,12 @@ class ProcessClient extends AbstractLotusClient
 		return $this->httpClient->request(
 			'POST',
 			sprintf('%s/find-by-variables', self::PATH_PROCESS),
-			['form_params' => $variables]
+			[
+				'body' => Json::encode($variables),
+				'headers' => [
+					'Content-Type' => 'application/json',
+				],
+			]
 		);
 	}
 
@@ -66,7 +72,12 @@ class ProcessClient extends AbstractLotusClient
 		return $this->request(
 			'POST',
 			sprintf('%s/%d', self::PATH_START, $id),
-			['form_params' => $data]
+			[
+				'body' => Json::encode($data),
+				'headers' => [
+					'Content-Type' => 'application/json',
+				],
+			]
 		);
 	}
 
