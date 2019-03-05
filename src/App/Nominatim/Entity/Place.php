@@ -45,8 +45,12 @@ final class Place
 		$p->osmId = $data['osm_id'] ?? '';
 		$p->displayName = $data['display_name'] ?? '';
 
-		$p->lat = isset($data['lat']) ? (float) $data['lat'] : 0;
-		$p->lng = isset($data['lon']) ? (float) $data['lon'] : 0;
+		$p->lat = isset($data['lat'])
+            ? (float) $data['lat']
+            : 0;
+		$p->lng = isset($data['lon'])
+            ? (float) $data['lon']
+            : 0;
 
 		if (isset($data['boundingbox']) && is_array($data['boundingbox'])) {
 			foreach ($data['boundingbox'] as $coord) {

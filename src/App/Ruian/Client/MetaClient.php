@@ -12,12 +12,12 @@ class MetaClient extends AbstractHttpClient
 
 	public function getMeta(): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s', static::BASE_URL));
+		return $this->httpClient->request('GET', sprintf('%s', self::BASE_URL));
 	}
 
 	public function getModelInfo(string $restModelName): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/model-info/%s', static::BASE_URL, $restModelName));
+		return $this->httpClient->request('GET', sprintf('%s/model-info/%s', self::BASE_URL, $restModelName));
 	}
 
 }

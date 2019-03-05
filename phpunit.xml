@@ -13,8 +13,13 @@
 		 stopOnError="false"
 		 stopOnFailure="false"
 		 verbose="true"
+		 cacheResult="true"
+		 cacheResultFile="tests/tmp/.phpunit.result.cache"
 		 bootstrap="vendor/autoload.php"
 >
+	<php>
+		<ini name="memory_limit" value="256M"/>
+	</php>
 	<testsuites>
 		<testsuite name="API">
 			<directory>./tests/cases</directory>

@@ -4,6 +4,9 @@
     <!-- Extending rulesets -->
     <rule ref="./vendor/ninjify/coding-standard/ruleset.xml">
         <exclude name="Generic.PHP.LowerCaseConstant"/> <!-- TRUE, FALSE, NULL -->
+		<exclude name="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing"/>
+		<exclude name="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator"/>
+		<exclude name="SlevomatCodingStandard.ControlStructures.UselessIfConditionWithReturn"/>
     </rule>
 
     <!-- Specific rules -->

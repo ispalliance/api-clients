@@ -15,7 +15,7 @@ class ParcelClient extends AbstractHttpClient
 	 */
 	public function getByCode($code): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/%s', static::BASE_URL, (string) $code));
+		return $this->httpClient->request('GET', sprintf('%s/%s', self::BASE_URL, (string) $code));
 	}
 
 	/**
@@ -23,7 +23,7 @@ class ParcelClient extends AbstractHttpClient
 	 */
 	public function getByCadastralArea($cadastralAreaCode): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/by-cadastral-area/%s', static::BASE_URL, (string) $cadastralAreaCode));
+		return $this->httpClient->request('GET', sprintf('%s/by-cadastral-area/%s', self::BASE_URL, (string) $cadastralAreaCode));
 	}
 
 	/**
@@ -32,7 +32,7 @@ class ParcelClient extends AbstractHttpClient
 	 */
 	public function getByCadastralAreaAndParcelNumber($cadastralAreaCode, $parcelNumber): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/by-cadastral-area-and-parcel-number/%s/%s', static::BASE_URL, (string) $cadastralAreaCode, (string) $parcelNumber));
+		return $this->httpClient->request('GET', sprintf('%s/by-cadastral-area-and-parcel-number/%s/%s', self::BASE_URL, (string) $cadastralAreaCode, (string) $parcelNumber));
 	}
 
 	/**
@@ -40,7 +40,7 @@ class ParcelClient extends AbstractHttpClient
 	 */
 	public function getByPolygon(): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s', static::BASE_URL));
+		return $this->httpClient->request('GET', sprintf('%s', self::BASE_URL));
 	}
 
 	/**

@@ -41,7 +41,6 @@ final class AddressRequestor extends AbstractRequestor
 		$data = $this->processResponse($resp);
 
 		$places = [];
-		if (!is_array($data)) return $places;
 
 		foreach ($data as $placeData) {
 			$places[] = Place::fromArray($placeData);

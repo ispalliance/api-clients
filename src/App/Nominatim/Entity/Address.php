@@ -53,9 +53,15 @@ final class Address
 	public function toQuery(): string
 	{
 		$q = $this->houseNumber . ' ' . $this->road;
-		$q .= $this->town !== '' ? ', ' . $this->town : '';
-		$q .= $this->postcode !== '' ? ', ' . $this->postcode : '';
-		$q .= $this->country !== '' ? ', ' . $this->country : '';
+		$q .= $this->town !== ''
+            ? ', ' . $this->town
+            : '';
+		$q .= $this->postcode !== ''
+            ? ', ' . $this->postcode
+            : '';
+		$q .= $this->country !== ''
+            ? ', ' . $this->country
+            : '';
 
 		return $q;
 	}

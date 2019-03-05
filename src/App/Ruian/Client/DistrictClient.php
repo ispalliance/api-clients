@@ -17,12 +17,13 @@ class DistrictClient extends AbstractHttpClient
 			'from' => $from,
 			'limit' => $limit,
 		]);
-		return $this->httpClient->request('GET', sprintf('%s%s', static::BASE_URL, $query));
+
+		return $this->httpClient->request('GET', sprintf('%s%s', self::BASE_URL, $query));
 	}
 
 	public function getAll(): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/all', static::BASE_URL));
+		return $this->httpClient->request('GET', sprintf('%s/all', self::BASE_URL));
 	}
 
 }

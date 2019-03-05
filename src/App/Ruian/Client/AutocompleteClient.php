@@ -12,12 +12,12 @@ class AutocompleteClient extends AbstractHttpClient
 
 	public function getDistrictsByFilter(string $filter): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/districts-by-filter/%s', static::BASE_URL, $filter));
+		return $this->httpClient->request('GET', sprintf('%s/districts-by-filter/%s', self::BASE_URL, $filter));
 	}
 
 	public function getMunicipalitiesWithPartsByFilter(string $filter): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/municipalities-with-parts-by-filter/%s', static::BASE_URL, $filter));
+		return $this->httpClient->request('GET', sprintf('%s/municipalities-with-parts-by-filter/%s', self::BASE_URL, $filter));
 	}
 
 	/**
@@ -25,7 +25,7 @@ class AutocompleteClient extends AbstractHttpClient
 	 */
 	public function getStreetsByCityCodeAndFilter($cityCode, string $filter): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/streets-by-filter/%s/%s', static::BASE_URL, (string) $cityCode, $filter));
+		return $this->httpClient->request('GET', sprintf('%s/streets-by-filter/%s/%s', self::BASE_URL, (string) $cityCode, $filter));
 	}
 
 	/**
@@ -33,7 +33,7 @@ class AutocompleteClient extends AbstractHttpClient
 	 */
 	public function getStreetsByCityPartCodeAndFilter($cityPartCode, string $filter): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/streets-by-part-of-city-filter/%s/%s', static::BASE_URL, (string) $cityPartCode, $filter));
+		return $this->httpClient->request('GET', sprintf('%s/streets-by-part-of-city-filter/%s/%s', self::BASE_URL, (string) $cityPartCode, $filter));
 	}
 
 	/**
@@ -41,7 +41,7 @@ class AutocompleteClient extends AbstractHttpClient
 	 */
 	public function getHouseNumbersByStreetCode($streetCode): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/house-numbers-by-street-code/%s', static::BASE_URL, (string) $streetCode));
+		return $this->httpClient->request('GET', sprintf('%s/house-numbers-by-street-code/%s', self::BASE_URL, (string) $streetCode));
 	}
 
 	/**
@@ -49,7 +49,7 @@ class AutocompleteClient extends AbstractHttpClient
 	 */
 	public function getHouseNumbersWithoutStreetByCityCode($cityCode): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/house-numbers-without-street-by-city-code/%s', static::BASE_URL, (string) $cityCode));
+		return $this->httpClient->request('GET', sprintf('%s/house-numbers-without-street-by-city-code/%s', self::BASE_URL, (string) $cityCode));
 	}
 
 	/**
@@ -57,7 +57,7 @@ class AutocompleteClient extends AbstractHttpClient
 	 */
 	public function getHouseNumbersWithoutStreetByCityPartCode($cityPartCode): ResponseInterface
 	{
-		return $this->httpClient->request('GET', sprintf('%s/house-numbers-without-street-by-part-of-city-code/%s', static::BASE_URL, (string) $cityPartCode));
+		return $this->httpClient->request('GET', sprintf('%s/house-numbers-without-street-by-part-of-city-code/%s', self::BASE_URL, (string) $cityPartCode));
 	}
 
 }

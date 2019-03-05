@@ -6,7 +6,7 @@ use ISPA\ApiClients\App\Lotus\Requestor\UserRequestor;
 use ISPA\ApiClients\Domain\AbstractRootquestor;
 
 /**
- * @property-read UserRequestor $users
+ * @property-read UserRequestor $user
  */
 class LotusRootquestor extends AbstractRootquestor
 {

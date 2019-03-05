@@ -62,125 +62,136 @@ class ApiClientsExtensionTest extends ContainerTestCase
 	protected function setUpCompileContainer(Compiler $compiler): void
 	{
 		$compiler->addExtension('ispa.apis', new ApiClientsExtension());
+		$compiler->addConfig([
+			'ispa.apis' => [
+				'app' => [
+					'dbd' => [
+						'http' => [
+							'wsdl' => 'http://ws.dcgroup.cz/index.php?WSDL',
+						],
+					],
+				],
+			],
+		]);
 	}
 
 	public function testServicesRegistration(): void
 	{
 		// CorePass
-		static::assertInstanceOf(ApiProvider::class, $this->container->getService('ispa.apis.provider'));
-		static::assertInstanceOf(GuzzleFactory::class, $this->container->getService('ispa.apis.guzzleFactory'));
+		static::assertInstanceOf(ApiProvider::class, $this->getContainer()->getService('ispa.apis.provider'));
+		static::assertInstanceOf(GuzzleFactory::class, $this->getContainer()->getService('ispa.apis.guzzleFactory'));
 
 		// AppAresPass
-		static::assertInstanceOf(HttpClient::class, $this->container->getService('ispa.apis.app.ares.http.client'));
+		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.ares.http.client'));
 
-		static::assertInstanceOf(AddressClient::class, $this->container->getService('ispa.apis.app.ares.client.address'));
-		static::assertInstanceOf(SubjectClient::class, $this->container->getService('ispa.apis.app.ares.client.subject'));
+		static::assertInstanceOf(AddressClient::class, $this->getContainer()->getService('ispa.apis.app.ares.client.address'));
+		static::assertInstanceOf(SubjectClient::class, $this->getContainer()->getService('ispa.apis.app.ares.client.subject'));
 
-		static::assertInstanceOf(AddressRequestor::class, $this->container->getService('ispa.apis.app.ares.requestor.address'));
-		static::assertInstanceOf(SubjectRequestor::class, $this->container->getService('ispa.apis.app.ares.requestor.subject'));
+		static::assertInstanceOf(AddressRequestor::class, $this->getContainer()->getService('ispa.apis.app.ares.requestor.address'));
+		static::assertInstanceOf(SubjectRequestor::class, $this->getContainer()->getService('ispa.apis.app.ares.requestor.subject'));
 
-		static::assertInstanceOf(AresRootquestor::class, $this->container->getService('ispa.apis.app.ares.rootquestor'));
-		static::assertInstanceOf(AddressRequestor::class, $this->container->getService('ispa.apis.app.ares.rootquestor')->address);
-		static::assertInstanceOf(SubjectRequestor::class, $this->container->getService('ispa.apis.app.ares.rootquestor')->subject);
+		static::assertInstanceOf(AresRootquestor::class, $this->getContainer()->getService('ispa.apis.app.ares.rootquestor'));
+		static::assertInstanceOf(AddressRequestor::class, $this->getContainer()->getService('ispa.apis.app.ares.rootquestor')->address);
+		static::assertInstanceOf(SubjectRequestor::class, $this->getContainer()->getService('ispa.apis.app.ares.rootquestor')->subject);
 
-		static::assertInstanceOf(AresRootquestor::class, $this->container->getService('ispa.apis.provider')->ares);
+		static::assertInstanceOf(AresRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->ares);
 
 		// AppCrmPass
-		static::assertInstanceOf(HttpClient::class, $this->container->getService('ispa.apis.app.adminus.http.client'));
+		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.http.client'));
 
-		static::assertInstanceOf(AccountingEntityClient::class, $this->container->getService('ispa.apis.app.adminus.client.accountingEntity'));
-		static::assertInstanceOf(ContractClient::class, $this->container->getService('ispa.apis.app.adminus.client.contract'));
-		static::assertInstanceOf(CustomerClient::class, $this->container->getService('ispa.apis.app.adminus.client.customer'));
-		static::assertInstanceOf(UserClient::class, $this->container->getService('ispa.apis.app.adminus.client.user'));
+		static::assertInstanceOf(AccountingEntityClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.client.accountingEntity'));
+		static::assertInstanceOf(ContractClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.client.contract'));
+		static::assertInstanceOf(CustomerClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.client.customer'));
+		static::assertInstanceOf(UserClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.client.user'));
 
-		static::assertInstanceOf(AccountingEntityRequestor::class, $this->container->getService('ispa.apis.app.adminus.requestor.accountingEntity'));
-		static::assertInstanceOf(ContractRequestor::class, $this->container->getService('ispa.apis.app.adminus.requestor.contract'));
-		static::assertInstanceOf(CustomerRequestor::class, $this->container->getService('ispa.apis.app.adminus.requestor.customer'));
-		static::assertInstanceOf(UserRequestor::class, $this->container->getService('ispa.apis.app.adminus.requestor.user'));
+		static::assertInstanceOf(AccountingEntityRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.requestor.accountingEntity'));
+		static::assertInstanceOf(ContractRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.requestor.contract'));
+		static::assertInstanceOf(CustomerRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.requestor.customer'));
+		static::assertInstanceOf(UserRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.requestor.user'));
 
-		static::assertInstanceOf(CrmRootquestor::class, $this->container->getService('ispa.apis.app.adminus.rootquestor'));
+		static::assertInstanceOf(CrmRootquestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.rootquestor'));
 
-		static::assertInstanceOf(AccountingEntityRequestor::class, $this->container->getService('ispa.apis.app.adminus.rootquestor')->accountingEntity);
-		static::assertInstanceOf(ContractRequestor::class, $this->container->getService('ispa.apis.app.adminus.rootquestor')->contract);
-		static::assertInstanceOf(CustomerRequestor::class, $this->container->getService('ispa.apis.app.adminus.rootquestor')->customer);
-		static::assertInstanceOf(UserRequestor::class, $this->container->getService('ispa.apis.app.adminus.rootquestor')->user);
+		static::assertInstanceOf(AccountingEntityRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.rootquestor')->accountingEntity);
+		static::assertInstanceOf(ContractRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.rootquestor')->contract);
+		static::assertInstanceOf(CustomerRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.rootquestor')->customer);
+		static::assertInstanceOf(UserRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.rootquestor')->user);
 
-		static::assertInstanceOf(CrmRootquestor::class, $this->container->getService('ispa.apis.provider')->crm);
+		static::assertInstanceOf(CrmRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->crm);
 
 		// AppLotusPass
-		static::assertInstanceOf(HttpClient::class, $this->container->getService('ispa.apis.app.lotus.http.client'));
+		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.http.client'));
 
-		static::assertInstanceOf(LotusUserClient::class, $this->container->getService('ispa.apis.app.lotus.client.users'));
+		static::assertInstanceOf(LotusUserClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.user'));
 
-		static::assertInstanceOf(LotusUserRequestor::class, $this->container->getService('ispa.apis.app.lotus.requestor.users'));
+		static::assertInstanceOf(LotusUserRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.user'));
 
-		static::assertInstanceOf(LotusRootquestor::class, $this->container->getService('ispa.apis.app.lotus.rootquestor'));
+		static::assertInstanceOf(LotusRootquestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor'));
 
-		static::assertInstanceOf(UserRequestor::class, $this->container->getService('ispa.apis.app.lotus.rootquestor')->user);
+		static::assertInstanceOf(LotusUserRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor')->user);
 
-		static::assertInstanceOf(LotusRootquestor::class, $this->container->getService('ispa.apis.provider')->lotus);
+		static::assertInstanceOf(LotusRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->lotus);
 
 		// AppPedefPass
-		static::assertInstanceOf(HttpClient::class, $this->container->getService('ispa.apis.app.pedef.http.client'));
+		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.pedef.http.client'));
 
-		static::assertInstanceOf(ThumbnailClient::class, $this->container->getService('ispa.apis.app.pedef.client.thumbnail'));
+		static::assertInstanceOf(ThumbnailClient::class, $this->getContainer()->getService('ispa.apis.app.pedef.client.thumbnail'));
 
-		static::assertInstanceOf(ThumbnailRequestor::class, $this->container->getService('ispa.apis.app.pedef.requestor.thumbnail'));
+		static::assertInstanceOf(ThumbnailRequestor::class, $this->getContainer()->getService('ispa.apis.app.pedef.requestor.thumbnail'));
 
-		static::assertInstanceOf(PedefRootquestor::class, $this->container->getService('ispa.apis.app.pedef.rootquestor'));
+		static::assertInstanceOf(PedefRootquestor::class, $this->getContainer()->getService('ispa.apis.app.pedef.rootquestor'));
 
-		static::assertInstanceOf(ThumbnailRequestor::class, $this->container->getService('ispa.apis.app.pedef.rootquestor')->thumbnail);
+		static::assertInstanceOf(ThumbnailRequestor::class, $this->getContainer()->getService('ispa.apis.app.pedef.rootquestor')->thumbnail);
 
-		static::assertInstanceOf(PedefRootquestor::class, $this->container->getService('ispa.apis.provider')->pedef);
+		static::assertInstanceOf(PedefRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->pedef);
 
 		// AppRuianPass
-		static::assertInstanceOf(HttpClient::class, $this->container->getService('ispa.apis.app.ruian.http.client'));
+		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.http.client'));
 
-		static::assertInstanceOf(AddressPlacesClient::class, $this->container->getService('ispa.apis.app.ruian.client.addressPlaces'));
-		static::assertInstanceOf(AutocompleteClient::class, $this->container->getService('ispa.apis.app.ruian.client.autocomplete'));
-		static::assertInstanceOf(BuildingObjectClient::class, $this->container->getService('ispa.apis.app.ruian.client.buildingObject'));
-		static::assertInstanceOf(CadastralAreaClient::class, $this->container->getService('ispa.apis.app.ruian.client.cadastralArea'));
-		static::assertInstanceOf(DistrictClient::class, $this->container->getService('ispa.apis.app.ruian.client.district'));
-		static::assertInstanceOf(MetaClient::class, $this->container->getService('ispa.apis.app.ruian.client.meta'));
-		static::assertInstanceOf(MunicipalityClient::class, $this->container->getService('ispa.apis.app.ruian.client.municipality'));
-		static::assertInstanceOf(MunicipalityPartClient::class, $this->container->getService('ispa.apis.app.ruian.client.municipalityPart'));
-		static::assertInstanceOf(ParcelClient::class, $this->container->getService('ispa.apis.app.ruian.client.parcel'));
-		static::assertInstanceOf(RegionClient::class, $this->container->getService('ispa.apis.app.ruian.client.region'));
-		static::assertInstanceOf(SearchClient::class, $this->container->getService('ispa.apis.app.ruian.client.search'));
-		static::assertInstanceOf(StreetClient::class, $this->container->getService('ispa.apis.app.ruian.client.street'));
-		static::assertInstanceOf(ZsjClient::class, $this->container->getService('ispa.apis.app.ruian.client.zsj'));
+		static::assertInstanceOf(AddressPlacesClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.addressPlaces'));
+		static::assertInstanceOf(AutocompleteClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.autocomplete'));
+		static::assertInstanceOf(BuildingObjectClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.buildingObject'));
+		static::assertInstanceOf(CadastralAreaClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.cadastralArea'));
+		static::assertInstanceOf(DistrictClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.district'));
+		static::assertInstanceOf(MetaClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.meta'));
+		static::assertInstanceOf(MunicipalityClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.municipality'));
+		static::assertInstanceOf(MunicipalityPartClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.municipalityPart'));
+		static::assertInstanceOf(ParcelClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.parcel'));
+		static::assertInstanceOf(RegionClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.region'));
+		static::assertInstanceOf(SearchClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.search'));
+		static::assertInstanceOf(StreetClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.street'));
+		static::assertInstanceOf(ZsjClient::class, $this->getContainer()->getService('ispa.apis.app.ruian.client.zsj'));
 
-		static::assertInstanceOf(AddressPlacesRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.addressPlaces'));
-		static::assertInstanceOf(AutocompleteRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.autocomplete'));
-		static::assertInstanceOf(BuildingObjectRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.buildingObject'));
-		static::assertInstanceOf(CadastralAreaRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.cadastralArea'));
-		static::assertInstanceOf(DistrictRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.district'));
-		static::assertInstanceOf(MetaRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.meta'));
-		static::assertInstanceOf(MunicipalityRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.municipality'));
-		static::assertInstanceOf(MunicipalityPartRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.municipalityPart'));
-		static::assertInstanceOf(ParcelRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.parcel'));
-		static::assertInstanceOf(RegionRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.region'));
-		static::assertInstanceOf(SearchRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.search'));
-		static::assertInstanceOf(StreetRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.street'));
-		static::assertInstanceOf(ZsjRequestor::class, $this->container->getService('ispa.apis.app.ruian.requestor.zsj'));
+		static::assertInstanceOf(AddressPlacesRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.addressPlaces'));
+		static::assertInstanceOf(AutocompleteRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.autocomplete'));
+		static::assertInstanceOf(BuildingObjectRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.buildingObject'));
+		static::assertInstanceOf(CadastralAreaRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.cadastralArea'));
+		static::assertInstanceOf(DistrictRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.district'));
+		static::assertInstanceOf(MetaRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.meta'));
+		static::assertInstanceOf(MunicipalityRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.municipality'));
+		static::assertInstanceOf(MunicipalityPartRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.municipalityPart'));
+		static::assertInstanceOf(ParcelRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.parcel'));
+		static::assertInstanceOf(RegionRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.region'));
+		static::assertInstanceOf(SearchRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.search'));
+		static::assertInstanceOf(StreetRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.street'));
+		static::assertInstanceOf(ZsjRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.requestor.zsj'));
 
-		static::assertInstanceOf(RuianRootquestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor'));
+		static::assertInstanceOf(RuianRootquestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor'));
 
-		static::assertInstanceOf(AddressPlacesRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->addressPlaces);
-		static::assertInstanceOf(AutocompleteRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->autocomplete);
-		static::assertInstanceOf(BuildingObjectRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->buildingObject);
-		static::assertInstanceOf(CadastralAreaRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->cadastralArea);
-		static::assertInstanceOf(DistrictRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->district);
-		static::assertInstanceOf(MetaRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->meta);
-		static::assertInstanceOf(MunicipalityRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->municipality);
-		static::assertInstanceOf(MunicipalityPartRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->municipalityPart);
-		static::assertInstanceOf(ParcelRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->parcel);
-		static::assertInstanceOf(RegionRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->region);
-		static::assertInstanceOf(SearchRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->search);
-		static::assertInstanceOf(StreetRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->street);
-		static::assertInstanceOf(ZsjRequestor::class, $this->container->getService('ispa.apis.app.ruian.rootquestor')->zsj);
+		static::assertInstanceOf(AddressPlacesRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->addressPlaces);
+		static::assertInstanceOf(AutocompleteRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->autocomplete);
+		static::assertInstanceOf(BuildingObjectRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->buildingObject);
+		static::assertInstanceOf(CadastralAreaRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->cadastralArea);
+		static::assertInstanceOf(DistrictRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->district);
+		static::assertInstanceOf(MetaRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->meta);
+		static::assertInstanceOf(MunicipalityRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->municipality);
+		static::assertInstanceOf(MunicipalityPartRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->municipalityPart);
+		static::assertInstanceOf(ParcelRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->parcel);
+		static::assertInstanceOf(RegionRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->region);
+		static::assertInstanceOf(SearchRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->search);
+		static::assertInstanceOf(StreetRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->street);
+		static::assertInstanceOf(ZsjRequestor::class, $this->getContainer()->getService('ispa.apis.app.ruian.rootquestor')->zsj);
 
-		static::assertInstanceOf(RuianRootquestor::class, $this->container->getService('ispa.apis.provider')->ruian);
+		static::assertInstanceOf(RuianRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->ruian);
 	}
 
 }

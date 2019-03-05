@@ -26,11 +26,13 @@ class SearchClient extends AbstractHttpClient
 	 */
 	public function getByFilter(array $filters, bool $expanded = FALSE): ResponseInterface
 	{
-		$query = $expanded ? Helpers::buildQuery(['expanded' => 'true']) : '';
+		$query = $expanded
+            ? Helpers::buildQuery(['expanded' => 'true'])
+            : '';
 
 		return $this->httpClient->request(
             'POST',
-			sprintf('%s/by-filter%s', static::BASE_URL, $query),
+			sprintf('%s/by-filter%s', self::BASE_URL, $query),
 			[
 				'body' => json_encode($filters),
 			]
@@ -54,11 +56,13 @@ class SearchClient extends AbstractHttpClient
 	 */
 	public function getMultipleByFilter(array $filters, bool $expanded = FALSE): ResponseInterface
 	{
-		$query = $expanded ? Helpers::buildQuery(['expanded' => 'true']) : '';
+		$query = $expanded
+            ? Helpers::buildQuery(['expanded' => 'true'])
+            : '';
 
 		return $this->httpClient->request(
             'POST',
-			sprintf('%s/multiple-by-filter%s', static::BASE_URL, $query),
+			sprintf('%s/multiple-by-filter%s', self::BASE_URL, $query),
 			[
 				'body' => json_encode($filters),
 			]
@@ -70,21 +74,21 @@ class SearchClient extends AbstractHttpClient
 	 */
 	public function getByFulltext(string $filter, $limit = NULL): ResponseInterface
 	{
-		if ($limit !== NULL) return $this->httpClient->request('GET', sprintf('%s/by-fulltext/%s/%s', static::BASE_URL, $filter, (string) $limit));
+		if ($limit !== NULL) return $this->httpClient->request('GET', sprintf('%s/by-fulltext/%s/%s', self::BASE_URL, $filter, (string) $limit));
 
-		return $this->httpClient->request('GET', sprintf('%s/by-fulltext/%s', static::BASE_URL, $filter));
+		return $this->httpClient->request('GET', sprintf('%s/by-fulltext/%s', self::BASE_URL, $filter));
 	}
 
 	public function getMultipleByFulltext(): ResponseInterface
 	{
 		//todo - missing docs
-		return $this->httpClient->request('POST', sprintf('%s/multiple-by-fulltext', static::BASE_URL));
+		return $this->httpClient->request('POST', sprintf('%s/multiple-by-fulltext', self::BASE_URL));
 	}
 
 	public function getByPolygon(): ResponseInterface
 	{
 		//todo - missing docs
-		return $this->httpClient->request('POST', sprintf('%s/by-polygon', static::BASE_URL));
+		return $this->httpClient->request('POST', sprintf('%s/by-polygon', self::BASE_URL));
 	}
 
 	/**

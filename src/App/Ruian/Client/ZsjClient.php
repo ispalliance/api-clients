@@ -17,7 +17,8 @@ class ZsjClient extends AbstractHttpClient
 			'from' => $from,
 			'limit' => $limit,
 		]);
-		return $this->httpClient->request('GET', sprintf('%s%s', static::BASE_URL, $query));
+
+		return $this->httpClient->request('GET', sprintf('%s%s', self::BASE_URL, $query));
 	}
 
 }

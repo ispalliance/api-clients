@@ -11,20 +11,7 @@ abstract class ContainerTestCase extends TestCase
 {
 
 	/** @var Container */
-	protected $container;
-
-	/** @var mixed[] */
-	protected $coptions = [
-		'unique' => FALSE,
-		'classUnique' => FALSE,
-		'parameters' => [],
-	];
-
-	protected function setUp(): void
-	{
-		parent::setUp();
-		$this->container = $this->getContainer();
-	}
+	private $container;
 
 	protected function getContainer(): Container
 	{
@@ -38,37 +25,10 @@ abstract class ContainerTestCase extends TestCase
 
 	protected function createContainer(): Container
 	{
-		// Check composer && tester
-		if (@!include __DIR__ . '/../../vendor/autoload.php') {
-			echo 'Install PhpUnit using `composer update --dev`';
-			exit(1);
-		}
-
 		// Create container
 		$loader = new ContainerLoader(self::TEMP_DIR);
 		$class = $loader->load(function (Compiler $compiler): void {
 			$compiler->addExtension('extensions', new ExtensionsExtension());
-
-			// Customizations
-			if ($this->coptions['unique'] === TRUE) {
-				$compiler->addConfig([
-					'parameters' => [
-						'tests__timestamp' => microtime(TRUE),
-					],
-				]);
-			}
-			if ($this->coptions['classUnique'] === TRUE) {
-				$compiler->addConfig([
-					'parameters' => [
-						'tests__called_class' => static::class,
-					],
-				]);
-			}
-			if ($this->coptions['parameters'] === TRUE) {
-				$compiler->addConfig([
-					'parameters' => $this->coptions['parameters'],
-				]);
-			}
 
 			// Call decorated method
 			$this->setUpCompileContainer($compiler);

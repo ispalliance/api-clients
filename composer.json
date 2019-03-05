@@ -25,9 +25,9 @@
     }
   ],
   "require": {
-    "php": ">=7.2.0",
+    "php": ">=7.3",
     "guzzlehttp/guzzle": "^6.3.3",
-    "contributte/utils": "^0.3.1"
+    "contributte/utils": "^0.4.0"
   },
   "require-dev": {
     "ext-dom": "*",
@@ -35,13 +35,13 @@
     "ext-libxml": "*",
     "ext-simplexml": "*",
     "ext-soap": "*",
-    "ninjify/qa": "^0.8.0",
-    "phpunit/phpunit": "^7.4.0",
-    "nette/di": "~2.4.14",
-    "phpstan/phpstan-shim": "^0.11",
-    "phpstan/phpstan-deprecation-rules": "^0.11",
-    "phpstan/phpstan-nette": "^0.11",
-    "phpstan/phpstan-strict-rules": "^0.11"
+    "ninjify/qa": "^0.9.0",
+    "phpunit/phpunit": "^8.0.4",
+    "nette/di": "~2.4.15 || ~3.0.0",
+    "phpstan/phpstan-shim": "^0.11.2",
+    "phpstan/phpstan-deprecation-rules": "^0.11.0",
+    "phpstan/phpstan-nette": "^0.11.0",
+    "phpstan/phpstan-strict-rules": "^0.11.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
