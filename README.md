@@ -4,10 +4,10 @@ This is aggregated central API client with delightful usage in Nette Framework a
 
 [![Build Status](https://img.shields.io/travis/ispalliance/api-clients.svg?style=flat-square)](https://travis-ci.org/ispalliance/api-clients)
 [![Code coverage](https://img.shields.io/coveralls/ispalliance/api-clients.svg?style=flat-square)](https://coveralls.io/r/ispalliance/api-clients)
-[![Licence](https://img.shields.io/packagist/l/ispalliance/api-clients.svg?style=flat-square)](https://packagist.org/packages/ispalliance/api-clients)
-[![Downloads this Month](https://img.shields.io/packagist/dm/ispalliance/api-clients.svg?style=flat-square)](https://packagist.org/packages/ispalliance/api-clients)
-[![Downloads total](https://img.shields.io/packagist/dt/ispalliance/api-clients.svg?style=flat-square)](https://packagist.org/packages/ispalliance/api-clients)
-[![Latest stable](https://img.shields.io/packagist/v/ispalliance/api-clients.svg?style=flat-square)](https://packagist.org/packages/ispalliance/api-clients)
+[![Licence](https://img.shields.io/packagist/l/ispa/api-clients.svg?style=flat-square)](https://packagist.org/packages/ispa/api-clients)
+[![Downloads this Month](https://img.shields.io/packagist/dm/ispa/api-clients.svg?style=flat-square)](https://packagist.org/packages/ispa/api-clients)
+[![Downloads total](https://img.shields.io/packagist/dt/ispa/api-clients.svg?style=flat-square)](https://packagist.org/packages/ispa/api-clients)
+[![Latest stable](https://img.shields.io/packagist/v/ispa/api-clients.svg?style=flat-square)](https://packagist.org/packages/ispa/api-clients)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
 
 
