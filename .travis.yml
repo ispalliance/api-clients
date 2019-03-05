@@ -1,7 +1,7 @@
 language: php
 php:
   - 7.3
-  - 7.4dev
+  - 7.4snapshot
 
 before_install:
   # Turn off XDebug
@@ -50,7 +50,7 @@ jobs:
         - composer outdated --direct --strict
 
   allow_failures:
-    - php: 7.4dev
+    - php: 7.4snapshot
 
 sudo: false
 
