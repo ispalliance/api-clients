@@ -21,7 +21,7 @@ composer require ispa/api-clients
 
 | State       | Version      | Branch   | PHP      | Composer                                        |
 |-------------|--------------|----------|----------|-------------------------------------------------|
-| development | `^0.1.0`     | `master` | `>= 7.3` | `minimum-stability: dev`, `prefer-stable: true` |
+| development | `^0.2.0`     | `master` | `>= 7.3` | `minimum-stability: dev`, `prefer-stable: true` |
 | stable      | `^0.1.0`     | `master` | `>= 7.3` |                                                 |
 
 ## Documentation
