@@ -17,8 +17,6 @@ final class UsageTest extends TestCase
 
 	public function setUp(): void
 	{
-		$this->markTestSkipped('Manual testing only');
-
 		$config = [
 			'app' => [
 				AppNominatimPass::APP_NAME => [

@@ -18,8 +18,6 @@ final class UsageTest extends TestCase
 
 	public function setUp(): void
 	{
-		$this->markTestSkipped('Manual testing only');
-
 		// Change base_uri and X-Api-Token values
 		$config = [
 			'app' => [

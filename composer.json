@@ -58,7 +58,7 @@
       "codesniffer src tests"
     ],
     "tests": [
-      "phpunit tests --colors=always"
+      "phpunit -c phpunit.xml --stderr --colors=always"
     ],
     "coverage": [
       "phpdbg -qrr vendor/bin/phpunit tests --colors=always -c tests/coverage.xml"

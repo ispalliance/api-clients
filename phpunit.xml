@@ -22,7 +22,7 @@
 	</php>
 	<testsuites>
 		<testsuite name="API">
-			<directory>./tests/cases</directory>
+			<directory suffix=".php">./tests/cases</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

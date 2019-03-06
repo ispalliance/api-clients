@@ -1,32 +1,33 @@
 <?xml version="1.0"?>
 <ruleset name="ISPA Apis">
 
-    <!-- Extending rulesets -->
-    <rule ref="./vendor/ninjify/coding-standard/ruleset.xml">
-        <exclude name="Generic.PHP.LowerCaseConstant"/> <!-- TRUE, FALSE, NULL -->
+	<!-- Extending rulesets -->
+	<rule ref="./vendor/ninjify/coding-standard/ruleset.xml">
+		<exclude name="Generic.PHP.LowerCaseConstant"/> <!-- TRUE, FALSE, NULL -->
 		<exclude name="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing"/>
 		<exclude name="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator"/>
 		<exclude name="SlevomatCodingStandard.ControlStructures.UselessIfConditionWithReturn"/>
-    </rule>
+	</rule>
 
-    <!-- Specific rules -->
-    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
-        <properties>
-            <property name="rootNamespaces" type="array" value="
-                src=>ISPA\ApiClients,
-                tests/cases=>Tests\Cases,
-                tests/toolkit=>Tests\Toolkit,
-            "/>
-        </properties>
-    </rule>
-    <rule ref="Generic.PHP.UpperCaseConstant"/>
-    <rule ref="Generic.WhiteSpace.ScopeIndent">
-        <properties>
-            <property name="indent" value="4"/>
-            <property name="tabIndent" value="true"/>
-        </properties>
-    </rule>
+	<!-- Specific rules -->
+	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+		<properties>
+			<property name="rootNamespaces" type="array" value="
+				src=>ISPA\ApiClients,
+				tests/cases=>Tests\Cases,
+				tests/toolkit=>Tests\Toolkit,
+			"/>
+			<property name="extensions" type="array" value="php,phpt"/>
+		</properties>
+	</rule>
+	<rule ref="Generic.PHP.UpperCaseConstant"/>
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" value="4"/>
+			<property name="tabIndent" value="true"/>
+		</properties>
+	</rule>
 
-    <!-- Exclude folders -->
-    <exclude-pattern>/tests/tmp</exclude-pattern>
+	<!-- Exclude folders -->
+	<exclude-pattern>/tests/tmp</exclude-pattern>
 </ruleset>
