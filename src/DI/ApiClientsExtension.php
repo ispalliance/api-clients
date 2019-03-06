@@ -6,6 +6,7 @@ use ISPA\ApiClients\DI\Pass\AbstractPass;
 use ISPA\ApiClients\DI\Pass\AppAresPass;
 use ISPA\ApiClients\DI\Pass\AppCrmPass;
 use ISPA\ApiClients\DI\Pass\AppDbdPass;
+use ISPA\ApiClients\DI\Pass\AppJuicyPdfPass;
 use ISPA\ApiClients\DI\Pass\AppLotusPass;
 use ISPA\ApiClients\DI\Pass\AppNominatimPass;
 use ISPA\ApiClients\DI\Pass\AppPedefPass;
@@ -26,6 +27,7 @@ class ApiClientsExtension extends CompilerExtension
 			'crm' => [],
 			'dbd' => [],
 			'lotus' => [],
+			'juicypdf' => [],
 			'nominatim' => [],
 			'nms' => [],
 			'pedef' => [],
@@ -47,6 +49,7 @@ class ApiClientsExtension extends CompilerExtension
 		$this->passes[] = new AppNominatimPass($this);
 		$this->passes[] = new AppPedefPass($this);
 		$this->passes[] = new AppRuianPass($this);
+		$this->passes[] = new AppJuicyPdfPass($this);
 	}
 
 	public function loadConfiguration(): void

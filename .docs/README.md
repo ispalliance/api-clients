@@ -27,6 +27,7 @@ And these 3rd-party applications
  
  - **dbd**
  - **nominatim**
+ - **juicypdf**
 
 The configuration for single application looks like this:
 
@@ -509,3 +510,25 @@ Allows you to get gps coordinates for given address or in reverse get address fr
 | -------------------------------------| --------------------------- |----- |
 | findByCoords(float $lat, float $lng) | /reverse                 | GET  |
 | findByAddress(Address $address)      | /                        | GET  |
+
+
+## JuicyPdf
+
+JuicyPdf is from family of [Juicy Functions](https://github.com/juicyfx). It creates a PDF files.
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        juicypdf:
+            http:
+                base_uri: https://pdf.jfx.cz/
+```
+
+### Available requestor's methods
+
+
+| Method              | API path                         | Type |
+| ------------------- | ---------------------------------|----- |
+| fromSource($source) | /gen                             | POST |
