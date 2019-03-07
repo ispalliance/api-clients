@@ -2,9 +2,9 @@
 
 namespace ISPA\ApiClients\DI\Pass;
 
+use ISPA\ApiClients\App\JuicyPdf\Client\PdfClient;
 use ISPA\ApiClients\App\JuicyPdf\JuicyPdfRootquestor;
-use ISPA\ApiClients\App\Lotus\Client\UserClient;
-use ISPA\ApiClients\App\Lotus\Requestor\UserRequestor;
+use ISPA\ApiClients\App\JuicyPdf\Requestor\PdfRequestor;
 use ISPA\ApiClients\Http\HttpClient;
 
 class AppJuicyPdfPass extends BaseAppPass
@@ -28,11 +28,11 @@ class AppJuicyPdfPass extends BaseAppPass
 
 		// #2 Clients
 		$builder->addDefinition($this->extension->prefix('app.juicypdf.client.pdf'))
-			->setFactory(UserClient::class, [$this->extension->prefix('@app.juicypdf.http.client')]);
+			->setFactory(PdfClient::class, [$this->extension->prefix('@app.juicypdf.http.client')]);
 
 		// #3 Requestors
 		$builder->addDefinition($this->extension->prefix('app.juicypdf.requestor.pdf'))
-			->setFactory(UserRequestor::class, [$this->extension->prefix('@app.juicypdf.client.pdf')]);
+			->setFactory(PdfRequestor::class, [$this->extension->prefix('@app.juicypdf.client.pdf')]);
 
 		// #4 Rootquestor
 		$builder->addDefinition($this->extension->prefix('app.juicypdf.rootquestor'))
