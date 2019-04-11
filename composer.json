@@ -7,9 +7,7 @@
     "api"
   ],
   "type": "library",
-  "license": [
-    "MIT"
-  ],
+  "license": "MIT",
   "homepage": "https://github.com/ispalliance/api-clients",
   "authors": [
     {
@@ -25,9 +23,9 @@
     }
   ],
   "require": {
-    "php": ">=7.3",
-    "guzzlehttp/guzzle": "^6.3.3",
-    "contributte/utils": "^0.4.0"
+    "php": "^7.3",
+    "contributte/utils": "^0.4.0",
+    "guzzlehttp/guzzle": "^6.3.3"
   },
   "require-dev": {
     "ext-dom": "*",
@@ -35,13 +33,13 @@
     "ext-libxml": "*",
     "ext-simplexml": "*",
     "ext-soap": "*",
-    "ninjify/qa": "^0.9.0",
-    "phpunit/phpunit": "^8.0.4",
     "nette/di": "~2.4.15 || ~3.0.0",
-    "phpstan/phpstan-shim": "^0.11.2",
+    "ninjify/qa": "^0.9.0",
     "phpstan/phpstan-deprecation-rules": "^0.11.0",
     "phpstan/phpstan-nette": "^0.11.0",
-    "phpstan/phpstan-strict-rules": "^0.11.0"
+    "phpstan/phpstan-shim": "^0.11.2",
+    "phpstan/phpstan-strict-rules": "^0.11.0",
+    "phpunit/phpunit": "^8.0.4"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -52,20 +50,8 @@
       "Tests\\Toolkit\\": "tests/toolkit"
     }
   },
-  "scripts": {
-    "qa": [
-      "linter src tests",
-      "codesniffer src tests"
-    ],
-    "tests": [
-      "phpunit -c phpunit.xml --stderr --colors=always"
-    ],
-    "coverage": [
-      "phpdbg -qrr vendor/bin/phpunit tests --colors=always -c tests/coverage.xml"
-    ],
-    "phpstan": [
-      "vendor/bin/phpstan analyse -l max -c phpstan.neon src"
-    ]
+  "config": {
+    "sort-packages": true
   },
   "extra": {
     "branch-alias": {

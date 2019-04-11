@@ -14,11 +14,14 @@ parameters:
 			message: '#^Parameter \#1 \$str of function trim expects string, string\|null given\.$#'
 			path: %currentWorkingDirectory%/src/App/Ares/Client/SubjectClient.php
 		-
-			message: '#^Parameter \#1 \$input of function str_pad expects string, string\|null given.$#'
+			message: '#^Parameter \#1 \$input of function str_pad expects string, string\|null given\.$#'
 			path: %currentWorkingDirectory%/src/App/Ares/Utils/IdNumberUtils.php
 		-
-			message: '#^If condition is always true.$#'
+			message: '#^If condition is always true\.$#'
 			path: %currentWorkingDirectory%/src/App/Dbd/Client/DebtorClient.php
 		-
-			message: '#^Only booleans are allowed in an if condition, SimpleXMLElement given.$#'
+			message: '#^Only booleans are allowed in an if condition, SimpleXMLElement given\.$#'
+			path: %currentWorkingDirectory%/src/App/Dbd/Client/DebtorClient.php
+		-
+			message: '#^Instanceof between ISPA\\ApiClients\\App\\Dbd\\Entity\\Company and ISPA\\ApiClients\\App\\Dbd\\Entity\\Company will always evaluate to true\.$#'
 			path: %currentWorkingDirectory%/src/App/Dbd/Client/DebtorClient.php

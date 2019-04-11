@@ -10,13 +10,6 @@ This is aggregated central API client with delightful usage in Nette Framework a
 [![Latest stable](https://img.shields.io/packagist/v/ispa/api-clients.svg?style=flat-square)](https://packagist.org/packages/ispa/api-clients)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
 
-
-## Install
-
-```
-composer require ispa/api-clients
-```
-
 ## Version
 
 | State       | Version      | Branch   | PHP      | Composer                                        |

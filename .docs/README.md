@@ -2,10 +2,15 @@
 
 This is aggregated central API client with delightful usage in Nette Framework and others.
 
+## Setup
 
-## Configuration
+Install package
 
-At first, register main extension in your NEON.
+```bash
+composer require ispa/api-clients
+```
+
+Register DI extension in your NEON.
 
 ```yaml
 extensions:
