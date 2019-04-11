@@ -45,4 +45,25 @@ final class UserRequestor extends BaseRequestor
 		return $this->processResponse($response)->getData();
 	}
 
+	/**
+	 * @param int[] $userIds
+	 * @return mixed[]
+	 */
+	public function combineUserGroup(string $gid, array $userIds, bool $includeSystemUsers = FALSE, bool $includeBlockedUsers = FALSE): array
+	{
+		$response = $this->client->combineUserGroup($gid, $userIds, $includeSystemUsers, $includeBlockedUsers);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function getMentions(string $query): array
+	{
+		$response = $this->client->getMentions($query);
+
+		return $this->processResponse($response)->getData();
+	}
+
 }

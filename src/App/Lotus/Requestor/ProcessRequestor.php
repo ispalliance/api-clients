@@ -49,6 +49,26 @@ final class ProcessRequestor extends BaseRequestor
 	/**
 	 * @return mixed[]
 	 */
+	public function addTag(int $pid, int $ttid): array
+	{
+		$response = $this->client->addTag($pid, $ttid);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function removeTag(int $pid, int $ttid): array
+	{
+		$response = $this->client->removeTag($pid, $ttid);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
 	public function listTemplates(int $limit = 10, int $offset = 0): array
 	{
 		$response = $this->client->listTemplates($limit, $offset);

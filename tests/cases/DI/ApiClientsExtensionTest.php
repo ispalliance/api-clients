@@ -16,8 +16,14 @@ use ISPA\ApiClients\App\Ares\Client\AddressClient;
 use ISPA\ApiClients\App\Ares\Client\SubjectClient;
 use ISPA\ApiClients\App\Ares\Requestor\AddressRequestor;
 use ISPA\ApiClients\App\Ares\Requestor\SubjectRequestor;
+use ISPA\ApiClients\App\Lotus\Client\CalendarClient;
+use ISPA\ApiClients\App\Lotus\Client\ProcessClient;
+use ISPA\ApiClients\App\Lotus\Client\SnippetClient;
 use ISPA\ApiClients\App\Lotus\Client\UserClient as LotusUserClient;
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
+use ISPA\ApiClients\App\Lotus\Requestor\CalendarRequestor;
+use ISPA\ApiClients\App\Lotus\Requestor\ProcessRequestor;
+use ISPA\ApiClients\App\Lotus\Requestor\SnippetRequestor;
 use ISPA\ApiClients\App\Lotus\Requestor\UserRequestor as LotusUserRequestor;
 use ISPA\ApiClients\App\Pedef\Client\ThumbnailClient;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
@@ -121,12 +127,21 @@ class ApiClientsExtensionTest extends ContainerTestCase
 		// AppLotusPass
 		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.http.client'));
 
+		static::assertInstanceOf(CalendarClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.calendar'));
+		static::assertInstanceOf(ProcessClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.process'));
+		static::assertInstanceOf(SnippetClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.snippet'));
 		static::assertInstanceOf(LotusUserClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.user'));
 
+		static::assertInstanceOf(CalendarRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.calendar'));
+		static::assertInstanceOf(ProcessRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.process'));
+		static::assertInstanceOf(SnippetRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.snippet'));
 		static::assertInstanceOf(LotusUserRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.user'));
 
 		static::assertInstanceOf(LotusRootquestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor'));
 
+		static::assertInstanceOf(CalendarRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor')->calendar);
+		static::assertInstanceOf(ProcessRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor')->process);
+		static::assertInstanceOf(SnippetRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor')->snippet);
 		static::assertInstanceOf(LotusUserRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor')->user);
 
 		static::assertInstanceOf(LotusRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->lotus);

@@ -45,6 +45,16 @@ class ProcessClient extends AbstractLotusClient
 		return $this->request('GET', sprintf('%s/detail/%d', self::PATH_PROCESS, $id));
 	}
 
+	public function addTag(int $pid, int $ttid): ResponseInterface
+	{
+		return $this->request('POST', sprintf('%s/%d/tags/%d', self::PATH_PROCESS, $pid, $ttid));
+	}
+
+	public function removeTag(int $pid, int $ttid): ResponseInterface
+	{
+		return $this->request('DELETE', sprintf('%s/%d/tags/%d', self::PATH_PROCESS, $pid, $ttid));
+	}
+
 	public function listTemplates(int $limit = 10, int $offset = 0): ResponseInterface
 	{
 		$query = Helpers::buildQuery([
@@ -94,7 +104,7 @@ class ProcessClient extends AbstractLotusClient
 			[
 				'multipart' => [
 					[
-						'name'     => 'File',
+						'name' => 'File',
 						'filename' => $fileName,
 						'contents' => $contents,
 					],
