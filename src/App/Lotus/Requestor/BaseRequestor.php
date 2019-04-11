@@ -14,26 +14,26 @@ class BaseRequestor extends AbstractRequestor
 {
 
 	/** @var AbstractLotusClient */
-	private $sudoClient;
+	protected $client;
 
-	public function __construct(AbstractLotusClient $sudoClient)
+	public function __construct(AbstractLotusClient $client)
 	{
-		$this->sudoClient = $sudoClient;
+		$this->client = $client;
 	}
 
 	public function enableSudo(string $email): void
 	{
-		$this->sudoClient->enableSudo($email);
+		$this->client->enableSudo($email);
 	}
 
 	public function disableSudo(): void
 	{
-		$this->sudoClient->disableSudo();
+		$this->client->disableSudo();
 	}
 
 	public function isSudo(): bool
 	{
-		return $this->sudoClient->isSudo();
+		return $this->client->isSudo();
 	}
 
 	protected function processResponse(ResponseInterface $response): LotusResponse

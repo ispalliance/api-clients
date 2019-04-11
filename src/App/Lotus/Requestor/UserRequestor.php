@@ -4,17 +4,15 @@ namespace ISPA\ApiClients\App\Lotus\Requestor;
 
 use ISPA\ApiClients\App\Lotus\Client\UserClient;
 
+/**
+ * @property UserClient $client
+ */
 final class UserRequestor extends BaseRequestor
 {
-
-	/** @var UserClient */
-	private $client;
 
 	public function __construct(UserClient $client)
 	{
 		parent::__construct($client);
-
-		$this->client = $client;
 	}
 
 	/**
