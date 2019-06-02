@@ -26,18 +26,14 @@ class ProcessClient extends AbstractLotusClient
 	/**
 	 * @param mixed[] $variables
 	 */
-	public function listProcessesByVariables(array $variables): ResponseInterface
+	public function listProcessesByVariables(array $variables, int $limit = 10, int $offset = 0): ResponseInterface
 	{
-		return $this->httpClient->request(
-			'POST',
-			sprintf('%s/find-by-variables', self::PATH_PROCESS),
-			[
-				'body' => Json::encode($variables),
-				'headers' => [
-					'Content-Type' => 'application/json',
-				],
-			]
-		);
+		$query = Helpers::buildQuery([
+			'limit' => $limit > 0 ? $limit : 10,
+			'offset' => $offset >= 0 ? $offset : 0,
+			'variables' => Json::encode($variables),
+		]);
+		return $this->request('GET', sprintf('%s?%s', self::PATH_PROCESS, $query));
 	}
 
 	public function getProcess(int $id): ResponseInterface

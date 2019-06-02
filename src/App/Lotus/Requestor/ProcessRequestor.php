@@ -28,6 +28,7 @@ final class ProcessRequestor extends BaseRequestor
 	/**
 	 * @param mixed[] $variables
 	 * @return mixed[]
+	 * @deprecated
 	 */
 	public function listProcessesByVariables(array $variables): array
 	{

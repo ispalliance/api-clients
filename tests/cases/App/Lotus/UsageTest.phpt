@@ -23,7 +23,7 @@ final class UsageTest extends TestCase
 			'app' => [
 				'lotus' => [
 					'http' => [
-						'base_uri' => 'http://localhost:8010/api/v1/',
+						'base_uri' => 'http://localhost:8000/api/v1/',
 						'headers' => [
 							'X-Api-Token' => 'TOKEN',
 						],
@@ -37,20 +37,29 @@ final class UsageTest extends TestCase
 
 	public function testListUsers(): void
 	{
-		$usrClient = new UserClient($this->guzzle);
-		$usrRequestor = new UserRequestor($usrClient);
+		$client = new UserClient($this->guzzle);
+		$requestor = new UserRequestor($client);
 
-		$res = $usrRequestor->list();
+		$res = $requestor->list();
 		$this->assertGreaterThan(0, count($res));
 	}
 
-	public function testUploadFile(): void
+	public function testListProcesses(): void
 	{
-		$procClient = new ProcessClient($this->guzzle);
-		$procRequestor = new ProcessRequestor($procClient);
+		$client = new ProcessClient($this->guzzle);
+		$requestor = new ProcessRequestor($client);
 
-		$upl = $procRequestor->uploadFile(12, 'task', 'filename', 'contents');
-		$this->assertEquals([], $upl);
+		$res = $requestor->listProcesses();
+		$this->assertGreaterThan(0, count($res));
+	}
+
+	public function testListProcessesByVariables(): void
+	{
+		$client = new ProcessClient($this->guzzle);
+		$requestor = new ProcessRequestor($client);
+
+		$res = $requestor->listProcessesByVariables(['processes1' => 73]);
+		$this->assertGreaterThan(0, count($res));
 	}
 
 }
