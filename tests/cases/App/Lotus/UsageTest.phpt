@@ -62,4 +62,13 @@ final class UsageTest extends TestCase
 		$this->assertGreaterThan(0, count($res));
 	}
 
+	public function testStartProcess(): void
+	{
+		$client = new ProcessClient($this->guzzle);
+		$requestor = new ProcessRequestor($client);
+
+		$res = $requestor->startProcess(1);
+		$this->assertEquals(1, $res['template']['id']);
+	}
+
 }

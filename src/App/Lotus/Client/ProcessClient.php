@@ -77,9 +77,12 @@ class ProcessClient extends AbstractLotusClient
 	{
 		return $this->request(
 			'POST',
-			sprintf('%s/%d', self::PATH_START, $id),
+			sprintf('%s', self::PATH_START),
 			[
-				'body' => Json::encode($data),
+				'body' => Json::encode(array_merge(
+					['template' => $id],
+					$data
+				)),
 				'headers' => [
 					'Content-Type' => 'application/json',
 				],
