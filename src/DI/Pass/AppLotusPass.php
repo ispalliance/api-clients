@@ -20,10 +20,6 @@ class AppLotusPass extends BaseAppPass
 
 	public function loadPassConfiguration(): void
 	{
-		// Is this APP enabled? (key in neon)
-		if (!$this->isEnabled(self::APP_NAME))
-			return;
-
 		$builder = $this->extension->getContainerBuilder();
 		$this->validateConfig(self::APP_NAME);
 

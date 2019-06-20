@@ -38,19 +38,18 @@ class ApiClientsExtension extends CompilerExtension
 	/** @var AbstractPass[] */
 	private $passes = [];
 
-	public function __construct()
-	{
-		$this->passes[] = new CorePass($this);
-
-		$this->passes[] = new AppAresPass($this);
-		$this->passes[] = new AppCrmPass($this);
-		$this->passes[] = new AppDbdPass($this);
-		$this->passes[] = new AppLotusPass($this);
-		$this->passes[] = new AppNominatimPass($this);
-		$this->passes[] = new AppPedefPass($this);
-		$this->passes[] = new AppRuianPass($this);
-		$this->passes[] = new AppJuicyPdfPass($this);
-	}
+	/** @var string[] */
+	private $map = [
+		CorePass::APP_NAME => CorePass::class,
+		AppAresPass::APP_NAME => AppAresPass::class,
+		AppCrmPass::APP_NAME => AppCrmPass::class,
+		AppDbdPass::APP_NAME => AppDbdPass::class,
+		AppLotusPass::APP_NAME => AppLotusPass::class,
+		AppNominatimPass::APP_NAME => AppNominatimPass::class,
+		AppPedefPass::APP_NAME => AppPedefPass::class,
+		AppRuianPass::APP_NAME => AppRuianPass::class,
+		AppJuicyPdfPass::APP_NAME => AppJuicyPdfPass::class,
+	];
 
 	public function loadConfiguration(): void
 	{
@@ -62,6 +61,14 @@ class ApiClientsExtension extends CompilerExtension
 
 		// Validate allowed apps
 		$this->validateConfig($this->defaults['app'], $config['app']);
+
+		// Instantiate enabled passes
+		foreach ($this->map as $passName => $passClass) {
+			$passConfig = $config['app'][$passName] ?? NULL;
+			if ($passName === CorePass::APP_NAME || !in_array($passConfig, [NULL, FALSE], TRUE)) {
+				$this->passes[] = new $passClass($this);
+			}
+		}
 
 		// Trigger passes
 		foreach ($this->passes as $pass) {

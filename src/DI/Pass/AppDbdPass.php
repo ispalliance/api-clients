@@ -14,9 +14,6 @@ class AppDbdPass extends BaseAppPass
 
 	public function loadPassConfiguration(): void
 	{
-		// Is this APP enabled? (key in neon)
-		if (!$this->isEnabled(self::APP_NAME)) return;
-
 		$builder = $this->extension->getContainerBuilder();
 		$config = $this->validateConfig(self::APP_NAME);
 

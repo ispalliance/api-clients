@@ -10,6 +10,8 @@ use ISPA\ApiClients\Utils\Arrays;
 class CorePass extends AbstractPass
 {
 
+	public const APP_NAME = 'core';
+
 	private const APP_GUZZLE = [
 		AppAresPass::APP_NAME,
 		AppCrmPass::APP_NAME,

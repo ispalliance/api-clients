@@ -11,13 +11,6 @@ abstract class BaseAppPass extends AbstractPass
 		'config' => [],
 	];
 
-	protected function isEnabled(string $app): bool
-	{
-		$config = $this->extension->getConfig();
-
-		return isset($config['app'][$app]) && $config['app'][$app] !== FALSE;
-	}
-
 	/**
 	 * @return mixed[]
 	 */
