@@ -14,33 +14,21 @@ use ISPA\ApiClients\DI\Pass\AppRuianPass;
 use ISPA\ApiClients\DI\Pass\CorePass;
 use Nette\DI\CompilerExtension;
 use Nette\PhpGenerator\ClassType;
-use Nette\Utils\Validators;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
 
+/**
+ * @method mixed[] getConfig()
+ * @property-read mixed[] $config
+ */
 class ApiClientsExtension extends CompilerExtension
 {
 
-	/** @var mixed[] */
-	private $defaults = [
-		'debug' => FALSE,
-		'app' => [
-			'ares' => [],
-			'crm' => [],
-			'dbd' => [],
-			'lotus' => [],
-			'juicypdf' => [],
-			'nominatim' => [],
-			'nms' => [],
-			'pedef' => [],
-			'ruian' => [],
-		],
-	];
-
 	/** @var AbstractPass[] */
-	private $passes = [];
+	protected $passes = [];
 
 	/** @var string[] */
-	private $map = [
-		CorePass::APP_NAME => CorePass::class,
+	protected $map = [
 		AppAresPass::APP_NAME => AppAresPass::class,
 		AppCrmPass::APP_NAME => AppCrmPass::class,
 		AppDbdPass::APP_NAME => AppDbdPass::class,
@@ -51,22 +39,39 @@ class ApiClientsExtension extends CompilerExtension
 		AppJuicyPdfPass::APP_NAME => AppJuicyPdfPass::class,
 	];
 
+	public function getConfigSchema(): Schema
+	{
+		return Expect::structure([
+			'debug' => Expect::bool(FALSE),
+			'app' => Expect::structure([
+				'ares' => Expect::anyOf(NULL, AppAresPass::getConfigSchema()),
+				'crm' => Expect::anyOf(NULL, AppCrmPass::getConfigSchema()),
+				'dbd' => Expect::anyOf(NULL, AppDbdPass::getConfigSchema()),
+				'lotus' => Expect::anyOf(NULL, AppLotusPass::getConfigSchema()),
+				'juicypdf' => Expect::anyOf(NULL, AppJuicyPdfPass::getConfigSchema()),
+				'nominatim' => Expect::anyOf(NULL, AppNominatimPass::getConfigSchema()),
+				'pedef' => Expect::anyOf(NULL, AppPedefPass::getConfigSchema()),
+				'ruian' => Expect::anyOf(NULL, AppRuianPass::getConfigSchema()),
+			])->castTo('array'),
+		])->castTo('array');
+	}
+
+	public function __construct()
+	{
+		$this->passes[] = new CorePass($this);
+	}
+
 	public function loadConfiguration(): void
 	{
-		// Validate config on top level
-		$config = $this->validateConfig($this->defaults);
+		$config = $this->config;
 
-		// Validate right structure of app
-		Validators::assertField($config, 'app', 'array');
-
-		// Validate allowed apps
-		$this->validateConfig($this->defaults['app'], $config['app']);
-
-		// Instantiate enabled passes
+		// Instantiate and configure enabled passes
 		foreach ($this->map as $passName => $passClass) {
-			$passConfig = $config['app'][$passName] ?? NULL;
-			if ($passName === CorePass::APP_NAME || !in_array($passConfig, [NULL, FALSE], TRUE)) {
-				$this->passes[] = new $passClass($this);
+			$passConfig = $config['app'][$passName];
+			if ($passConfig !== NULL) {
+				/** @var AbstractPass $pass */
+				$this->passes[] = $pass = new $passClass($this);
+				$pass->setConfig($passConfig);
 			}
 		}
 

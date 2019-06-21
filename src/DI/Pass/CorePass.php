@@ -19,6 +19,7 @@ class CorePass extends AbstractPass
 		AppPedefPass::APP_NAME,
 		AppRuianPass::APP_NAME,
 	];
+
 	private const APP_SOAP = [
 		AppDbdPass::APP_NAME,
 	];

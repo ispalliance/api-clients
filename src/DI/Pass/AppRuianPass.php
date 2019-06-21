@@ -30,6 +30,7 @@ use ISPA\ApiClients\App\Ruian\Requestor\StreetRequestor;
 use ISPA\ApiClients\App\Ruian\Requestor\ZsjRequestor;
 use ISPA\ApiClients\App\Ruian\RuianRootquestor;
 use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\ServiceDefinition;
 
 class AppRuianPass extends BaseAppPass
 {
@@ -39,7 +40,6 @@ class AppRuianPass extends BaseAppPass
 	public function loadPassConfiguration(): void
 	{
 		$builder = $this->extension->getContainerBuilder();
-		$this->validateConfig(self::APP_NAME);
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.ruian.http.client'))
@@ -104,11 +104,11 @@ class AppRuianPass extends BaseAppPass
 			->setFactory(ZsjRequestor::class, [$this->extension->prefix('@app.ruian.client.zsj')]);
 
 		// #4 Rootquestor
-		$builder->addDefinition($this->extension->prefix('app.ruian.rootquestor'))
+		$rootquestor = $builder->addDefinition($this->extension->prefix('app.ruian.rootquestor'))
 			->setFactory(RuianRootquestor::class);
 
 		// #4 -> #3 connect rootquestor to requestors
-		$builder->getDefinition($this->extension->prefix('app.ruian.rootquestor'))
+		$rootquestor
 			->addSetup('add', ['addressPlaces', $this->extension->prefix('@app.ruian.requestor.addressPlaces')])
 			->addSetup('add', ['autocomplete', $this->extension->prefix('@app.ruian.requestor.autocomplete')])
 			->addSetup('add', ['buildingObject', $this->extension->prefix('@app.ruian.requestor.buildingObject')])
@@ -124,8 +124,9 @@ class AppRuianPass extends BaseAppPass
 			->addSetup('add', ['zsj', $this->extension->prefix('@app.ruian.requestor.zsj')]);
 
 		// ApiProvider -> #4 connect provider to rootquestor
-		$builder->getDefinition($this->extension->prefix('provider'))
-			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.ruian.rootquestor')]);
+		$provider = $builder->getDefinition($this->extension->prefix('provider'));
+		assert($provider instanceof ServiceDefinition);
+		$provider->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.ruian.rootquestor')]);
 	}
 
 }

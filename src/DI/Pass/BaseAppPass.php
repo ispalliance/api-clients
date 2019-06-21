@@ -2,23 +2,18 @@
 
 namespace ISPA\ApiClients\DI\Pass;
 
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
+
 abstract class BaseAppPass extends AbstractPass
 {
 
-	/** @var mixed[] */
-	protected $defaults = [
-		'http' => [],
-		'config' => [],
-	];
-
-	/**
-	 * @return mixed[]
-	 */
-	protected function validateConfig(string $name): array
+	public static function getConfigSchema(): Schema
 	{
-		$config = $this->extension->getConfig();
-
-		return $this->extension->validateConfig($this->defaults, $config['app'][$name]);
+		return Expect::structure([
+			'http' => Expect::arrayOf('mixed'),
+			'config' => Expect::arrayOf('mixed'),
+		])->castTo('array');
 	}
 
 }

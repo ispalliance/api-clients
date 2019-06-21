@@ -14,7 +14,10 @@ Register DI extension in your NEON.
 
 ```yaml
 extensions:
+    # For Nette 3.0+
     ispa.api: ISPA\ApiClients\DI\ApiClientsExtension
+    # For Nette 2.4
+    ispa.api: ISPA\ApiClients\DI\ApiClientsExtension24
 
 ispa.api:
     debug: %debugMode%

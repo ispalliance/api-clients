@@ -25,3 +25,12 @@ parameters:
 		-
 			message: '#^Instanceof between ISPA\\ApiClients\\App\\Dbd\\Entity\\Company and ISPA\\ApiClients\\App\\Dbd\\Entity\\Company will always evaluate to true\.$#'
 			path: %currentWorkingDirectory%/src/App/Dbd/Client/DebtorClient.php
+
+		-
+			message: '#^Parameter \#2 ...\$args of function array_merge expects array, array\|null given\.$#'
+			path: %currentWorkingDirectory%/src/App/Lotus/Client/ProcessClient.php
+
+		# Ignore Nette 2.4 completely, only 3.0 is validated
+		-
+			message: '#.+#'
+			path: %currentWorkingDirectory%/src/DI/ApiClientsExtension24.php

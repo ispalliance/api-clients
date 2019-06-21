@@ -4,6 +4,8 @@ namespace ISPA\ApiClients\DI\Pass;
 
 use ISPA\ApiClients\DI\ApiClientsExtension;
 use Nette\PhpGenerator\ClassType;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
 
 abstract class AbstractPass
 {
@@ -11,9 +13,25 @@ abstract class AbstractPass
 	/** @var ApiClientsExtension */
 	protected $extension;
 
+	/** @var mixed[] */
+	protected $config;
+
 	public function __construct(ApiClientsExtension $extension)
 	{
 		$this->extension = $extension;
+	}
+
+	public static function getConfigSchema(): Schema
+	{
+		return Expect::structure([]);
+	}
+
+	/**
+	 * @param mixed[] $config
+	 */
+	public function setConfig(array $config): void
+	{
+		$this->config = $config;
 	}
 
 	public function loadPassConfiguration(): void

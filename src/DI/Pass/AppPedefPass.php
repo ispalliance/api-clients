@@ -6,6 +6,7 @@ use ISPA\ApiClients\App\Pedef\Client\ThumbnailClient;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
 use ISPA\ApiClients\App\Pedef\Requestor\ThumbnailRequestor;
 use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\ServiceDefinition;
 
 class AppPedefPass extends BaseAppPass
 {
@@ -15,7 +16,6 @@ class AppPedefPass extends BaseAppPass
 	public function loadPassConfiguration(): void
 	{
 		$builder = $this->extension->getContainerBuilder();
-		$this->validateConfig(self::APP_NAME);
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.pedef.http.client'))
@@ -32,16 +32,17 @@ class AppPedefPass extends BaseAppPass
 			->setFactory(ThumbnailRequestor::class, [$this->extension->prefix('@app.pedef.client.thumbnail')]);
 
 		// #4 Rootquestor
-		$builder->addDefinition($this->extension->prefix('app.pedef.rootquestor'))
+		$rootquestor = $builder->addDefinition($this->extension->prefix('app.pedef.rootquestor'))
 			->setFactory(PedefRootquestor::class);
 
 		// #4 -> #3 connect rootquestor to requestors
-		$builder->getDefinition($this->extension->prefix('app.pedef.rootquestor'))
+		$rootquestor
 			->addSetup('add', ['thumbnail', $this->extension->prefix('@app.pedef.requestor.thumbnail')]);
 
 		// ApiProvider -> #4 connect provider to rootquestor
-		$builder->getDefinition($this->extension->prefix('provider'))
-			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.pedef.rootquestor')]);
+		$provider = $builder->getDefinition($this->extension->prefix('provider'));
+		assert($provider instanceof ServiceDefinition);
+		$provider->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.pedef.rootquestor')]);
 	}
 
 }

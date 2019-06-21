@@ -6,6 +6,7 @@ use ISPA\ApiClients\App\JuicyPdf\Client\PdfClient;
 use ISPA\ApiClients\App\JuicyPdf\JuicyPdfRootquestor;
 use ISPA\ApiClients\App\JuicyPdf\Requestor\PdfRequestor;
 use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\ServiceDefinition;
 
 class AppJuicyPdfPass extends BaseAppPass
 {
@@ -15,7 +16,6 @@ class AppJuicyPdfPass extends BaseAppPass
 	public function loadPassConfiguration(): void
 	{
 		$builder = $this->extension->getContainerBuilder();
-		$this->validateConfig(self::APP_NAME);
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.juicypdf.http.client'))
@@ -32,16 +32,17 @@ class AppJuicyPdfPass extends BaseAppPass
 			->setFactory(PdfRequestor::class, [$this->extension->prefix('@app.juicypdf.client.pdf')]);
 
 		// #4 Rootquestor
-		$builder->addDefinition($this->extension->prefix('app.juicypdf.rootquestor'))
+		$rootquestor = $builder->addDefinition($this->extension->prefix('app.juicypdf.rootquestor'))
 			->setFactory(JuicyPdfRootquestor::class);
 
 		// #4 -> #3 connect rootquestor to requestors
-		$builder->getDefinition($this->extension->prefix('app.juicypdf.rootquestor'))
+		$rootquestor
 			->addSetup('add', ['pdf', $this->extension->prefix('@app.juicypdf.requestor.pdf')]);
 
 		// ApiProvider -> #4 connect provider to rootquestor
-		$builder->getDefinition($this->extension->prefix('provider'))
-			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.juicypdf.rootquestor')]);
+		$provider = $builder->getDefinition($this->extension->prefix('provider'));
+		assert($provider instanceof ServiceDefinition);
+		$provider->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.juicypdf.rootquestor')]);
 	}
 
 }

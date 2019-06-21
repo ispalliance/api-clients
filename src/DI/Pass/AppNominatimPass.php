@@ -6,6 +6,7 @@ use ISPA\ApiClients\App\Nominatim\Client\AddressClient;
 use ISPA\ApiClients\App\Nominatim\NominatimRootquestor;
 use ISPA\ApiClients\App\Nominatim\Requestor\AddressRequestor;
 use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\ServiceDefinition;
 
 class AppNominatimPass extends BaseAppPass
 {
@@ -15,7 +16,6 @@ class AppNominatimPass extends BaseAppPass
 	public function loadPassConfiguration(): void
 	{
 		$builder = $this->extension->getContainerBuilder();
-		$this->validateConfig(self::APP_NAME);
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.nominatim.http.client'))
@@ -32,16 +32,17 @@ class AppNominatimPass extends BaseAppPass
 			->setFactory(AddressRequestor::class, [$this->extension->prefix('@app.nominatim.client.address')]);
 
 		// #4 Rootquestor
-		$builder->addDefinition($this->extension->prefix('app.nominatim.rootquestor'))
+		$rootquestor = $builder->addDefinition($this->extension->prefix('app.nominatim.rootquestor'))
 			->setFactory(NominatimRootquestor::class);
 
 		// #4 -> #3 connect rootquestor to requestors
-		$builder->getDefinition($this->extension->prefix('app.nominatim.rootquestor'))
+		$rootquestor
 			->addSetup('add', ['address', $this->extension->prefix('@app.nominatim.requestor.address')]);
 
 		// ApiProvider -> #4 connect provider to rootquestor
-		$builder->getDefinition($this->extension->prefix('provider'))
-			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.nominatim.rootquestor')]);
+		$provider = $builder->getDefinition($this->extension->prefix('provider'));
+		assert($provider instanceof ServiceDefinition);
+		$provider->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.nominatim.rootquestor')]);
 	}
 
 }

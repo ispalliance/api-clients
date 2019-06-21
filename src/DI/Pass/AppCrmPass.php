@@ -12,6 +12,7 @@ use ISPA\ApiClients\App\Adminus\Requestor\ContractRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\CustomerRequestor;
 use ISPA\ApiClients\App\Adminus\Requestor\UserRequestor;
 use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\ServiceDefinition;
 
 class AppCrmPass extends BaseAppPass
 {
@@ -21,7 +22,6 @@ class AppCrmPass extends BaseAppPass
 	public function loadPassConfiguration(): void
 	{
 		$builder = $this->extension->getContainerBuilder();
-		$this->validateConfig(self::APP_NAME);
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.adminus.http.client'))
@@ -50,19 +50,20 @@ class AppCrmPass extends BaseAppPass
 			->setFactory(UserRequestor::class, [$this->extension->prefix('@app.adminus.client.user')]);
 
 		// #4 Rootquestor
-		$builder->addDefinition($this->extension->prefix('app.adminus.rootquestor'))
+		$rootquestor = $builder->addDefinition($this->extension->prefix('app.adminus.rootquestor'))
 			->setFactory(CrmRootquestor::class);
 
 		// #4 -> #3 connect rootquestor to requestors
-		$builder->getDefinition($this->extension->prefix('app.adminus.rootquestor'))
+		$rootquestor
 			->addSetup('add', ['accountingEntity', $this->extension->prefix('@app.adminus.requestor.accountingEntity')])
 			->addSetup('add', ['contract', $this->extension->prefix('@app.adminus.requestor.contract')])
 			->addSetup('add', ['customer', $this->extension->prefix('@app.adminus.requestor.customer')])
 			->addSetup('add', ['user', $this->extension->prefix('@app.adminus.requestor.user')]);
 
 		// ApiProvider -> #4 connect provider to rootquestor
-		$builder->getDefinition($this->extension->prefix('provider'))
-			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.adminus.rootquestor')]);
+		$provider = $builder->getDefinition($this->extension->prefix('provider'));
+		assert($provider instanceof ServiceDefinition);
+		$provider->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.adminus.rootquestor')]);
 	}
 
 }

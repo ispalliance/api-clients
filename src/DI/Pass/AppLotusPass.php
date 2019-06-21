@@ -12,6 +12,7 @@ use ISPA\ApiClients\App\Lotus\Requestor\ProcessRequestor;
 use ISPA\ApiClients\App\Lotus\Requestor\SnippetRequestor;
 use ISPA\ApiClients\App\Lotus\Requestor\UserRequestor;
 use ISPA\ApiClients\Http\HttpClient;
+use Nette\DI\ServiceDefinition;
 
 class AppLotusPass extends BaseAppPass
 {
@@ -21,7 +22,6 @@ class AppLotusPass extends BaseAppPass
 	public function loadPassConfiguration(): void
 	{
 		$builder = $this->extension->getContainerBuilder();
-		$this->validateConfig(self::APP_NAME);
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.lotus.http.client'))
@@ -50,19 +50,20 @@ class AppLotusPass extends BaseAppPass
 			->setFactory(UserRequestor::class, [$this->extension->prefix('@app.lotus.client.user')]);
 
 		// #4 Rootquestor
-		$builder->addDefinition($this->extension->prefix('app.lotus.rootquestor'))
+		$rootquestor = $builder->addDefinition($this->extension->prefix('app.lotus.rootquestor'))
 			->setFactory(LotusRootquestor::class);
 
 		// #4 -> #3 connect rootquestor to requestors
-		$builder->getDefinition($this->extension->prefix('app.lotus.rootquestor'))
+		$rootquestor
 			->addSetup('add', ['calendar', $this->extension->prefix('@app.lotus.requestor.calendar')])
 			->addSetup('add', ['process', $this->extension->prefix('@app.lotus.requestor.process')])
 			->addSetup('add', ['snippet', $this->extension->prefix('@app.lotus.requestor.snippet')])
 			->addSetup('add', ['user', $this->extension->prefix('@app.lotus.requestor.user')]);
 
 		// ApiProvider -> #4 connect provider to rootquestor
-		$builder->getDefinition($this->extension->prefix('provider'))
-			->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.lotus.rootquestor')]);
+		$provider = $builder->getDefinition($this->extension->prefix('provider'));
+		assert($provider instanceof ServiceDefinition);
+		$provider->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.lotus.rootquestor')]);
 	}
 
 }

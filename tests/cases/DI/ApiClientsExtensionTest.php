@@ -56,10 +56,12 @@ use ISPA\ApiClients\App\Ruian\Requestor\StreetRequestor;
 use ISPA\ApiClients\App\Ruian\Requestor\ZsjRequestor;
 use ISPA\ApiClients\App\Ruian\RuianRootquestor;
 use ISPA\ApiClients\DI\ApiClientsExtension;
+use ISPA\ApiClients\DI\ApiClientsExtension24;
 use ISPA\ApiClients\Domain\ApiProvider;
 use ISPA\ApiClients\Http\Guzzle\GuzzleFactory;
 use ISPA\ApiClients\Http\HttpClient;
 use Nette\DI\Compiler;
+use Nette\DI\Definitions\ServiceDefinition;
 use Tests\Toolkit\ContainerTestCase;
 
 class ApiClientsExtensionTest extends ContainerTestCase
@@ -67,15 +69,25 @@ class ApiClientsExtensionTest extends ContainerTestCase
 
 	protected function setUpCompileContainer(Compiler $compiler): void
 	{
-		$compiler->addExtension('ispa.apis', new ApiClientsExtension());
+		$extension = class_exists(ServiceDefinition::class)
+            ? new ApiClientsExtension()
+            : new ApiClientsExtension24();
+		$compiler->addExtension('ispa.apis', $extension);
 		$compiler->addConfig([
 			'ispa.apis' => [
 				'app' => [
+					'ares' => [],
+					'crm' => [],
 					'dbd' => [
 						'http' => [
 							'wsdl' => 'http://ws.dcgroup.cz/index.php?WSDL',
 						],
 					],
+					'lotus' => [],
+					'juicypdf' => [],
+					'nominatim' => [],
+					'pedef' => [],
+					'ruian' => [],
 				],
 			],
 		]);
