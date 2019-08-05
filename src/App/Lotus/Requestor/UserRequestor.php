@@ -3,6 +3,9 @@
 namespace ISPA\ApiClients\App\Lotus\Requestor;
 
 use ISPA\ApiClients\App\Lotus\Client\UserClient;
+use ISPA\ApiClients\App\Lotus\Entity\UserCreateEntity;
+use ISPA\ApiClients\App\Lotus\Entity\UserEditEntity;
+use ISPA\ApiClients\App\Lotus\Filter\UserListFilter;
 
 /**
  * @property UserClient $client
@@ -18,9 +21,9 @@ final class UserRequestor extends BaseRequestor
 	/**
 	 * @return mixed[]
 	 */
-	public function list(int $limit = 10, int $offset = 0): array
+	public function list(int $limit = 10, int $offset = 0, ?UserListFilter $filter = NULL): array
 	{
-		$response = $this->client->list($limit, $offset);
+		$response = $this->client->list($limit, $offset, $filter);
 
 		return $this->processResponse($response)->getData();
 	}
@@ -38,20 +41,9 @@ final class UserRequestor extends BaseRequestor
 	/**
 	 * @return mixed[]
 	 */
-	public function getByEmail(string $email): array
+	public function create(UserCreateEntity $entity): array
 	{
-		$response = $this->client->getByEmail($email);
-
-		return $this->processResponse($response)->getData();
-	}
-
-	/**
-	 * @param int[] $userIds
-	 * @return mixed[]
-	 */
-	public function combineUserGroup(string $gid, array $userIds, bool $includeSystemUsers = FALSE, bool $includeBlockedUsers = FALSE): array
-	{
-		$response = $this->client->combineUserGroup($gid, $userIds, $includeSystemUsers, $includeBlockedUsers);
+		$response = $this->client->create($entity);
 
 		return $this->processResponse($response)->getData();
 	}
@@ -59,9 +51,9 @@ final class UserRequestor extends BaseRequestor
 	/**
 	 * @return mixed[]
 	 */
-	public function getMentions(string $query): array
+	public function edit(UserEditEntity $entity): array
 	{
-		$response = $this->client->getMentions($query);
+		$response = $this->client->edit($entity);
 
 		return $this->processResponse($response)->getData();
 	}

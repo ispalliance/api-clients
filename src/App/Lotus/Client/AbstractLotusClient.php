@@ -11,7 +11,7 @@ abstract class AbstractLotusClient extends AbstractHttpClient
 {
 
 	/** @var string|null  */
-	protected $sudo = NULL;
+	protected $sudo;
 
 	public function enableSudo(string $email): void
 	{

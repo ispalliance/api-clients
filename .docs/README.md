@@ -277,26 +277,63 @@ lotus.api:
 
 **UserRequestor**
 
-| Method                    | API path                    | Type |
-| --------------------------| --------------------------- |----- |
-| list($limit, $offset)     | /users                   | GET  |
-| getById(int $id)          | /users/detail/{$id}      | GET  |
-| getByEmail(string $email) | /users/detail/email{$id} | GET  |
+| Method                         | API path                    | Type   |
+| ------------------------------ | --------------------------- | ------ |
+| list($limit, $offset, $filter) | /users                      | GET    |
+| getById($id)                   | /users/{id}                 | GET    |
+| create($entity)                | /users                      | POST   |
+| edit($entity)                  | /users/{id}                 | PUT    |
+
+**UserGroupRequestor**
+
+| Method                                                                | API path                       | Type   |
+| --------------------------------------------------------------------- | ------------------------------ | ------ |
+| appendUsers($id, $userIds, $includeSystemUsers, $includeBlockedUsers) | /user-groups/{id}/append-users | PATCH  |
+| findOne($id)                                                          | /user-groups/{id}              | GET    |
+| createOne($entity)                                                    | /user-groups                   | POST   |
+| editOne($entity)                                                      | /user-groups/{id}              | PUT    |
+| deleteOne($id)                                                        | /user-groups/{id}              | DELETE |
+
+**PlanRequestor**
+
+| Method                        | API path    | Type   |
+| ----------------------------- | ----------- | ------ |
+| findMultiple($limit, $offset) | /plans      | GET    |
+| createOne($entity)            | /plans      | POST   |
+| deleteOne($id)                | /plans/{id} | DELETE |
+
+**SnippetRequestor**
+
+| Method                                       | API path       | Type   |
+| -------------------------------------------- | -------------- | ------ |
+| listSnippets($limit, $offset)                | /snippets      | GET    |
+| createSnippet($name, $description, $snippet) | /snippets      | POST   |
+| deleteSnippet($id)                           | /snippets/{id} | DELETE |
+
+**CalendarRequestor**
+
+| Method         | API path       | Type   |
+| -------------- | -------------- | ------ |
+| getFolder($id) | /calendar/{id} | GET    |
 
 **ProcessRequestor**
 
-| Method                                                                           | API path                                              | Type |
-| ---------------------------------------------------------------------------------| ----------------------------------------------------- |----- |
-| listProcesses($limit, $offset)                                                   | /processes                                         | GET  |
-| listProcessesByVariables(array $variables) *1                                    | /processes/find-by-variables                       | POST |
-| getProcess(int $id)                                                              | /processes/detail/{$id}                            | GET  |
-| listTemplates($limit, $offset)                                                   | /template-processes                                | GET  |
-| listStartableTemplates()                                                         | /template-processes/startable                      | GET  |
-| getTemplate(int $id)                                                             | /template-processes/detail/{$id}                   | GET  |
-| startProcess(int $id, ?array $data = []) *2                                      | /start-process                                     | POST |
-| uploadFile(int $processId, string $variable, string $fileName, string $contents) | /process/{$processId}/upload?variable=%{$variable} | POST |
+| Method                                           | API path                           | Type   |
+| ------------------------------------------------ | ---------------------------------- | ------ |
+| listProcesses($limit, $offset, $filter)          | /processes                         | GET    |
+| getProcess($id)                                  | /processes/{id}                    | GET    |
+| addTag($pid, $ttid)                              | /processes/{pid}/tags/{ttid}       | POST   |
+| removeTag($pid, $ttid)                           | /processes/{pid}/tags/{ttid}       | DELETE |
+| moveProcessToNextStep($id)                       | /processes/{id}/next               | POST   |
+| uploadFile($id, $variable, $fileName, $contents) | /process/{id}/upload               | POST   |
+| listTemplates($limit, $offset, $startableOnly)   | /template-processes                | GET    |
+| getTemplate($id)                                 | /template-processes/{id}           | GET    |
+| createTemplate($entity)                          | /template-processes                | POST   |
+| deleteTemplate($id)                              | /template-processes/{id}           | DELETE |
+| archiveTemplate($id)                             | /template-processes/{id}/archive   | PATCH  |
+| startProcess($tid, $data)                        | /template-processes/{id}/start     | POST   |
 
-*1 Note: listProcessesByVariables expects $variables to be array of variables to search for in format ["name" => "value", ...] eg ["user" => "10", "status" => "active"]
+*1 Note: listProcesses $filter expects $variables to be array of variables to search for in format ["name" => "value", ...] eg ["user" => "10", "status" => "active"]
 
 *2 Note: startProcess detailed info:
 

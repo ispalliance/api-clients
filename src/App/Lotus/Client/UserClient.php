@@ -2,6 +2,9 @@
 
 namespace ISPA\ApiClients\App\Lotus\Client;
 
+use ISPA\ApiClients\App\Lotus\Entity\UserCreateEntity;
+use ISPA\ApiClients\App\Lotus\Entity\UserEditEntity;
+use ISPA\ApiClients\App\Lotus\Filter\UserListFilter;
 use ISPA\ApiClients\Http\Utils\Helpers;
 use Nette\Utils\Json;
 use Psr\Http\Message\ResponseInterface;
@@ -11,43 +14,54 @@ class UserClient extends AbstractLotusClient
 
 	private const PATH = 'users';
 
-	public function list(int $limit = 10, int $offset = 0): ResponseInterface
+	public function list(int $limit = 10, int $offset = 0, ?UserListFilter $filter = NULL): ResponseInterface
 	{
-		$query = Helpers::buildQuery([
+		$parameters = [
 			'limit' => $limit > 0 ? $limit : 10,
 			'offset' => $offset >= 0 ? $offset : 0,
-		]);
-		return $this->request('GET', sprintf('%s?%s', self::PATH, $query));
+		];
+
+		if ($filter !== NULL) {
+			$state = $filter->getState();
+			if ($state !== NULL) {
+				$parameters['state'] = $state;
+			}
+
+			$email = $filter->getEmail();
+			if ($email !== NULL) {
+				$parameters['email'] = $email;
+			}
+
+			$id = $filter->getId();
+			if ($id !== NULL) {
+				$parameters['id'] = $id;
+			}
+
+			$username = $filter->getUsername();
+			if ($username !== NULL) {
+				$parameters['username'] = $username;
+			}
+		}
+
+		return $this->request('GET', sprintf('%s?%s', self::PATH, Helpers::buildQuery($parameters)));
 	}
 
 	public function getById(int $id): ResponseInterface
 	{
-		return $this->request('GET', sprintf('%s/detail/%d', self::PATH, $id));
+		return $this->request('GET', sprintf('%s/%d', self::PATH, $id));
 	}
 
-	public function getByEmail(string $email): ResponseInterface
+	public function create(UserCreateEntity $entity): ResponseInterface
 	{
-		$query = Helpers::buildQuery(['email' => $email]);
-		return $this->request('GET', sprintf('%s/detail/email?%s', self::PATH, $query));
-	}
-
-	/**
-	 * @param int[] $userIds
-	 */
-	public function combineUserGroup(string $gid, array $userIds, bool $includeSystemUsers = FALSE, bool $includeBlockedUsers = FALSE): ResponseInterface
-	{
-		$query = [
-			'system' => $includeSystemUsers ? 'true' : 'false',
-			'blocked' => $includeBlockedUsers ? 'true' : 'false',
-		];
-		$query = Helpers::buildQuery($query);
-
 		return $this->request(
-			'PATCH',
-			sprintf('%s/%s/combine?%s', self::PATH, $gid, $query),
+			'POST',
+			sprintf('%s', self::PATH),
 			[
 				'body' => Json::encode([
-					'ids' => $userIds,
+					'name' => $entity->getName(),
+					'surname' => $entity->getSurname(),
+					'email' => $entity->getEmailAddress(),
+					'password' => $entity->getPassword(),
 				]),
 				'headers' => [
 					'Content-Type' => 'application/json',
@@ -56,9 +70,23 @@ class UserClient extends AbstractLotusClient
 		);
 	}
 
-	public function getMentions(string $query): ResponseInterface
+	public function edit(UserEditEntity $entity): ResponseInterface
 	{
-		return $this->request('GET', sprintf('%s/mentions/%s', self::PATH, $query));
+		return $this->request(
+			'PUT',
+			sprintf('%s/%s', self::PATH, $entity->getId()),
+			[
+				'body' => Json::encode([
+					'name' => $entity->getName(),
+					'surname' => $entity->getSurname(),
+					'username' => $entity->getUserName(),
+					'email' => $entity->getEmailAddress(),
+				]),
+				'headers' => [
+					'Content-Type' => 'application/json',
+				],
+			]
+		);
 	}
 
 }

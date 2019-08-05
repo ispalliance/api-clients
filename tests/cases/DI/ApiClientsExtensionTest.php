@@ -17,13 +17,17 @@ use ISPA\ApiClients\App\Ares\Client\SubjectClient;
 use ISPA\ApiClients\App\Ares\Requestor\AddressRequestor;
 use ISPA\ApiClients\App\Ares\Requestor\SubjectRequestor;
 use ISPA\ApiClients\App\Lotus\Client\CalendarClient;
+use ISPA\ApiClients\App\Lotus\Client\PlanClient;
 use ISPA\ApiClients\App\Lotus\Client\ProcessClient;
 use ISPA\ApiClients\App\Lotus\Client\SnippetClient;
 use ISPA\ApiClients\App\Lotus\Client\UserClient as LotusUserClient;
+use ISPA\ApiClients\App\Lotus\Client\UserGroupClient;
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
 use ISPA\ApiClients\App\Lotus\Requestor\CalendarRequestor;
+use ISPA\ApiClients\App\Lotus\Requestor\PlanRequestor;
 use ISPA\ApiClients\App\Lotus\Requestor\ProcessRequestor;
 use ISPA\ApiClients\App\Lotus\Requestor\SnippetRequestor;
+use ISPA\ApiClients\App\Lotus\Requestor\UserGroupRequestor;
 use ISPA\ApiClients\App\Lotus\Requestor\UserRequestor as LotusUserRequestor;
 use ISPA\ApiClients\App\Pedef\Client\ThumbnailClient;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
@@ -140,14 +144,18 @@ class ApiClientsExtensionTest extends ContainerTestCase
 		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.http.client'));
 
 		static::assertInstanceOf(CalendarClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.calendar'));
+		static::assertInstanceOf(PlanClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.plan'));
 		static::assertInstanceOf(ProcessClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.process'));
 		static::assertInstanceOf(SnippetClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.snippet'));
 		static::assertInstanceOf(LotusUserClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.user'));
+		static::assertInstanceOf(UserGroupClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.client.userGroup'));
 
 		static::assertInstanceOf(CalendarRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.calendar'));
+		static::assertInstanceOf(PlanRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.plan'));
 		static::assertInstanceOf(ProcessRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.process'));
 		static::assertInstanceOf(SnippetRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.snippet'));
 		static::assertInstanceOf(LotusUserRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.user'));
+		static::assertInstanceOf(UserGroupRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.requestor.userGroup'));
 
 		static::assertInstanceOf(LotusRootquestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor'));
 
@@ -155,6 +163,7 @@ class ApiClientsExtensionTest extends ContainerTestCase
 		static::assertInstanceOf(ProcessRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor')->process);
 		static::assertInstanceOf(SnippetRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor')->snippet);
 		static::assertInstanceOf(LotusUserRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor')->user);
+		static::assertInstanceOf(UserGroupRequestor::class, $this->getContainer()->getService('ispa.apis.app.lotus.rootquestor')->userGroup);
 
 		static::assertInstanceOf(LotusRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->lotus);
 

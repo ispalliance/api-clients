@@ -3,6 +3,7 @@
 namespace ISPA\ApiClients\App\Lotus\Requestor;
 
 use ISPA\ApiClients\App\Lotus\Client\ProcessClient;
+use ISPA\ApiClients\App\Lotus\Filter\ProcessListFilter;
 
 /**
  * @property ProcessClient $client
@@ -18,21 +19,9 @@ final class ProcessRequestor extends BaseRequestor
 	/**
 	 * @return mixed[]
 	 */
-	public function listProcesses(int $limit = 10, int $offset = 0): array
+	public function listProcesses(int $limit = 10, int $offset = 0, ?ProcessListFilter $filter = NULL): array
 	{
-		$response = $this->client->listProcesses($limit, $offset);
-
-		return $this->processResponse($response)->getData();
-	}
-
-	/**
-	 * @param mixed[] $variables
-	 * @return mixed[]
-	 * @deprecated
-	 */
-	public function listProcessesByVariables(array $variables): array
-	{
-		$response = $this->client->listProcessesByVariables($variables);
+		$response = $this->client->listProcesses($limit, $offset, $filter);
 
 		return $this->processResponse($response)->getData();
 	}
@@ -70,40 +59,9 @@ final class ProcessRequestor extends BaseRequestor
 	/**
 	 * @return mixed[]
 	 */
-	public function listTemplates(int $limit = 10, int $offset = 0): array
+	public function moveProcessToNextStep(int $processId): array
 	{
-		$response = $this->client->listTemplates($limit, $offset);
-
-		return $this->processResponse($response)->getData();
-	}
-
-	/**
-	 * @return mixed[]
-	 */
-	public function listStartableTemplates(): array
-	{
-		$response = $this->client->listStartableTemplates();
-
-		return $this->processResponse($response)->getData();
-	}
-
-	/**
-	 * @return mixed[]
-	 */
-	public function getTemplate(int $id): array
-	{
-		$response = $this->client->getTemplate($id);
-
-		return $this->processResponse($response)->getData();
-	}
-
-	/**
-	 * @param mixed[] $data
-	 * @return mixed[]
-	 */
-	public function startProcess(int $id, ?array $data = []): array
-	{
-		$response = $this->client->startProcess($id, $data);
+		$response = $this->client->moveProcessToNextStep($processId);
 
 		return $this->processResponse($response)->getData();
 	}
@@ -119,6 +77,67 @@ final class ProcessRequestor extends BaseRequestor
 	): array
 	{
 		$response = $this->client->uploadFile($processId, $variable, $fileName, $contents);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @param mixed[] $data
+	 * @return mixed[]
+	 */
+	public function startProcess(int $tid, array $data = []): array
+	{
+		$response = $this->client->startProcess($tid, $data);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function listTemplates(int $limit = 10, int $offset = 0, bool $startableOnly = FALSE): array
+	{
+		$response = $this->client->listTemplates($limit, $offset, $startableOnly);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function getTemplate(int $id): array
+	{
+		$response = $this->client->getTemplate($id);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function createTemplate(string $template): array
+	{
+		$response = $this->client->createTemplate($template);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function deleteTemplate(int $templateId): array
+	{
+		$response = $this->client->deleteTemplate($templateId);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function archiveTemplate(int $templateId): array
+	{
+		$response = $this->client->archiveTemplate($templateId);
 
 		return $this->processResponse($response)->getData();
 	}

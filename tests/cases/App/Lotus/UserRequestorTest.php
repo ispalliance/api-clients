@@ -36,21 +36,12 @@ class UserRequestorTest extends AbstractAppTestCase
 		$this->assertEquals('Leopoldus Augustus Ispus', $res['fullname']);
 	}
 
-	public function testGetByEmail(): void
-	{
-		$usersRequestor = $this->createRequestor('user.json');
-		$res = $usersRequestor->getByEmail('user@ispalliance.cz');
-
-		$this->assertEquals('user@ispalliance.cz', $res['email']);
-		$this->assertEquals('Leopoldus Augustus Ispus', $res['fullname']);
-	}
-
 	public function testError(): void
 	{
 		$this->expectException(ResponseException::class);
 		$this->expectExceptionMessage('API error. Status: error, Message: Client authentication failed');
 		$usersRequestor = $this->createRequestor('error.json');
-		$usersRequestor->getByEmail('user@ispalliance.cz');
+		$usersRequestor->getById(1);
 	}
 
 	public function testSudoDisabled(): void
@@ -67,7 +58,7 @@ class UserRequestorTest extends AbstractAppTestCase
 		$requestor = new UserRequestor($client);
 
 		$this->assertFalse($requestor->isSudo());
-		$requestor->getByEmail('user@ispalliance.cz');
+		$requestor->getById(1);
 	}
 
 	public function testSudoEnabled(): void
@@ -89,7 +80,7 @@ class UserRequestorTest extends AbstractAppTestCase
 		$requestor->enableSudo('email@ispa.cz');
 		$this->assertTrue($requestor->isSudo());
 
-		$requestor->getByEmail('user@ispalliance.cz');
+		$requestor->getById(1);
 	}
 
 	private function createRequestor(string $file): UserRequestor

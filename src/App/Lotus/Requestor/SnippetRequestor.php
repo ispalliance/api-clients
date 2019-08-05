@@ -28,9 +28,19 @@ class SnippetRequestor extends BaseRequestor
 	/**
 	 * @return mixed[]
 	 */
-	public function deleteSnippet(string $name): array
+	public function deleteSnippet(int $id): array
 	{
-		$response = $this->client->deleteSnippet($name);
+		$response = $this->client->deleteSnippet($id);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function listSnippets(int $limit = 10, int $offset = 0): array
+	{
+		$response = $this->client->listSnippets($limit, $offset);
 
 		return $this->processResponse($response)->getData();
 	}
