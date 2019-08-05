@@ -3,7 +3,6 @@
 namespace ISPA\ApiClients\DI;
 
 use ISPA\ApiClients\DI\Pass\AbstractPass;
-use ISPA\ApiClients\DI\Pass\CorePass;
 use Nette\Utils\Validators;
 
 class ApiClientsExtension24 extends ApiClientsExtension
