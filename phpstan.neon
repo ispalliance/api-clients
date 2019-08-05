@@ -30,6 +30,11 @@ parameters:
 			message: '#^Parameter \#2 ...\$args of function array_merge expects array, array\|null given\.$#'
 			path: %currentWorkingDirectory%/src/App/Lotus/Client/ProcessClient.php
 
+		# Intentional
+		-
+			message: '#^Variable property access on SimpleXMLElement\.$#'
+			path: %currentWorkingDirectory%/src/App/Dbd/Result/Result.php
+
 		# Ignore Nette 2.4 completely, only 3.0 is validated
 		-
 			message: '#.+#'
