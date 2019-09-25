@@ -13,8 +13,8 @@ class PdfClient extends AbstractHttpClient
 	 */
 	public function fromSource(string $source, array $options = []): ResponseInterface
 	{
-		return $this->httpClient->request('POST', 'gen/', [
-			'body' => $source,
+		return $this->httpClient->request('POST', 'post/', [
+			'json' => ['data' => $source],
 			'query' => $options,
 		]);
 	}
