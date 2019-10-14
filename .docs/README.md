@@ -25,7 +25,7 @@ ispa.api:
 
 Secondly, configure single application. We support these ISP-based applications:
 
- - **adminus**
+ - **adminusCrm**
  - **ares**
  - **lotus**
  - **pedef**
@@ -125,16 +125,16 @@ public function magic(): void
 # ISP-based API definition
 
 
-## Adminus
+## Adminus CRM
 
 ### Configuration
 
 ```yaml
 ispa.api:
     app:
-        adminus:
+        adminusCrm:
             http:
-                base_uri: http://adminus.example.com/api/
+                base_uri: http://adminus-crm.example.com/api/
 ```
 
 ### Available requestor's methods

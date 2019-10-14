@@ -13,7 +13,7 @@ class ApiClientsExtension24 extends ApiClientsExtension
 		'debug' => FALSE,
 		'app' => [
 			'ares' => NULL,
-			'crm' => NULL,
+			'adminusCrm' => NULL,
 			'dbd' => NULL,
 			'lotus' => NULL,
 			'juicypdf' => NULL,

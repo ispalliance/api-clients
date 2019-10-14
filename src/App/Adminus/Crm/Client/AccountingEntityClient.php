@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace ISPA\ApiClients\App\Adminus\Client;
+namespace ISPA\ApiClients\App\Adminus\Crm\Client;
 
 use ISPA\ApiClients\Domain\AbstractHttpClient;
 use Psr\Http\Message\ResponseInterface;

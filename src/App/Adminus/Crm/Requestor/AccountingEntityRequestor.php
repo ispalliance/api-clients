@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace ISPA\ApiClients\App\Adminus\Requestor;
+namespace ISPA\ApiClients\App\Adminus\Crm\Requestor;
 
-use ISPA\ApiClients\App\Adminus\Client\AccountingEntityClient;
+use ISPA\ApiClients\App\Adminus\Crm\Client\AccountingEntityClient;
 use ISPA\ApiClients\App\Ispa\ResponseDataExtractor;
 use ISPA\ApiClients\Domain\AbstractRequestor;
 

@@ -4,7 +4,7 @@ namespace ISPA\ApiClients\DI;
 
 use ISPA\ApiClients\DI\Pass\AbstractPass;
 use ISPA\ApiClients\DI\Pass\AppAresPass;
-use ISPA\ApiClients\DI\Pass\AppCrmPass;
+use ISPA\ApiClients\DI\Pass\AppAdminusCrmPass;
 use ISPA\ApiClients\DI\Pass\AppDbdPass;
 use ISPA\ApiClients\DI\Pass\AppJuicyPdfPass;
 use ISPA\ApiClients\DI\Pass\AppLotusPass;
@@ -30,7 +30,7 @@ class ApiClientsExtension extends CompilerExtension
 	/** @var string[] */
 	protected $map = [
 		AppAresPass::APP_NAME => AppAresPass::class,
-		AppCrmPass::APP_NAME => AppCrmPass::class,
+		AppAdminusCrmPass::APP_NAME => AppAdminusCrmPass::class,
 		AppDbdPass::APP_NAME => AppDbdPass::class,
 		AppLotusPass::APP_NAME => AppLotusPass::class,
 		AppNominatimPass::APP_NAME => AppNominatimPass::class,
@@ -45,7 +45,7 @@ class ApiClientsExtension extends CompilerExtension
 			'debug' => Expect::bool(FALSE),
 			'app' => Expect::structure([
 				'ares' => Expect::anyOf(NULL, AppAresPass::getConfigSchema()),
-				'crm' => Expect::anyOf(NULL, AppCrmPass::getConfigSchema()),
+				'adminusCrm' => Expect::anyOf(NULL, AppAdminusCrmPass::getConfigSchema()),
 				'dbd' => Expect::anyOf(NULL, AppDbdPass::getConfigSchema()),
 				'lotus' => Expect::anyOf(NULL, AppLotusPass::getConfigSchema()),
 				'juicypdf' => Expect::anyOf(NULL, AppJuicyPdfPass::getConfigSchema()),
