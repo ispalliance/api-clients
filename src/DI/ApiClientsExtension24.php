@@ -3,6 +3,14 @@
 namespace ISPA\ApiClients\DI;
 
 use ISPA\ApiClients\DI\Pass\AbstractPass;
+use ISPA\ApiClients\DI\Pass\AppAdminusCrmPass;
+use ISPA\ApiClients\DI\Pass\AppAresPass;
+use ISPA\ApiClients\DI\Pass\AppDbdPass;
+use ISPA\ApiClients\DI\Pass\AppJuicyPdfPass;
+use ISPA\ApiClients\DI\Pass\AppLotusPass;
+use ISPA\ApiClients\DI\Pass\AppNominatimPass;
+use ISPA\ApiClients\DI\Pass\AppPedefPass;
+use ISPA\ApiClients\DI\Pass\AppRuianPass;
 use Nette\Utils\Validators;
 
 class ApiClientsExtension24 extends ApiClientsExtension
@@ -12,15 +20,14 @@ class ApiClientsExtension24 extends ApiClientsExtension
 	private $defaults = [
 		'debug' => FALSE,
 		'app' => [
-			'ares' => NULL,
-			'adminusCrm' => NULL,
-			'dbd' => NULL,
-			'lotus' => NULL,
-			'juicypdf' => NULL,
-			'nominatim' => NULL,
-			'nms' => NULL,
-			'pedef' => NULL,
-			'ruian' => NULL,
+			AppAresPass::APP_NAME => NULL,
+			AppAdminusCrmPass::APP_NAME => NULL,
+			AppDbdPass::APP_NAME => NULL,
+			AppLotusPass::APP_NAME => NULL,
+			AppJuicyPdfPass::APP_NAME => NULL,
+			AppNominatimPass::APP_NAME => NULL,
+			AppPedefPass::APP_NAME => NULL,
+			AppRuianPass::APP_NAME => NULL,
 		],
 	];
 
