@@ -3,8 +3,8 @@
 namespace ISPA\ApiClients\DI;
 
 use ISPA\ApiClients\DI\Pass\AbstractPass;
-use ISPA\ApiClients\DI\Pass\AppAresPass;
 use ISPA\ApiClients\DI\Pass\AppAdminusCrmPass;
+use ISPA\ApiClients\DI\Pass\AppAresPass;
 use ISPA\ApiClients\DI\Pass\AppDbdPass;
 use ISPA\ApiClients\DI\Pass\AppJuicyPdfPass;
 use ISPA\ApiClients\DI\Pass\AppLotusPass;
@@ -33,10 +33,10 @@ class ApiClientsExtension extends CompilerExtension
 		AppAdminusCrmPass::APP_NAME => AppAdminusCrmPass::class,
 		AppDbdPass::APP_NAME => AppDbdPass::class,
 		AppLotusPass::APP_NAME => AppLotusPass::class,
+		AppJuicyPdfPass::APP_NAME => AppJuicyPdfPass::class,
 		AppNominatimPass::APP_NAME => AppNominatimPass::class,
 		AppPedefPass::APP_NAME => AppPedefPass::class,
 		AppRuianPass::APP_NAME => AppRuianPass::class,
-		AppJuicyPdfPass::APP_NAME => AppJuicyPdfPass::class,
 	];
 
 	public function getConfigSchema(): Schema
@@ -44,14 +44,14 @@ class ApiClientsExtension extends CompilerExtension
 		return Expect::structure([
 			'debug' => Expect::bool(FALSE),
 			'app' => Expect::structure([
-				'ares' => Expect::anyOf(NULL, AppAresPass::getConfigSchema()),
-				'adminusCrm' => Expect::anyOf(NULL, AppAdminusCrmPass::getConfigSchema()),
-				'dbd' => Expect::anyOf(NULL, AppDbdPass::getConfigSchema()),
-				'lotus' => Expect::anyOf(NULL, AppLotusPass::getConfigSchema()),
-				'juicypdf' => Expect::anyOf(NULL, AppJuicyPdfPass::getConfigSchema()),
-				'nominatim' => Expect::anyOf(NULL, AppNominatimPass::getConfigSchema()),
-				'pedef' => Expect::anyOf(NULL, AppPedefPass::getConfigSchema()),
-				'ruian' => Expect::anyOf(NULL, AppRuianPass::getConfigSchema()),
+				AppAresPass::APP_NAME => Expect::anyOf(NULL, AppAresPass::getConfigSchema()),
+				AppAdminusCrmPass::APP_NAME => Expect::anyOf(NULL, AppAdminusCrmPass::getConfigSchema()),
+				AppDbdPass::APP_NAME => Expect::anyOf(NULL, AppDbdPass::getConfigSchema()),
+				AppLotusPass::APP_NAME => Expect::anyOf(NULL, AppLotusPass::getConfigSchema()),
+				AppJuicyPdfPass::APP_NAME => Expect::anyOf(NULL, AppJuicyPdfPass::getConfigSchema()),
+				AppNominatimPass::APP_NAME => Expect::anyOf(NULL, AppNominatimPass::getConfigSchema()),
+				AppPedefPass::APP_NAME => Expect::anyOf(NULL, AppPedefPass::getConfigSchema()),
+				AppRuianPass::APP_NAME => Expect::anyOf(NULL, AppRuianPass::getConfigSchema()),
 			])->castTo('array'),
 		])->castTo('array');
 	}
