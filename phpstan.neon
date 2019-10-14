@@ -26,10 +26,6 @@ parameters:
 			message: '#^Instanceof between ISPA\\ApiClients\\App\\Dbd\\Entity\\Company and ISPA\\ApiClients\\App\\Dbd\\Entity\\Company will always evaluate to true\.$#'
 			path: %currentWorkingDirectory%/src/App/Dbd/Client/DebtorClient.php
 
-		-
-			message: '#^Parameter \#2 ...\$args of function array_merge expects array, array\|null given\.$#'
-			path: %currentWorkingDirectory%/src/App/Lotus/Client/ProcessClient.php
-
 		# Intentional
 		-
 			message: '#^Variable property access on SimpleXMLElement\.$#'
