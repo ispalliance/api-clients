@@ -11,6 +11,13 @@ use ISPA\ApiClients\App\Adminus\Crm\Requestor\AccountingEntityRequestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\ContractRequestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\CustomerRequestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\UserRequestor;
+use ISPA\ApiClients\App\Adminus\Nms\Client\AreaClient;
+use ISPA\ApiClients\App\Adminus\Nms\Client\DeviceClient;
+use ISPA\ApiClients\App\Adminus\Nms\Client\PopClient;
+use ISPA\ApiClients\App\Adminus\Nms\NmsRootquestor;
+use ISPA\ApiClients\App\Adminus\Nms\Requestor\AreaRequestor;
+use ISPA\ApiClients\App\Adminus\Nms\Requestor\DeviceRequestor;
+use ISPA\ApiClients\App\Adminus\Nms\Requestor\PopRequestor;
 use ISPA\ApiClients\App\Ares\AresRootquestor;
 use ISPA\ApiClients\App\Ares\Client\AddressClient;
 use ISPA\ApiClients\App\Ares\Client\SubjectClient;
@@ -82,6 +89,7 @@ class ApiClientsExtensionTest extends ContainerTestCase
 				'app' => [
 					'ares' => [],
 					'adminusCrm' => [],
+					'adminusNms' => [],
 					'dbd' => [
 						'http' => [
 							'wsdl' => 'http://ws.dcgroup.cz/index.php?WSDL',
@@ -118,7 +126,7 @@ class ApiClientsExtensionTest extends ContainerTestCase
 
 		static::assertInstanceOf(AresRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->ares);
 
-		// AppCrmPass
+		// AppAdminusCrmPass
 		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.http.client'));
 
 		static::assertInstanceOf(AccountingEntityClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.client.accountingEntity'));
@@ -139,6 +147,25 @@ class ApiClientsExtensionTest extends ContainerTestCase
 		static::assertInstanceOf(UserRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.rootquestor')->user);
 
 		static::assertInstanceOf(CrmRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->adminusCrm);
+
+		// AppAdminusNmsPass
+		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.http.client'));
+
+		static::assertInstanceOf(AreaClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.client.area'));
+		static::assertInstanceOf(DeviceClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.client.device'));
+		static::assertInstanceOf(PopClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.client.pop'));
+
+		static::assertInstanceOf(AreaRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.requestor.area'));
+		static::assertInstanceOf(DeviceRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.requestor.device'));
+		static::assertInstanceOf(PopRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.requestor.pop'));
+
+		static::assertInstanceOf(NmsRootquestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.rootquestor'));
+
+		static::assertInstanceOf(AreaRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.rootquestor')->area);
+		static::assertInstanceOf(DeviceRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.rootquestor')->device);
+		static::assertInstanceOf(PopRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.nms.rootquestor')->pop);
+
+		static::assertInstanceOf(NmsRootquestor::class, $this->getContainer()->getService('ispa.apis.provider')->adminusNms);
 
 		// AppLotusPass
 		static::assertInstanceOf(HttpClient::class, $this->getContainer()->getService('ispa.apis.app.lotus.http.client'));

@@ -26,6 +26,7 @@ ispa.api:
 Secondly, configure single application. We support these ISP-based applications:
 
  - **adminusCrm**
+ - **adminusNms**
  - **ares**
  - **lotus**
  - **pedef**
@@ -183,6 +184,43 @@ ispa.api:
 | getAll()      | /user       | GET  |
 | getById($id)  | /user/{$id} | GET  |
 
+## Adminus NMS
+
+### Configuration
+
+```yaml
+ispa.api:
+    app:
+        adminusNms:
+            http:
+                base_uri: http://adminus-nms.example.com/api/
+```
+
+### Available requestor's methods
+
+**AreaRequestor**
+
+| Method             | API path                                  | Type |
+| ------------------ | ----------------------------------------- |----- |
+| getById($id)       | /nms-lotus-detail/area-by-id/{$id}        | GET  |
+| getByIds($ids)     | /nms-lotus-detail/area-by-id/{$id}        | GET  |
+| getByQuery($query) | /nms-lotus-search/area-by-query//{$query} | GET  |
+
+**DeviceRequestor**
+
+| Method             | API path                                    | Type |
+| ------------------ | ------------------------------------------- |----- |
+| getById($id)       | /nms-lotus-detail/device-by-id/{$id}        | GET  |
+| getByIds($ids)     | /nms-lotus-detail/device-by-id/{$id}        | GET  |
+| getByQuery($query) | /nms-lotus-search/device-by-query//{$query} | GET  |
+
+**PopRequestor**
+
+| Method             | API path                                 | Type |
+| ------------------ | ---------------------------------------- |----- |
+| getById($id)       | /nms-lotus-detail/pop-by-id/{$id}        | GET  |
+| getByIds($ids)     | /nms-lotus-detail/pop-by-id/{$id}        | GET  |
+| getByQuery($query) | /nms-lotus-search/pop-by-query//{$query} | GET  |
 
 ## ARES
 

@@ -4,6 +4,7 @@ namespace ISPA\ApiClients\DI;
 
 use ISPA\ApiClients\DI\Pass\AbstractPass;
 use ISPA\ApiClients\DI\Pass\AppAdminusCrmPass;
+use ISPA\ApiClients\DI\Pass\AppAdminusNmsPass;
 use ISPA\ApiClients\DI\Pass\AppAresPass;
 use ISPA\ApiClients\DI\Pass\AppDbdPass;
 use ISPA\ApiClients\DI\Pass\AppJuicyPdfPass;
@@ -22,6 +23,7 @@ class ApiClientsExtension24 extends ApiClientsExtension
 		'app' => [
 			AppAresPass::APP_NAME => NULL,
 			AppAdminusCrmPass::APP_NAME => NULL,
+			AppAdminusNmsPass::APP_NAME => NULL,
 			AppDbdPass::APP_NAME => NULL,
 			AppLotusPass::APP_NAME => NULL,
 			AppJuicyPdfPass::APP_NAME => NULL,
