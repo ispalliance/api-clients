@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace ISPA\ApiClients\App\Adminus;
+namespace ISPA\ApiClients\App\Adminus\Crm;
 
-use ISPA\ApiClients\App\Adminus\Requestor\AccountingEntityRequestor;
-use ISPA\ApiClients\App\Adminus\Requestor\ContractRequestor;
-use ISPA\ApiClients\App\Adminus\Requestor\CustomerRequestor;
-use ISPA\ApiClients\App\Adminus\Requestor\UserRequestor;
+use ISPA\ApiClients\App\Adminus\Crm\Requestor\AccountingEntityRequestor;
+use ISPA\ApiClients\App\Adminus\Crm\Requestor\ContractRequestor;
+use ISPA\ApiClients\App\Adminus\Crm\Requestor\CustomerRequestor;
+use ISPA\ApiClients\App\Adminus\Crm\Requestor\UserRequestor;
 use ISPA\ApiClients\Domain\AbstractRootquestor;
 
 /**
