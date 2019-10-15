@@ -17,7 +17,7 @@ use Nette\DI\ServiceDefinition;
 class AppAdminusCrmPass extends BaseAppPass
 {
 
-	public const APP_NAME = 'adminusCrm';
+	public const APP_NAME = 'adminus_crm';
 
 	public function loadPassConfiguration(): void
 	{
@@ -25,7 +25,7 @@ class AppAdminusCrmPass extends BaseAppPass
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.adminus.crm.http.client'))
-			->setFactory($this->extension->prefix('@guzzleFactory::create'), [self::APP_NAME])
+			->setFactory($this->extension->prefix('@guzzleFactory::create'), ['adminusCrm'])
 			->setType(HttpClient::class)
 			->setAutowired(FALSE);
 
@@ -63,7 +63,7 @@ class AppAdminusCrmPass extends BaseAppPass
 		// ApiProvider -> #4 connect provider to rootquestor
 		$provider = $builder->getDefinition($this->extension->prefix('provider'));
 		assert($provider instanceof ServiceDefinition);
-		$provider->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.adminus.crm.rootquestor')]);
+		$provider->addSetup('add', ['adminusCrm', $this->extension->prefix('@app.adminus.crm.rootquestor')]);
 	}
 
 }

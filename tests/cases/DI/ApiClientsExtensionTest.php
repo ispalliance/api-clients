@@ -88,8 +88,8 @@ class ApiClientsExtensionTest extends ContainerTestCase
 			'ispa.apis' => [
 				'app' => [
 					'ares' => [],
-					'adminusCrm' => [],
-					'adminusNms' => [],
+					'adminus_crm' => [],
+					'adminus_nms' => [],
 					'dbd' => [
 						'http' => [
 							'wsdl' => 'http://ws.dcgroup.cz/index.php?WSDL',
