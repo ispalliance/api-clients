@@ -15,7 +15,7 @@ use Nette\DI\ServiceDefinition;
 class AppAdminusNmsPass extends BaseAppPass
 {
 
-	public const APP_NAME = 'adminusNms';
+	public const APP_NAME = 'adminus_nms';
 
 	public function loadPassConfiguration(): void
 	{
@@ -23,7 +23,7 @@ class AppAdminusNmsPass extends BaseAppPass
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.adminus.nms.http.client'))
-			->setFactory($this->extension->prefix('@guzzleFactory::create'), [self::APP_NAME])
+			->setFactory($this->extension->prefix('@guzzleFactory::create'), ['adminusNms'])
 			->setType(HttpClient::class)
 			->setAutowired(FALSE);
 
@@ -56,7 +56,7 @@ class AppAdminusNmsPass extends BaseAppPass
 		// ApiProvider -> #4 connect provider to rootquestor
 		$provider = $builder->getDefinition($this->extension->prefix('provider'));
 		assert($provider instanceof ServiceDefinition);
-		$provider->addSetup('add', [self::APP_NAME, $this->extension->prefix('@app.adminus.nms.rootquestor')]);
+		$provider->addSetup('add', ['adminusNms', $this->extension->prefix('@app.adminus.nms.rootquestor')]);
 	}
 
 }
