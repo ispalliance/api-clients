@@ -23,7 +23,7 @@ class AppAdminusNmsPass extends BaseAppPass
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.adminus.nms.http.client'))
-			->setFactory($this->extension->prefix('@guzzleFactory::create'), ['adminusNms'])
+			->setFactory($this->extension->prefix('@guzzleFactory::create'), [self::APP_NAME])
 			->setType(HttpClient::class)
 			->setAutowired(FALSE);
 
