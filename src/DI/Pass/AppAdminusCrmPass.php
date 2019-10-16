@@ -25,7 +25,7 @@ class AppAdminusCrmPass extends BaseAppPass
 
 		// #1 HTTP client
 		$builder->addDefinition($this->extension->prefix('app.adminus.crm.http.client'))
-			->setFactory($this->extension->prefix('@guzzleFactory::create'), ['adminusCrm'])
+			->setFactory($this->extension->prefix('@guzzleFactory::create'), [self::APP_NAME])
 			->setType(HttpClient::class)
 			->setAutowired(FALSE);
 
