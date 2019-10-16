@@ -3,6 +3,7 @@
 namespace ISPA\ApiClients\Domain;
 
 use ISPA\ApiClients\App\Adminus\Crm\CrmRootquestor;
+use ISPA\ApiClients\App\Adminus\Nms\NmsRootquestor;
 use ISPA\ApiClients\App\Ares\AresRootquestor;
 use ISPA\ApiClients\App\Lotus\LotusRootquestor;
 use ISPA\ApiClients\App\Pedef\PedefRootquestor;
@@ -12,6 +13,7 @@ use ISPA\ApiClients\Exception\Logical\InvalidStateException;
 /**
  * @property-read AresRootquestor $ares
  * @property-read CrmRootquestor $adminusCrm
+ * @property-read NmsRootquestor $adminusNms
  * @property-read LotusRootquestor $lotus
  * @property-read PedefRootquestor $pedef
  * @property-read RuianRootquestor $ruian
