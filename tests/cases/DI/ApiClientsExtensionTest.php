@@ -5,10 +5,12 @@ namespace Tests\Cases\DI;
 use ISPA\ApiClients\App\Adminus\Crm\Client\AccountingEntityClient;
 use ISPA\ApiClients\App\Adminus\Crm\Client\ContractClient;
 use ISPA\ApiClients\App\Adminus\Crm\Client\CustomerClient;
+use ISPA\ApiClients\App\Adminus\Crm\Client\CustomerFileClient;
 use ISPA\ApiClients\App\Adminus\Crm\Client\UserClient;
 use ISPA\ApiClients\App\Adminus\Crm\CrmRootquestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\AccountingEntityRequestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\ContractRequestor;
+use ISPA\ApiClients\App\Adminus\Crm\Requestor\CustomerFileRequestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\CustomerRequestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\UserRequestor;
 use ISPA\ApiClients\App\Adminus\Nms\Client\AreaClient;
@@ -133,11 +135,13 @@ class ApiClientsExtensionTest extends ContainerTestCase
 		static::assertInstanceOf(ContractClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.client.contract'));
 		static::assertInstanceOf(CustomerClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.client.customer'));
 		static::assertInstanceOf(UserClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.client.user'));
+		static::assertInstanceOf(CustomerFileClient::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.client.customerFile'));
 
 		static::assertInstanceOf(AccountingEntityRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.requestor.accountingEntity'));
 		static::assertInstanceOf(ContractRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.requestor.contract'));
 		static::assertInstanceOf(CustomerRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.requestor.customer'));
 		static::assertInstanceOf(UserRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.requestor.user'));
+		static::assertInstanceOf(CustomerFileRequestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.requestor.customerFile'));
 
 		static::assertInstanceOf(CrmRootquestor::class, $this->getContainer()->getService('ispa.apis.app.adminus.crm.rootquestor'));
 
