@@ -18,6 +18,38 @@ final class ResponseDataExtractor
 			return [];
 		}
 
+		$data = self::extractResponse($response);
+
+		return $data['data'];
+	}
+
+	public static function extractBooleanData(ResponseInterface $response): bool
+	{
+		if ($response->getStatusCode() === 404) {
+			return FALSE;
+		}
+
+		$data = self::extractResponse($response);
+
+		return $data['data'];
+	}
+
+	public static function extractIntegerData(ResponseInterface $response): int
+	{
+		if ($response->getStatusCode() === 404) {
+			return 0;
+		}
+
+		$data = self::extractResponse($response);
+
+		return $data['data'];
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	private static function extractResponse(ResponseInterface $response): array
+	{
 		$data = Json::decode($response->getBody()->getContents(), Json::FORCE_ARRAY);
 
 		if (
@@ -31,7 +63,7 @@ final class ResponseDataExtractor
 			throw new InvalidStateException('Response content contains falsy status.');
 		}
 
-		return $data['data'];
+		return $data;
 	}
 
 }

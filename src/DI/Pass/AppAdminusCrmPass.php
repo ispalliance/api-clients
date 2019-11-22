@@ -5,10 +5,12 @@ namespace ISPA\ApiClients\DI\Pass;
 use ISPA\ApiClients\App\Adminus\Crm\Client\AccountingEntityClient;
 use ISPA\ApiClients\App\Adminus\Crm\Client\ContractClient;
 use ISPA\ApiClients\App\Adminus\Crm\Client\CustomerClient;
+use ISPA\ApiClients\App\Adminus\Crm\Client\CustomerFileClient;
 use ISPA\ApiClients\App\Adminus\Crm\Client\UserClient;
 use ISPA\ApiClients\App\Adminus\Crm\CrmRootquestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\AccountingEntityRequestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\ContractRequestor;
+use ISPA\ApiClients\App\Adminus\Crm\Requestor\CustomerFileRequestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\CustomerRequestor;
 use ISPA\ApiClients\App\Adminus\Crm\Requestor\UserRequestor;
 use ISPA\ApiClients\Http\HttpClient;
@@ -36,6 +38,8 @@ class AppAdminusCrmPass extends BaseAppPass
 			->setFactory(ContractClient::class, [$this->extension->prefix('@app.adminus.crm.http.client')]);
 		$builder->addDefinition($this->extension->prefix('app.adminus.crm.client.customer'))
 			->setFactory(CustomerClient::class, [$this->extension->prefix('@app.adminus.crm.http.client')]);
+		$builder->addDefinition($this->extension->prefix('app.adminus.crm.client.customerFile'))
+			->setFactory(CustomerFileClient::class, [$this->extension->prefix('@app.adminus.crm.http.client')]);
 		$builder->addDefinition($this->extension->prefix('app.adminus.crm.client.user'))
 			->setFactory(UserClient::class, [$this->extension->prefix('@app.adminus.crm.http.client')]);
 
@@ -46,6 +50,8 @@ class AppAdminusCrmPass extends BaseAppPass
 			->setFactory(ContractRequestor::class, [$this->extension->prefix('@app.adminus.crm.client.contract')]);
 		$builder->addDefinition($this->extension->prefix('app.adminus.crm.requestor.customer'))
 			->setFactory(CustomerRequestor::class, [$this->extension->prefix('@app.adminus.crm.client.customer')]);
+		$builder->addDefinition($this->extension->prefix('app.adminus.crm.requestor.customerFile'))
+			->setFactory(CustomerFileRequestor::class, [$this->extension->prefix('@app.adminus.crm.client.customerFile')]);
 		$builder->addDefinition($this->extension->prefix('app.adminus.crm.requestor.user'))
 			->setFactory(UserRequestor::class, [$this->extension->prefix('@app.adminus.crm.client.user')]);
 
@@ -58,6 +64,7 @@ class AppAdminusCrmPass extends BaseAppPass
 			->addSetup('add', ['accountingEntity', $this->extension->prefix('@app.adminus.crm.requestor.accountingEntity')])
 			->addSetup('add', ['contract', $this->extension->prefix('@app.adminus.crm.requestor.contract')])
 			->addSetup('add', ['customer', $this->extension->prefix('@app.adminus.crm.requestor.customer')])
+			->addSetup('add', ['customerFile', $this->extension->prefix('@app.adminus.crm.requestor.customerFile')])
 			->addSetup('add', ['user', $this->extension->prefix('@app.adminus.crm.requestor.user')]);
 
 		// ApiProvider -> #4 connect provider to rootquestor
