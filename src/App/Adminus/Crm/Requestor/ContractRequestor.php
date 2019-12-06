@@ -3,6 +3,7 @@
 namespace ISPA\ApiClients\App\Adminus\Crm\Requestor;
 
 use ISPA\ApiClients\App\Adminus\Crm\Client\ContractClient;
+use ISPA\ApiClients\App\Adminus\Crm\Utils\Filter;
 use ISPA\ApiClients\App\Ispa\ResponseDataExtractor;
 use ISPA\ApiClients\Domain\AbstractRequestor;
 
@@ -19,14 +20,17 @@ class ContractRequestor extends AbstractRequestor
 
 	/**
 	 * @param string|int $id
+	 * @param mixed[] $filters
 	 * @return mixed[]
 	 */
-	public function getById($id): array
+	public function getById($id, array $filters = []): array
 	{
 		$response = $this->client->getById($id);
 		$this->assertResponse($response, [200, 404]);
 
-		return ResponseDataExtractor::extractData($response);
+		$item = ResponseDataExtractor::extractData($response);
+
+		return Filter::isValid($item, $filters) ? $item : [];
 	}
 
 	/**
@@ -43,14 +47,17 @@ class ContractRequestor extends AbstractRequestor
 
 	/**
 	 * @param string|int $customerId
+	 * @param mixed[] $filters
 	 * @return mixed[]
 	 */
-	public function getByCustomer($customerId): array
+	public function getByCustomer($customerId, array $filters = []): array
 	{
 		$response = $this->client->getByCustomer($customerId);
 		$this->assertResponse($response, [200, 404]);
 
-		return ResponseDataExtractor::extractData($response);
+		$items = ResponseDataExtractor::extractData($response);
+
+		return Filter::getValid($items, $filters);
 	}
 
 	/**
