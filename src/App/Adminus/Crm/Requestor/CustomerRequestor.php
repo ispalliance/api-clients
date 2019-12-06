@@ -3,6 +3,7 @@
 namespace ISPA\ApiClients\App\Adminus\Crm\Requestor;
 
 use ISPA\ApiClients\App\Adminus\Crm\Client\CustomerClient;
+use ISPA\ApiClients\App\Adminus\Crm\Utils\Filter;
 use ISPA\ApiClients\App\Ispa\ResponseDataExtractor;
 use ISPA\ApiClients\Domain\AbstractRequestor;
 
@@ -31,15 +32,18 @@ class CustomerRequestor extends AbstractRequestor
 
 	/**
 	 * @param string|int $id
+	 * @param mixed[] $filters
 	 * @return mixed[]
 	 */
-	public function getById($id): array
+	public function getById($id, array $filters = []): array
 	{
 		$resp = $this->client->getById($id);
 
 		$this->assertResponse($resp, [200, 404]);
 
-		return ResponseDataExtractor::extractData($resp);
+		$item = ResponseDataExtractor::extractData($resp);
+
+		return Filter::isValid($item, $filters) ? $item : [];
 	}
 
 	/**
@@ -56,15 +60,18 @@ class CustomerRequestor extends AbstractRequestor
 	}
 
 	/**
+	 * @param mixed[] $filters
 	 * @return mixed[]
 	 */
-	public function getByFilter(string $query): array
+	public function getByFilter(string $query, array $filters = []): array
 	{
 		$resp = $this->client->getByFilter($query);
 
 		$this->assertResponse($resp, [200, 404]);
 
-		return ResponseDataExtractor::extractData($resp);
+		$items = ResponseDataExtractor::extractData($resp);
+
+		return Filter::getValid($items, $filters);
 	}
 
 	/**
@@ -121,7 +128,7 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['k:2412'],
 			],
 			'titul' => [
-				'description' => '  hledá dle titulu zákazníka  
+				'description' => '  hledá dle titulu zákazníka
                                 *(najde i hodnoty s částečnou shodou)*
             ',
 				'examples' => ['titul:ing'],
@@ -135,13 +142,13 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['rc:8311251234'],
 			],
 			'jmeno' => [
-				'description' => '  hledá dle jména zákazníka, lze použít i zkrácený zápis `j`  
+				'description' => '  hledá dle jména zákazníka, lze použít i zkrácený zápis `j`
                                 *(najde i hodnoty s částečnou shodou)*
             ',
 				'examples' => ['j:pavel'],
 			],
 			'prijmeni' => [
-				'description' => '  hledá dle příjmení zákazníka, lze použít i zkrácený zápis `p`  
+				'description' => '  hledá dle příjmení zákazníka, lze použít i zkrácený zápis `p`
                                 *(najde i hodnoty s částečnou shodou)*
             ',
 				'examples' => ['p:novak'],
@@ -179,12 +186,12 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['tel:733123456'],
 			],
 			'ip' => [
-				'description' => '  hledá dle zákaznické IP adresy  
+				'description' => '  hledá dle zákaznické IP adresy
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['ip:192.168.1.2', 'ip:0', 'ip:1'],
 			],
 			'verejnaip' => [
-				'description' => '  hledá dle veřejné IP adresy (hledá pouze mezi zákazníky kteří mají zadanou IP adresu)  
+				'description' => '  hledá dle veřejné IP adresy (hledá pouze mezi zákazníky kteří mají zadanou IP adresu)
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['verejnaip:12.12.12.12', 'verejnaip:0', 'verejnaip:1'],
 			],
@@ -220,7 +227,7 @@ class CustomerRequestor extends AbstractRequestor
 			'smlstav' => [
 				'description' => '  hledání podle stavu smlouvy (automatická nápověda)
                                 - kombinuje se se "služba" tj. pokud se hledá jak podle klíče "služba" tak podle klíč "smlstav", tak jsou ve výsledku uvažovány jen ty smlouvy které jsou uzavřeny na danou službu a mají daný stav
-                                - smlouvy ve stavu "Nový", lze hledat pomocí výrazu `smlstav:[Nový]`  
+                                - smlouvy ve stavu "Nový", lze hledat pomocí výrazu `smlstav:[Nový]`
                                 *(najde i hodnoty s částečnou shodou)*
                                 ',
 				'examples' => ['smlstav:Odpojen'],
@@ -242,7 +249,7 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['ipr:192.168.143.101/27'],
 			],
 			'mac' => [
-				'description' => '  hledá dle MAC adresy zákaznického zařízení evidovaného u některé ze zákaznických smluv, namísto dvojtečky použijte v hledané MAC adrese znak pomlčky  
+				'description' => '  hledá dle MAC adresy zákaznického zařízení evidovaného u některé ze zákaznických smluv, namísto dvojtečky použijte v hledané MAC adrese znak pomlčky
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['mac:01-23-45-67'],
 			],
@@ -251,7 +258,7 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['banka:1234/0800'],
 			],
 			'pozn' => [
-				'description' => '  hledá v poznámkách u zákazníka  
+				'description' => '  hledá v poznámkách u zákazníka
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['pozn:text'],
 			],
@@ -268,25 +275,25 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['pozastaveno:1'],
 			],
 			'ssid' => [
-				'description' => '  hledá dle SSID vysílače  
+				'description' => '  hledá dle SSID vysílače
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['ssid:ZlebyAP3'],
 			],
 			'adresa' => [
-				'description' => '  Hledá dle zákaznické adresy, lze zadat komplexní adresu např. ve tvaru *Palackého 471 Čáslav*, nebo *Bousov 123* apod.  
-                                Pokud není vyhledávání dle celkové adresy úspěšné, použijte vyhledávání s konkrétní specifikací jednotlivých částí adresy např. 
-                                `ulice:palackého, mesto:caslav, cp: 471`, lze použít i zkrácený zápis `a`  
+				'description' => '  Hledá dle zákaznické adresy, lze zadat komplexní adresu např. ve tvaru *Palackého 471 Čáslav*, nebo *Bousov 123* apod.
+                                Pokud není vyhledávání dle celkové adresy úspěšné, použijte vyhledávání s konkrétní specifikací jednotlivých částí adresy např.
+                                `ulice:palackého, mesto:caslav, cp: 471`, lze použít i zkrácený zápis `a`
                                 *(najde i hodnoty s částečnou shodou)*
             ',
 				'examples' => ['adresa:Palackého 471 Čáslav', 'Bousov 123'],
 			],
 			'mesto' => [
-				'description' => '  hledá město v zákaznických adresách, lze použít i zkrácený zápis `m`  
+				'description' => '  hledá město v zákaznických adresách, lze použít i zkrácený zápis `m`
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['m:pardubice'],
 			],
 			'ulice' => [
-				'description' => '  hledá ulici v zákaznických adresách, lze použít i zkrácený zápis `u`  
+				'description' => '  hledá ulici v zákaznických adresách, lze použít i zkrácený zápis `u`
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['u:novakova'],
 			],
@@ -303,7 +310,7 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['město:Praha, typadresy:fakturační'],
 			],
 			'psc' => [
-				'description' => '  hledá dle PSČ v zákaznických adresách, lze uvést i více PSČ a ty oddělit symbolem "|"  
+				'description' => '  hledá dle PSČ v zákaznických adresách, lze uvést i více PSČ a ty oddělit symbolem "|"
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['psc:53854', 'psc:53854|53901|53944'],
 			],
@@ -316,17 +323,17 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['co:1234'],
 			],
 			'posta' => [
-				'description' => '  hledá dle pošty v zákaznických adresách  
+				'description' => '  hledá dle pošty v zákaznických adresách
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['posta:přelouč'],
 			],
 			'apozn' => [
-				'description' => '  hledá v poznámkách zákaznických adres  
+				'description' => '  hledá v poznámkách zákaznických adres
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['apozn:text'],
 			],
 			'tag' => [
-				'description' => '  hledá zákazníky podle štítků  
+				'description' => '  hledá zákazníky podle štítků
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['tag:Řeší se'],
 			],
@@ -335,7 +342,7 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['tagtrvani>30'],
 			],
 			'beztagu' => [
-				'description' => '  hledá zákazníky, kteří nemají štítek  
+				'description' => '  hledá zákazníky, kteří nemají štítek
                                 *(najde i hodnoty s částečnou shodou)*',
 				'examples' => ['beztagu:Řeší se'],
 			],
@@ -396,11 +403,11 @@ class CustomerRequestor extends AbstractRequestor
 				'examples' => ['konecuvazku>30'],
 			],
 			'konecpredplaceni' => [
-				'description' => ' hledá zákazníky dle toho, kdy některé z jejich smluv končí předplacení za daný počet dní (lze použít operátory &lt;,&lt;=,=,&gt;=,&gt;)  
+				'description' => ' hledá zákazníky dle toho, kdy některé z jejich smluv končí předplacení za daný počet dní (lze použít operátory &lt;,&lt;=,=,&gt;=,&gt;)
                                 pokud se zada zaporna hodnota, tak lze hledat i predplaceni, ktera jiz skoncila:
-                                - `konecpredplaceni<-30` najde predplaceni, ktera jiz skoncila a skoncila pred mene jak 30-ti dny 
-                                - `konecpredplaceni>-30` najde predplaceni, ktera jiz skoncila a skoncila pred vice jak 30-ti dny 
-                                
+                                - `konecpredplaceni<-30` najde predplaceni, ktera jiz skoncila a skoncila pred mene jak 30-ti dny
+                                - `konecpredplaceni>-30` najde predplaceni, ktera jiz skoncila a skoncila pred vice jak 30-ti dny
+
             ',
 				'examples' => ['konecpredplaceni<=7', 'konecpredplaceni>-30', 'konecpredplaceni=14'],
 			],
