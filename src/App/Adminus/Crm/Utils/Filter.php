@@ -12,7 +12,7 @@ class Filter
 	 */
 	public static function getValid(array $items, array $filters): array
 	{
-		if (count($filters) === 0) {
+		if ($filters === []) {
 			return $items;
 		}
 
@@ -33,21 +33,17 @@ class Filter
 	 */
 	public static function isValid(array $item, array $filters): bool
 	{
-		if (count($filters) === 0) {
-			return TRUE;
-		}
-
 		foreach ($filters as $key => $value) {
 			if (isset($item[$key]) === FALSE) {
-				continue;
+				return FALSE;
 			}
 
-			if ($item[$key] === $value) {
-				return TRUE;
+			if ($item[$key] !== $value) {
+				return FALSE;
 			}
 		}
 
-		return FALSE;
+		return TRUE;
 	}
 
 }
