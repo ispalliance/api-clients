@@ -20,7 +20,7 @@ final class ResponseDataExtractor
 
 		$data = self::extractResponse($response);
 
-		return $data['data'];
+		return (array) $data['data'];
 	}
 
 	public static function extractBooleanData(ResponseInterface $response): bool
