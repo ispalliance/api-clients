@@ -14,6 +14,10 @@ class Helpers
 			return '';
 		}
 
+		$parameters = array_filter($parameters, static function ($value) {
+			return $value !== NULL && $value !== '';
+		});
+
 		return http_build_query($parameters, '', '&', PHP_QUERY_RFC3986);
 	}
 
