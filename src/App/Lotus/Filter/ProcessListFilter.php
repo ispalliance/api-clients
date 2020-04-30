@@ -20,6 +20,9 @@ class ProcessListFilter
 	/** @var mixed[]|null */
 	private $variables;
 
+	/** @var string[] */
+	private $include;
+
 	/**
 	 * @return static
 	 */
@@ -82,6 +85,22 @@ class ProcessListFilter
 	public function getVariables(): ?array
 	{
 		return $this->variables;
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getInclude(): array
+	{
+		return $this->include;
+	}
+
+	/**
+	 * @param string[] $include
+	 */
+	public function setInclude(array $include): void
+	{
+		$this->include = $include;
 	}
 
 }

@@ -27,11 +27,12 @@ final class ProcessRequestor extends BaseRequestor
 	}
 
 	/**
+	 * @param string[] $include
 	 * @return mixed[]
 	 */
-	public function getProcess(int $id): array
+	public function getProcess(int $id, array $include = []): array
 	{
-		$response = $this->client->getProcess($id);
+		$response = $this->client->getProcess($id, $include);
 
 		return $this->processResponse($response)->getData();
 	}
@@ -82,32 +83,35 @@ final class ProcessRequestor extends BaseRequestor
 	}
 
 	/**
-	 * @param mixed[] $data
+	 * @param mixed[]  $data
+	 * @param string[] $include
 	 * @return mixed[]
 	 */
-	public function startProcess(int $tid, array $data = []): array
+	public function startProcess(int $tid, array $data = [], array $include = []): array
 	{
-		$response = $this->client->startProcess($tid, $data);
+		$response = $this->client->startProcess($tid, $data, $include);
 
 		return $this->processResponse($response)->getData();
 	}
 
 	/**
+	 * @param string[] $include
 	 * @return mixed[]
 	 */
-	public function listTemplates(int $limit = 10, int $offset = 0, bool $startableOnly = FALSE): array
+	public function listTemplates(int $limit = 10, int $offset = 0, bool $startableOnly = FALSE, array $include = []): array
 	{
-		$response = $this->client->listTemplates($limit, $offset, $startableOnly);
+		$response = $this->client->listTemplates($limit, $offset, $startableOnly, $include);
 
 		return $this->processResponse($response)->getData();
 	}
 
 	/**
+	 * @param string[] $include
 	 * @return mixed[]
 	 */
-	public function getTemplate(int $id): array
+	public function getTemplate(int $id, array $include = []): array
 	{
-		$response = $this->client->getTemplate($id);
+		$response = $this->client->getTemplate($id, $include);
 
 		return $this->processResponse($response)->getData();
 	}

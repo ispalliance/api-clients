@@ -13,15 +13,12 @@ class ProcessClient extends AbstractLotusClient
 	private const PATH_PROCESS = 'processes';
 	private const PATH_TEMPLATE = 'template-processes';
 
-	/**
-	 * @param string[] $include
-	 */
-	public function listProcesses(int $limit = 10, int $offset = 0, ?ProcessListFilter $filter = NULL, array $include = []): ResponseInterface
+	public function listProcesses(int $limit = 10, int $offset = 0, ?ProcessListFilter $filter = NULL): ResponseInterface
 	{
 		$parameters = [
 			'limit' => $limit > 0 ? $limit : 10,
 			'offset' => $offset >= 0 ? $offset : 0,
-			'include' => implode(',', $include),
+			'include' => implode(',', $filter !== NULL ? $filter->getInclude() : []),
 		];
 
 		if ($filter !== NULL) {
