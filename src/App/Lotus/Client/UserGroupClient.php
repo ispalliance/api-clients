@@ -38,9 +38,16 @@ class UserGroupClient extends AbstractLotusClient
 		);
 	}
 
-	public function findOne(int $id): ResponseInterface
+	/**
+	 * @param string[] $include
+	 */
+	public function findOne(int $id, array $include = []): ResponseInterface
 	{
-		return $this->request('GET', sprintf('%s/%d', self::PATH, $id));
+		$query = Helpers::buildQuery([
+			'include' => implode(',', $include),
+		]);
+
+		return $this->request('GET', sprintf('%s/%d?%s', self::PATH, $id, $query));
 	}
 
 	public function createOne(UserGroupCreateEntity $entity): ResponseInterface

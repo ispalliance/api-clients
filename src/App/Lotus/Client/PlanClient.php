@@ -38,11 +38,15 @@ class PlanClient extends AbstractLotusClient
 		return $this->request('DELETE', sprintf('%s/%s', self::PATH, $id));
 	}
 
-	public function findMultiple(int $limit = 10, int $offset = 0): ResponseInterface
+	/**
+	 * @param string[] $include
+	 */
+	public function findMultiple(int $limit = 10, int $offset = 0, array $include = []): ResponseInterface
 	{
 		$query = Helpers::buildQuery([
 			'limit' => $limit > 0 ? $limit : 10,
 			'offset' => $offset >= 0 ? $offset : 0,
+			'include' => implode(',', $include),
 		]);
 		return $this->request('GET', sprintf('%s?%s', self::PATH, $query));
 	}

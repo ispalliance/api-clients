@@ -13,11 +13,15 @@ class ProcessClient extends AbstractLotusClient
 	private const PATH_PROCESS = 'processes';
 	private const PATH_TEMPLATE = 'template-processes';
 
-	public function listProcesses(int $limit = 10, int $offset = 0, ?ProcessListFilter $filter = NULL): ResponseInterface
+	/**
+	 * @param string[] $include
+	 */
+	public function listProcesses(int $limit = 10, int $offset = 0, ?ProcessListFilter $filter = NULL, array $include = []): ResponseInterface
 	{
 		$parameters = [
 			'limit' => $limit > 0 ? $limit : 10,
 			'offset' => $offset >= 0 ? $offset : 0,
+			'include' => implode(',', $include),
 		];
 
 		if ($filter !== NULL) {
@@ -45,9 +49,16 @@ class ProcessClient extends AbstractLotusClient
 		return $this->request('GET', sprintf('%s?%s', self::PATH_PROCESS, Helpers::buildQuery($parameters)));
 	}
 
-	public function getProcess(int $id): ResponseInterface
+	/**
+	 * @param string[] $include
+	 */
+	public function getProcess(int $id, array $include = []): ResponseInterface
 	{
-		return $this->request('GET', sprintf('%s/%d', self::PATH_PROCESS, $id));
+		$query = Helpers::buildQuery([
+			'include' => implode(',', $include),
+		]);
+
+		return $this->request('GET', sprintf('%s/%d?%s', self::PATH_PROCESS, $id, $query));
 	}
 
 	public function addTag(int $pid, int $ttid): ResponseInterface
@@ -97,12 +108,17 @@ class ProcessClient extends AbstractLotusClient
 
 	/**
 	 * @param mixed[] $data
+	 * @param string[] $include
 	 */
-	public function startProcess(int $tid, array $data = []): ResponseInterface
+	public function startProcess(int $tid, array $data = [], array $include = []): ResponseInterface
 	{
+		$query = Helpers::buildQuery([
+			'include' => implode(',', $include),
+		]);
+
 		return $this->request(
 			'POST',
-			sprintf('%s/%s/start-process', self::PATH_TEMPLATE, $tid),
+			sprintf('%s/%s/start-process?%s', self::PATH_TEMPLATE, $tid, $query),
 			[
 				'body' => Json::encode($data),
 				'headers' => [
@@ -112,19 +128,30 @@ class ProcessClient extends AbstractLotusClient
 		);
 	}
 
-	public function listTemplates(int $limit = 10, int $offset = 0, bool $startableOnly = FALSE): ResponseInterface
+	/**
+	 * @param string[] $include
+	 */
+	public function listTemplates(int $limit = 10, int $offset = 0, bool $startableOnly = FALSE, array $include = []): ResponseInterface
 	{
 		$query = Helpers::buildQuery([
 			'limit' => $limit > 0 ? $limit : 10,
 			'offset' => $offset >= 0 ? $offset : 0,
 			'startableOnly' => $startableOnly ? 'true' : 'false',
+			'include' => implode(',', $include),
 		]);
 		return $this->request('GET', sprintf('%s?%s', self::PATH_TEMPLATE, $query));
 	}
 
-	public function getTemplate(int $id): ResponseInterface
+	/**
+	 * @param string[] $include
+	 */
+	public function getTemplate(int $id, array $include = []): ResponseInterface
 	{
-		return $this->request('GET', sprintf('%s/%d', self::PATH_TEMPLATE, $id));
+		$query = Helpers::buildQuery([
+			'include' => implode(',', $include),
+		]);
+
+		return $this->request('GET', sprintf('%s/%d?%s', self::PATH_TEMPLATE, $id, $query));
 	}
 
 	public function createTemplate(string $template): ResponseInterface
