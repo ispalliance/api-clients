@@ -29,11 +29,12 @@ class UserGroupRequestor extends BaseRequestor
 	}
 
 	/**
+	 * @param string[] $include
 	 * @return mixed[]
 	 */
-	public function findOne(int $id): array
+	public function findOne(int $id, array $include = []): array
 	{
-		$response = $this->client->findOne($id);
+		$response = $this->client->findOne($id, $include);
 
 		return $this->processResponse($response)->getData();
 	}

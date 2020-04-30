@@ -37,11 +37,12 @@ class PlanRequestor extends BaseRequestor
 	}
 
 	/**
+	 * @param string[] $include
 	 * @return mixed[]
 	 */
-	public function findMultiple(int $limit = 10, int $offset = 0): array
+	public function findMultiple(int $limit = 10, int $offset = 0, array $include = []): array
 	{
-		$response = $this->client->findMultiple($limit, $offset);
+		$response = $this->client->findMultiple($limit, $offset, $include);
 
 		return $this->processResponse($response)->getData();
 	}

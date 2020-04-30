@@ -36,11 +36,12 @@ class SnippetRequestor extends BaseRequestor
 	}
 
 	/**
+	 * @param string[] $include
 	 * @return mixed[]
 	 */
-	public function listSnippets(int $limit = 10, int $offset = 0): array
+	public function listSnippets(int $limit = 10, int $offset = 0, array $include = []): array
 	{
-		$response = $this->client->listSnippets($limit, $offset);
+		$response = $this->client->listSnippets($limit, $offset, $include);
 
 		return $this->processResponse($response)->getData();
 	}
