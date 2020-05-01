@@ -31,9 +31,9 @@ Secondly, configure single application. We support these ISP-based applications:
  - **lotus**
  - **pedef**
  - **ruian**
- 
+
 And these 3rd-party applications
- 
+
  - **dbd**
  - **nominatim**
  - **juicypdf**
@@ -48,7 +48,7 @@ ispa.api:
                 base_uri: http://example.com/api/v1/
 ```
 
-Each application has `http` key for configuring its HTTP client. By default this is the Guzzle client, 
+Each application has `http` key for configuring its HTTP client. By default this is the Guzzle client,
 take a look at [Guzzle doc](https://guzzle.readthedocs.io/en/latest/quickstart.html).
 
 You could also disable client entirely.
@@ -63,7 +63,7 @@ ispa.api:
 ## Architecture
 
 ```
-ApiProvider -> *Rootquestor(s) -> *Requestor(s) -> endpoint method 
+ApiProvider -> *Rootquestor(s) -> *Requestor(s) -> endpoint method
 ```
 
 There are many ways how to use this aggregated API clients.
@@ -249,7 +249,7 @@ ispa.api:
 | get(string $idNumber): Subject | /ares_es.cgi | GET  |
 | getAll(string $name): array    | /ares_es.cgi | GET  |
 
-### Examples 
+### Examples
 
 #### Get subject
 
@@ -307,7 +307,7 @@ lotus.api:
         lotus:
             http:
                 base_uri: http://lotus.ispa.cz/api/v1/
-                headers: 
+                headers:
                     X-Api-Token: token
 ```
 
@@ -327,7 +327,7 @@ lotus.api:
 | Method                                                                | API path                       | Type   |
 | --------------------------------------------------------------------- | ------------------------------ | ------ |
 | appendUsers($id, $userIds, $includeSystemUsers, $includeBlockedUsers) | /user-groups/{id}/append-users | PATCH  |
-| findOne($id)                                                          | /user-groups/{id}              | GET    |
+| findOne($id, $include)                                                | /user-groups/{id}              | GET    |
 | createOne($entity)                                                    | /user-groups                   | POST   |
 | editOne($entity)                                                      | /user-groups/{id}              | PUT    |
 | deleteOne($id)                                                        | /user-groups/{id}              | DELETE |
@@ -344,7 +344,7 @@ lotus.api:
 
 | Method                                       | API path       | Type   |
 | -------------------------------------------- | -------------- | ------ |
-| listSnippets($limit, $offset)                | /snippets      | GET    |
+| listSnippets($limit, $offset, $include)      | /snippets      | GET    |
 | createSnippet($name, $description, $snippet) | /snippets      | POST   |
 | deleteSnippet($id)                           | /snippets/{id} | DELETE |
 
@@ -358,18 +358,18 @@ lotus.api:
 
 | Method                                           | API path                           | Type   |
 | ------------------------------------------------ | ---------------------------------- | ------ |
-| listProcesses($limit, $offset, $filter)          | /processes                         | GET    |
-| getProcess($id)                                  | /processes/{id}                    | GET    |
+| listProcesses($limit, $offset, $filter, $include) | /processes                         | GET    |
+| getProcess($id, $include)                        | /processes/{id}                    | GET    |
 | addTag($pid, $ttid)                              | /processes/{pid}/tags/{ttid}       | POST   |
 | removeTag($pid, $ttid)                           | /processes/{pid}/tags/{ttid}       | DELETE |
 | moveProcessToNextStep($id)                       | /processes/{id}/next               | POST   |
 | uploadFile($id, $variable, $fileName, $contents) | /process/{id}/upload               | POST   |
-| listTemplates($limit, $offset, $startableOnly)   | /template-processes                | GET    |
-| getTemplate($id)                                 | /template-processes/{id}           | GET    |
+| listTemplates($limit, $offset, $startableOnly, $include) | /template-processes                | GET    |
+| getTemplate($id, $include)                       | /template-processes/{id}           | GET    |
 | createTemplate($entity)                          | /template-processes                | POST   |
 | deleteTemplate($id)                              | /template-processes/{id}           | DELETE |
 | archiveTemplate($id)                             | /template-processes/{id}/archive   | PATCH  |
-| startProcess($tid, $data)                        | /template-processes/{id}/start     | POST   |
+| startProcess($tid, $data, $include)              | /template-processes/{id}/start     | POST   |
 
 *1 Note: listProcesses $filter expects $variables to be array of variables to search for in format ["name" => "value", ...] eg ["user" => "10", "status" => "active"]
 
@@ -393,7 +393,7 @@ $data = [
     'next' => 2,
 ];
 ```
-    
+
 
 
 ## Pedef
@@ -541,7 +541,7 @@ ispa.api:
 
 ## DBD
 
-Please note that DBD client communicates using SOAP, thus configuration key 'soap' is used. 
+Please note that DBD client communicates using SOAP, thus configuration key 'soap' is used.
 `wsdl`, `user` and `pass` subkeys are requried.
 
 All requests to remote API are being charged, so it is recommended to have `test` option enabled during testing and debugging.
@@ -554,10 +554,10 @@ ispa.api:
         dbd:
             http:
                 wsdl: 'http://ws.dcgroup.cz/index.php?WSDL'
-                auth: 
+                auth:
                     user: foo
                     pass: bar
-            config: 
+            config:
                 test: TRUE
 ```
 
@@ -587,7 +587,7 @@ ispa.api:
 
 **AddressRequestor**
 
-Allows you to get gps coordinates for given address or in reverse get address from given coordinates. 
+Allows you to get gps coordinates for given address or in reverse get address from given coordinates.
 
 | Method                               | API path                    | Type |
 | -------------------------------------| --------------------------- |----- |
