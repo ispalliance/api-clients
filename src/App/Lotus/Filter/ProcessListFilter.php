@@ -21,7 +21,7 @@ class ProcessListFilter
 	private $variables;
 
 	/** @var string[] */
-	private $include;
+	private $include = [];
 
 	/**
 	 * @return static
