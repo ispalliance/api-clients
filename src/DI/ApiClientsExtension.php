@@ -8,7 +8,6 @@ use ISPA\ApiClients\DI\Pass\AppAdminusNmsPass;
 use ISPA\ApiClients\DI\Pass\AppAresPass;
 use ISPA\ApiClients\DI\Pass\AppDbdPass;
 use ISPA\ApiClients\DI\Pass\AppJuicyPdfPass;
-use ISPA\ApiClients\DI\Pass\AppLotusPass;
 use ISPA\ApiClients\DI\Pass\AppNominatimPass;
 use ISPA\ApiClients\DI\Pass\AppPedefPass;
 use ISPA\ApiClients\DI\Pass\AppRuianPass;
@@ -34,7 +33,6 @@ class ApiClientsExtension extends CompilerExtension
 		AppAdminusCrmPass::APP_NAME => AppAdminusCrmPass::class,
 		AppAdminusNmsPass::APP_NAME => AppAdminusNmsPass::class,
 		AppDbdPass::APP_NAME => AppDbdPass::class,
-		AppLotusPass::APP_NAME => AppLotusPass::class,
 		AppJuicyPdfPass::APP_NAME => AppJuicyPdfPass::class,
 		AppNominatimPass::APP_NAME => AppNominatimPass::class,
 		AppPedefPass::APP_NAME => AppPedefPass::class,
@@ -50,7 +48,6 @@ class ApiClientsExtension extends CompilerExtension
 				AppAdminusCrmPass::APP_NAME => Expect::anyOf(NULL, AppAdminusCrmPass::getConfigSchema()),
 				AppAdminusNmsPass::APP_NAME => Expect::anyOf(NULL, AppAdminusNmsPass::getConfigSchema()),
 				AppDbdPass::APP_NAME => Expect::anyOf(NULL, AppDbdPass::getConfigSchema()),
-				AppLotusPass::APP_NAME => Expect::anyOf(NULL, AppLotusPass::getConfigSchema()),
 				AppJuicyPdfPass::APP_NAME => Expect::anyOf(NULL, AppJuicyPdfPass::getConfigSchema()),
 				AppNominatimPass::APP_NAME => Expect::anyOf(NULL, AppNominatimPass::getConfigSchema()),
 				AppPedefPass::APP_NAME => Expect::anyOf(NULL, AppPedefPass::getConfigSchema()),
