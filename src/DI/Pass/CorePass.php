@@ -15,7 +15,6 @@ class CorePass extends AbstractPass
 	private const APP_GUZZLE = [
 		AppAresPass::APP_NAME,
 		AppAdminusCrmPass::APP_NAME,
-		AppLotusPass::APP_NAME,
 		AppPedefPass::APP_NAME,
 		AppRuianPass::APP_NAME,
 	];

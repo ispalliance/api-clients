@@ -28,7 +28,6 @@ Secondly, configure single application. We support these ISP-based applications:
  - **adminus_crm**
  - **adminus_nms**
  - **ares**
- - **lotus**
  - **pedef**
  - **ruian**
 
@@ -78,7 +77,7 @@ public $api;
 
 public function magic(): void
 {
-    $users = $this->api->lotus->users->getAll()
+    $users = $this->api->adminusCrm->user->getAll()
 }
 ```
 
@@ -93,12 +92,12 @@ $this->api->{app}->{requestor}->{method}
 This is middle-level way how to manage our APIs.
 
 ```php
-/** @var LotusRootquestor @inject */
+/** @var CrmRootquestor @inject */
 public $api;
 
 public function magic(): void
 {
-    $users = $this->api->users->getAll();
+    $users = $this->api->user->getAll();
 }
 ```
 
@@ -117,8 +116,8 @@ public $guzzleFactory;
 
 public function magic(): void
 {
-    $client = $this->guzzleFactory->create('lotus');
-    $users = $client->get("users");
+    $client = $this->guzzleFactory->create('adminusCrm');
+    $users = $client->get("user");
 }
 ```
 
@@ -295,105 +294,6 @@ try {
     // Do something
 }
 ```
-
-
-## Lotus
-
-### Configuration
-
-```yaml
-lotus.api:
-    app:
-        lotus:
-            http:
-                base_uri: http://lotus.ispa.cz/api/v1/
-                headers:
-                    X-Api-Token: token
-```
-
-### Available requestor's methods
-
-**UserRequestor**
-
-| Method                         | API path                    | Type   |
-| ------------------------------ | --------------------------- | ------ |
-| list($limit, $offset, $filter) | /users                      | GET    |
-| getById($id)                   | /users/{id}                 | GET    |
-| create($entity)                | /users                      | POST   |
-| edit($entity)                  | /users/{id}                 | PUT    |
-
-**UserGroupRequestor**
-
-| Method                                                                | API path                       | Type   |
-| --------------------------------------------------------------------- | ------------------------------ | ------ |
-| appendUsers($id, $userIds, $includeSystemUsers, $includeBlockedUsers) | /user-groups/{id}/append-users | PATCH  |
-| findOne($id, $include)                                                | /user-groups/{id}              | GET    |
-| createOne($entity)                                                    | /user-groups                   | POST   |
-| editOne($entity)                                                      | /user-groups/{id}              | PUT    |
-| deleteOne($id)                                                        | /user-groups/{id}              | DELETE |
-
-**PlanRequestor**
-
-| Method                        | API path    | Type   |
-| ----------------------------- | ----------- | ------ |
-| findMultiple($limit, $offset) | /plans      | GET    |
-| createOne($entity)            | /plans      | POST   |
-| deleteOne($id)                | /plans/{id} | DELETE |
-
-**SnippetRequestor**
-
-| Method                                       | API path       | Type   |
-| -------------------------------------------- | -------------- | ------ |
-| listSnippets($limit, $offset, $include)      | /snippets      | GET    |
-| createSnippet($name, $description, $snippet) | /snippets      | POST   |
-| deleteSnippet($id)                           | /snippets/{id} | DELETE |
-
-**CalendarRequestor**
-
-| Method         | API path       | Type   |
-| -------------- | -------------- | ------ |
-| getFolder($id) | /calendar/{id} | GET    |
-
-**ProcessRequestor**
-
-| Method                                           | API path                           | Type   |
-| ------------------------------------------------ | ---------------------------------- | ------ |
-| listProcesses($limit, $offset, $filter, $include) | /processes                         | GET    |
-| getProcess($id, $include)                        | /processes/{id}                    | GET    |
-| addTag($pid, $ttid)                              | /processes/{pid}/tags/{ttid}       | POST   |
-| removeTag($pid, $ttid)                           | /processes/{pid}/tags/{ttid}       | DELETE |
-| moveProcessToNextStep($id)                       | /processes/{id}/next               | POST   |
-| uploadFile($id, $variable, $fileName, $contents) | /process/{id}/upload               | POST   |
-| listTemplates($limit, $offset, $startableOnly, $include) | /template-processes                | GET    |
-| getTemplate($id, $include)                       | /template-processes/{id}           | GET    |
-| createTemplate($entity)                          | /template-processes                | POST   |
-| deleteTemplate($id)                              | /template-processes/{id}           | DELETE |
-| archiveTemplate($id)                             | /template-processes/{id}/archive   | PATCH  |
-| startProcess($tid, $data, $include)              | /template-processes/{id}/start     | POST   |
-
-*1 Note: listProcesses $filter expects $variables to be array of variables to search for in format ["name" => "value", ...] eg ["user" => "10", "status" => "active"]
-
-*2 Note: startProcess detailed info:
-
-StartProcess method accepts optional parameter $data with which you can set process default variables, assign users to roles etc.
-Please see example of $data with comments below:
-```php
-$data = [
-    // set values to process variables
-    'variables' => [
-        'foo' => 'bar',
-        'baz' => 'bat',
-    ],
-    // assign users to roles by their user ids and role names
-    'roles' => [
-        'medic' => [152578, 24557],
-        'coroner' => [666]
-    ],
-    // how many times the process should proceed to next step automatically
-    'next' => 2,
-];
-```
-
 
 
 ## Pedef

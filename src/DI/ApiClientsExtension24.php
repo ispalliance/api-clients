@@ -8,7 +8,6 @@ use ISPA\ApiClients\DI\Pass\AppAdminusNmsPass;
 use ISPA\ApiClients\DI\Pass\AppAresPass;
 use ISPA\ApiClients\DI\Pass\AppDbdPass;
 use ISPA\ApiClients\DI\Pass\AppJuicyPdfPass;
-use ISPA\ApiClients\DI\Pass\AppLotusPass;
 use ISPA\ApiClients\DI\Pass\AppNominatimPass;
 use ISPA\ApiClients\DI\Pass\AppPedefPass;
 use ISPA\ApiClients\DI\Pass\AppRuianPass;
@@ -25,7 +24,6 @@ class ApiClientsExtension24 extends ApiClientsExtension
 			AppAdminusCrmPass::APP_NAME => NULL,
 			AppAdminusNmsPass::APP_NAME => NULL,
 			AppDbdPass::APP_NAME => NULL,
-			AppLotusPass::APP_NAME => NULL,
 			AppJuicyPdfPass::APP_NAME => NULL,
 			AppNominatimPass::APP_NAME => NULL,
 			AppPedefPass::APP_NAME => NULL,
