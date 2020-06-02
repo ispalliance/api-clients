@@ -14,8 +14,8 @@ This is aggregated central API client with delightful usage in Nette Framework a
 
 | State       | Version      | Branch   | PHP    | Composer                                        |
 |-------------|--------------|----------|--------|-------------------------------------------------|
-| development | `^0.2.0`     | `master` | `^7.2` | `minimum-stability: dev`, `prefer-stable: true` |
-| stable      | `^0.1.0`     | `master` | `^7.2` |                                                 |
+| development | `^0.3.0`     | `master` | `^7.2` | `minimum-stability: dev`, `prefer-stable: true` |
+| stable      | `^0.2.0`     | `master` | `^7.2` |                                                 |
 
 ## Documentation
 
