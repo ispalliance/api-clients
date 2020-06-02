@@ -88,18 +88,24 @@ class ProcessClient extends AbstractLotusClient
 		string $contents
 	): ResponseInterface
 	{
-		return $this->request(
-			'POST',
+		return $this->upload(
 			sprintf('%s/%s/upload?variable=%s', self::PATH_PROCESS, $processId, $variable),
-			[
-				'multipart' => [
-					[
-						'name' => 'File',
-						'filename' => $fileName,
-						'contents' => $contents,
-					],
-				],
-			]
+			$fileName,
+			$contents
+		);
+	}
+
+	public function uploadFileToDiscussion(
+		int $processId,
+		int $discussionId,
+		string $fileName,
+		string $contents
+	): ResponseInterface
+	{
+		return $this->upload(
+			sprintf('%s/%s/discussion/%s/upload', self::PATH_PROCESS, $processId, $discussionId),
+			$fileName,
+			$contents
 		);
 	}
 
@@ -175,6 +181,23 @@ class ProcessClient extends AbstractLotusClient
 	public function archiveTemplate(int $templateId): ResponseInterface
 	{
 		return $this->request('PATCH', sprintf('%s/%s/archive', self::PATH_TEMPLATE, $templateId));
+	}
+
+	private function upload(string $path, string $fileName, string $fileContent): ResponseInterface
+	{
+		return $this->request(
+			'POST',
+			$path,
+			[
+				'multipart' => [
+					[
+						'name' => 'File',
+						'filename' => $fileName,
+						'contents' => $fileContent,
+					],
+				],
+			]
+		);
 	}
 
 }
