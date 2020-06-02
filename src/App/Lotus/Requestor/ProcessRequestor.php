@@ -83,6 +83,21 @@ final class ProcessRequestor extends BaseRequestor
 	}
 
 	/**
+	 * @return mixed[]
+	 */
+	public function uploadFileToDiscussion(
+		int $processId,
+		int $discussionId,
+		string $fileName,
+		string $contents
+	): array
+	{
+		$response = $this->client->uploadFileToDiscussion($processId, $discussionId, $fileName, $contents);
+
+		return $this->processResponse($response)->getData();
+	}
+
+	/**
 	 * @param mixed[]  $data
 	 * @param string[] $include
 	 * @return mixed[]
