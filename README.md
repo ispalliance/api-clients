@@ -38,6 +38,6 @@ Take a closer look at [implemented API clients](.docs/README.md).
 
 ## Sponsoring
 
-<a href="https://github.com/tlapnet"><img  width="200" src="https://cdn.rawgit.com/f3l1x/xsource/2463efb7/assets/tlapdev.png"></a>
+<a href="https://github.com/tlapnet"><img  width="200" src="https://github.com/tlapnet.png"></a>
 
 The development is sponsored by [Tlapnet](https://www.tlapnet.cz)
